@@ -186,7 +186,7 @@ body {
 .visual-hint { font-size: 13px; color: var(--text-light); }
 
 /* Page preview sections */
-.page-preview { max-width: 1100px; margin: 0 auto; padding: 0 24px 120px 100px; }
+.page-preview { max-width: 1100px; margin: 0 auto; padding: 0 24px 120px 148px; }
 .pv-hero {
   position: relative; height: 300px; border-radius: 12px; overflow: hidden;
   background-size: cover; background-position: center; margin: 24px 0;
@@ -272,30 +272,30 @@ body {
 .pv-section-wrap { position: relative; margin-bottom: 16px; }
 .pv-section-wrap .pv-section { margin-bottom: 0; }
 .pv-size-gutter {
-  position: absolute; right: 100%; top: 12px;
-  width: 80px; margin-right: 8px;
-  display: flex; flex-direction: column; gap: 8px;
+  position: absolute; right: 100%; top: 16px;
+  width: 120px; margin-right: 12px;
+  display: flex; flex-direction: column; gap: 12px;
 }
 .pv-size-control {
-  display: flex; align-items: center; gap: 4px;
+  display: flex; align-items: center; gap: 6px;
 }
 .pv-size-control label {
-  font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.5px; color: #aaa; width: 28px; flex-shrink: 0;
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; color: #999; width: 32px; flex-shrink: 0;
 }
 .pv-size-btns { display: flex; align-items: center; }
 .pv-size-btns button {
-  width: 24px; height: 24px; border: 1px solid #ddd; background: #fff;
-  font-size: 14px; line-height: 1; cursor: pointer; color: #666;
+  width: 32px; height: 32px; border: 1px solid #ccc; background: #fff;
+  font-size: 18px; line-height: 1; cursor: pointer; color: #555;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
 }
-.pv-size-btns button:hover { background: #f0f0f0; color: #333; border-color: #bbb; }
-.pv-size-btns button:first-child { border-radius: 4px 0 0 4px; }
-.pv-size-btns button:last-child { border-radius: 0 4px 4px 0; }
+.pv-size-btns button:hover { background: #f0f0f0; color: #222; border-color: #999; }
+.pv-size-btns button:first-child { border-radius: 6px 0 0 6px; }
+.pv-size-btns button:last-child { border-radius: 0 6px 6px 0; }
 .pv-size-val {
-  width: 30px; height: 24px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; border-left: none; border-right: none;
-  text-align: center; font-size: 11px; font-family: inherit; color: #666;
+  width: 40px; height: 32px; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; border-left: none; border-right: none;
+  text-align: center; font-size: 13px; font-family: inherit; color: #555;
   background: #fafafa; padding: 0;
 }
 .pv-hero-actions { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; gap: 8px; }
