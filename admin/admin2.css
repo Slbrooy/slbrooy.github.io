@@ -69,16 +69,14 @@ body {
   position: sticky; top: 0; z-index: 10;
 }
 .admin-header-inner {
-  margin: 0; padding: 16px 24px;
-  display: flex; justify-content: space-between; align-items: center;
+  margin: 0; padding: 0 24px;
+  display: flex; align-items: center; gap: 8px;
 }
-.admin-header-inner h2 { font-size: 22px; font-weight: 700; }
-.admin-header-right { display: flex; align-items: center; gap: 12px; }
+.admin-header-inner h2 { font-size: 18px; font-weight: 700; white-space: nowrap; }
+.admin-header-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
 #user-name { font-size: 13px; color: var(--text-light); }
 #admin-nav {
-  max-width: 1000px; margin: 0 auto;
-  padding: 0 24px;
-  display: flex; gap: 0;
+  display: flex; gap: 0; margin-left: 16px;
 }
 .nav-item {
   padding: 12px 20px;
