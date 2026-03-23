@@ -1665,6 +1665,10 @@
     if (pages[key]) { toast('A page with that key already exists', true); return; }
     pages[key] = {
       title: title.trim(),
+      url: key + '.html',
+      showInNav: true,
+      navLabel: title.trim(),
+      navOrder: Object.keys(pages).length + 1,
       heroImage: '',
       sections: []
     };
