@@ -146,6 +146,45 @@
     });
   }
 
+  // ===== HERO + SECTION IMAGES =====
+  function detectCurrentPage() {
+    var path = location.pathname;
+    if (path.match(/index\.html$/) || path.match(/\/$/)) return 'home';
+    if (path.match(/about-selena/)) return 'about-selena';
+    if (path.match(/about-sessions/)) return 'about-sessions';
+    if (path.match(/blog\.html/)) return 'blog';
+    if (path.match(/faqs\.html/)) return 'faqs';
+    if (path.match(/contact\.html/)) return 'contact';
+    return null;
+  }
+
+  function renderHeroImage() {
+    var pageKey = detectCurrentPage();
+    if (!pageKey || !pages[pageKey]) return;
+    var heroImage = pages[pageKey].heroImage;
+    if (!heroImage) return;
+    var hero = document.querySelector('.hero');
+    if (hero) {
+      hero.style.backgroundImage = "url('" + BASE + heroImage + "')";
+    }
+  }
+
+  function renderSectionImages() {
+    var pageKey = detectCurrentPage();
+    if (!pageKey || !pages[pageKey]) return;
+    var sectionImgs = document.querySelectorAll('[data-cms-section-img]');
+    sectionImgs.forEach(function(el) {
+      var sectionId = el.dataset.cmsSectionImg;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (!section || !section.image) return;
+      if (el.tagName === 'IMG') {
+        el.src = BASE + section.image;
+      } else {
+        el.style.backgroundImage = "url('" + BASE + section.image + "')";
+      }
+    });
+  }
+
   // ===== BLOG LISTING =====
   function renderBlogList() {
     var target = document.getElementById('blog-list');
@@ -282,6 +321,8 @@
     renderNav();
     renderFooter();
     renderPageSections();
+    renderHeroImage();
+    renderSectionImages();
   });
 
   renderBlogList();
