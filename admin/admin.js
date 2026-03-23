@@ -846,7 +846,6 @@
     $('setting-facebook').value = settings.facebookUrl || '';
     $('setting-calendly').value = settings.calendlyUrl || '';
     $('setting-hero').value = settings.heroHeadline || '';
-    $('setting-quote').value = settings.quoteText || '';
     // Fonts
     $('setting-font-heading').value = settings.fontHeading || "'Playfair Display', Georgia, serif";
     $('setting-font-body').value = settings.fontBody || "'Poppins', 'Helvetica Neue', Arial, sans-serif";
@@ -868,7 +867,6 @@
     settings.facebookUrl = $('setting-facebook').value.trim();
     settings.calendlyUrl = $('setting-calendly').value.trim();
     settings.heroHeadline = $('setting-hero').value.trim();
-    settings.quoteText = $('setting-quote').value.trim();
     // Fonts
     settings.fontHeading = $('setting-font-heading').value;
     settings.fontBody = $('setting-font-body').value;
