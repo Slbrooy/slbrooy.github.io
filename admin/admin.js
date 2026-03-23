@@ -1232,6 +1232,7 @@
         delBtn +
         typeLabel +
         '<h2 onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;">' + s.heading + ' <span style="font-size:12px;color:#999;font-weight:400;">edit</span></h2>' +
+        (s.body ? '<div onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;margin-bottom:12px;color:#666;">' + s.body + '</div>' : '') +
         '<div style="display:flex;gap:12px;margin-top:12px;">' + imgHtml + '</div>' +
       '</div>';
       return wrapWithControls(pageKey, sectionId, card);
