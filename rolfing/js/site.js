@@ -139,10 +139,35 @@
       var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
       if (!section) return;
       el.innerHTML = section.body;
+      // Apply font size
+      if (section.fontSize) {
+        el.style.fontSize = section.fontSize + 'px';
+      }
       var heading = el.previousElementSibling;
       if (heading && heading.classList.contains('section-title')) {
         heading.innerHTML = section.heading;
       }
+    });
+  }
+
+  // Apply font/image sizes to sections identified by data-cms-section-size
+  function applySectionSizes() {
+    var pageKey = detectCurrentPage();
+    if (!pageKey || !pages[pageKey]) return;
+    pages[pageKey].sections.forEach(function(section) {
+      // Font size on section containers
+      var els = document.querySelectorAll('[data-cms-section="' + section.id + '"]');
+      els.forEach(function(el) {
+        if (section.fontSize) el.style.fontSize = section.fontSize + 'px';
+      });
+      // Image size on section images
+      var imgEls = document.querySelectorAll('[data-cms-section-img="' + section.id + '"]');
+      imgEls.forEach(function(el) {
+        if (section.imageSize && el.tagName === 'IMG') {
+          el.style.width = section.imageSize + 'px';
+          el.style.height = 'auto';
+        }
+      });
     });
   }
 
@@ -323,6 +348,7 @@
     renderPageSections();
     renderHeroImage();
     renderSectionImages();
+    applySectionSizes();
   });
 
   renderBlogList();
