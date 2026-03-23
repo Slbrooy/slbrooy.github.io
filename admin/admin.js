@@ -676,12 +676,12 @@
   function renderTestimonialsList() {
     var html = '';
     testimonials.forEach(function(t, i) {
-      var preview = t.quote.length > 80 ? t.quote.substring(0, 80) + '...' : t.quote;
-      html += '<div class="item-row">';
-      html += '<div class="item-info"><h3>' + t.name;
-      if (t.credentials) html += ' <span style="color:#999;font-weight:400;">- ' + t.credentials + '</span>';
-      html += '</h3><p>' + preview + '</p></div>';
-      html += '<div class="item-actions">';
+      html += '<div class="review-preview">';
+      html += '<div class="review-preview-quote">&ldquo;' + t.quote + '&rdquo;</div>';
+      html += '<div class="review-preview-author"><strong>' + t.name + '</strong>';
+      if (t.credentials) html += ' <span style="color:#999;">- ' + t.credentials + '</span>';
+      html += '</div>';
+      html += '<div class="review-preview-actions">';
       if (i > 0) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',-1)" title="Move up">&uarr;</button>';
       if (i < testimonials.length - 1) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',1)" title="Move down">&darr;</button>';
       html += '<button class="btn-small" onclick="CMS.editTestimonial(' + i + ')">Edit</button>';
@@ -1424,7 +1424,29 @@
     pages.home.sections.forEach(function(sec) {
       html += pvSection('home', sec.id);
     });
-    html += '<div class="pv-note">Client Reviews -- manage from the Reviews tab</div>';
+    // Reviews preview
+    html += '<div class="pv-section" style="cursor:default;">';
+    html += '<h2>Client Reviews</h2>';
+    if (testimonials.length > 0) {
+      html += '<div style="display:flex;gap:16px;margin-top:12px;">';
+      testimonials.slice(0, 3).forEach(function(t) {
+        html += '<div style="flex:1;min-width:0;padding:16px;background:#f9f9f9;border-radius:8px;font-size:13px;line-height:1.7;color:#666;font-style:italic;">';
+        html += '&ldquo;' + (t.quote.length > 100 ? t.quote.substring(0, 100) + '...' : t.quote) + '&rdquo;';
+        html += '<div style="margin-top:8px;font-style:normal;font-weight:600;color:#333;font-size:12px;">' + t.name + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+      html += '<p style="text-align:center;color:#999;font-size:12px;margin-top:8px;">' + testimonials.length + ' reviews total -- manage from Reviews tab</p>';
+    } else {
+      html += '<p style="color:#999;font-size:13px;">No reviews yet -- add from Reviews tab</p>';
+    }
+    html += '</div>';
+    // Map preview
+    if (settings.mapCoords) {
+      html += '<div class="pv-section" style="padding:0;overflow:hidden;cursor:default;">';
+      html += '<iframe src="https://maps.google.com/maps?q=' + settings.mapCoords + '&z=12&t=m&output=embed" width="100%" height="250" style="border:0;display:block;filter:saturate(0.3) contrast(1.1) brightness(1.05);border-radius:12px;" loading="lazy"></iframe>';
+      html += '</div>';
+    }
     html += pvAddSection('home');
     return html;
   }

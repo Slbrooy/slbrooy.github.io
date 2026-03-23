@@ -385,6 +385,19 @@ body {
 .edit-modal-body input:focus { outline: none; border-color: var(--accent); }
 #modal-editor .ql-container { min-height: 200px; }
 
+/* REVIEW PREVIEW CARDS */
+.review-preview {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin-bottom: 12px; transition: border-color 0.2s;
+}
+.review-preview:hover { border-color: var(--accent); }
+.review-preview-quote {
+  font-size: 14px; line-height: 1.8; color: var(--text-light);
+  font-style: italic; margin-bottom: 12px;
+}
+.review-preview-author { font-size: 14px; margin-bottom: 12px; }
+.review-preview-actions { display: flex; gap: 6px; }
+
 /* IMAGES IN EDITOR */
 .ql-editor img {
   max-width: 100%;
