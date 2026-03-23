@@ -9,7 +9,8 @@
   var API = 'https://api.github.com';
 
   var SITES = {
-    rolfing: { name: 'Salt Spring Rolfing', path: 'rolfing/' }
+    rolfing: { name: 'Salt Spring Rolfing', path: 'rolfing/' },
+    rhizome: { name: 'Rhizome Springs', path: 'rhizome/' }
   };
   var currentSite = localStorage.getItem('selena-cms-site') || 'rolfing';
   var BASE_PATH = SITES[currentSite].path + 'content/';

@@ -1,0 +1,37 @@
+{
+  "home": {
+    "title": "Home",
+    "url": "index.html",
+    "showInNav": false,
+    "navLabel": "Home",
+    "heroImage": "",
+    "sections": []
+  },
+  "about": {
+    "title": "About",
+    "url": "about.html",
+    "showInNav": true,
+    "navLabel": "About",
+    "navOrder": 1,
+    "heroImage": "",
+    "sections": []
+  },
+  "calendar": {
+    "title": "Calendar",
+    "url": "calendar.html",
+    "showInNav": true,
+    "navLabel": "Calendar",
+    "navOrder": 2,
+    "heroImage": "",
+    "sections": []
+  },
+  "shop": {
+    "title": "Shop",
+    "url": "shop.html",
+    "showInNav": true,
+    "navLabel": "Shop",
+    "navOrder": 3,
+    "heroImage": "",
+    "sections": []
+  }
+}
