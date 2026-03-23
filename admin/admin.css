@@ -252,8 +252,8 @@ body {
 .pv-section-quote p { color: #fff; text-align: center; font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; font-style: italic; }
 .pv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .pv-grid .pv-section { margin-bottom: 0; }
-.pv-img-section { display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start; }
-.pv-img-section img { width: 200px; height: auto; border-radius: 12px; object-fit: cover; }
+.pv-img-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.pv-img-section img { width: 100%; height: auto; border-radius: 12px; object-fit: cover; }
 .pv-note { text-align: center; color: var(--text-light); font-size: 13px; padding: 20px; background: var(--white); border: 1px dashed var(--border); border-radius: 12px; margin-bottom: 16px; }
 
 /* Add Section button */
