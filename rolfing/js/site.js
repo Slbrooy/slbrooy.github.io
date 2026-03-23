@@ -188,6 +188,28 @@
   }
 
   // ===== PAGE SECTIONS =====
+  // Quote heading/body from pages.json
+  function renderQuoteSections() {
+    document.querySelectorAll('[data-cms-quote-heading]').forEach(function(el) {
+      var pageKey = el.dataset.cmsPage;
+      var sectionId = el.dataset.cmsQuoteHeading;
+      if (!pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (section && section.heading) {
+        el.innerHTML = '\u201c' + section.heading + '\u201d';
+      }
+    });
+    document.querySelectorAll('[data-cms-quote-body]').forEach(function(el) {
+      var pageKey = el.dataset.cmsPage;
+      var sectionId = el.dataset.cmsQuoteBody;
+      if (!pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (section && section.body) {
+        el.innerHTML = section.body.replace(/<\/?p>/g, '');
+      }
+    });
+  }
+
   function renderPageSections() {
     document.querySelectorAll('[data-cms-section]').forEach(function(el) {
       var pageKey = el.dataset.cmsPage;
@@ -409,6 +431,7 @@
     renderNav();
     renderFooter();
     renderPageSections();
+    renderQuoteSections();
     renderDynamicPage();
     renderHeroImage();
     renderSectionImages();
