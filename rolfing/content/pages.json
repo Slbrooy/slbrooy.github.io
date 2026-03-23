@@ -148,7 +148,15 @@
         "heading": "Good",
         "body": "<p>Love these ones</p>",
         "heading2": "Bad",
-        "body2": "<p>ARE YOU KIDDIN?<img src=\"images/uploads/1774306756054-jordans-255.png\"></p>"
+        "body2": "<p>ARE YOU KIDDIN?</p>"
+      },
+      {
+        "id": "love-these-forever",
+        "type": "text-image",
+        "heading": "Love these forever",
+        "body": "<p class=\"ql-align-right\">Out of all my shoes, these are the most confusing.</p>",
+        "image": "images/uploads/1774308239798-2paintedyeezy-001.png",
+        "imagePosition": "right"
       }
     ]
   }
