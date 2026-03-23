@@ -6,8 +6,14 @@
   var OWNER = 'slbrooy';
   var REPO = 'slbrooy.github.io';
   var BRANCH = 'main';
-  var BASE_PATH = 'content/';
   var API = 'https://api.github.com';
+
+  var SITES = {
+    rolfing: { name: 'Salt Spring Rolfing', path: 'rolfing/' }
+  };
+  var currentSite = localStorage.getItem('selena-cms-site') || 'rolfing';
+  var BASE_PATH = SITES[currentSite].path + 'content/';
+  var UPLOAD_PATH_PREFIX = SITES[currentSite].path;
 
   // ===== STATE =====
   var token = '';
@@ -26,6 +32,50 @@
   var editingColumn = ''; // '' or 'right' for two-column sections
   var pendingChanges = {}; // { filename: true } tracks which files have unpublished changes
   var DRAFT_KEY = 'selena-cms-drafts';
+
+  // ===== SITE SWITCHER =====
+  function populateSitePicker() {
+    var picker = $('site-picker');
+    picker.innerHTML = '';
+    Object.keys(SITES).forEach(function(key) {
+      var opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = SITES[key].name;
+      picker.appendChild(opt);
+    });
+    picker.value = currentSite;
+    $('site-title').textContent = SITES[currentSite].name;
+  }
+
+  function switchSite(siteKey) {
+    if (!SITES[siteKey]) return;
+    // Save any pending drafts for current site before switching
+    if (Object.keys(pendingChanges).length > 0) {
+      if (!confirm('You have unpublished changes. Switch site anyway? (Drafts will be lost)')) {
+        $('site-picker').value = currentSite;
+        return;
+      }
+    }
+    currentSite = siteKey;
+    localStorage.setItem('selena-cms-site', siteKey);
+    BASE_PATH = SITES[siteKey].path + 'content/';
+    UPLOAD_PATH = SITES[siteKey].path + 'images/uploads/';
+    UPLOAD_PATH_PREFIX = SITES[siteKey].path;
+    $('site-title').textContent = SITES[siteKey].name;
+    // Reset state
+    shas = {};
+    blogPosts = [];
+    testimonials = [];
+    faqs = [];
+    settings = {};
+    pages = {};
+    pendingChanges = {};
+    localStorage.removeItem(DRAFT_KEY);
+    updatePublishBar();
+    // Reload content for new site
+    loadAllContent();
+    showSection('dashboard');
+  }
 
   // ===== DRAFTS =====
   function saveDrafts() {
@@ -179,7 +229,7 @@
   }
 
   // ===== IMAGE UPLOAD =====
-  var UPLOAD_PATH = 'images/uploads/';
+  var UPLOAD_PATH = UPLOAD_PATH_PREFIX + 'images/uploads/';
 
   function uploadImage(file) {
     return new Promise(function(resolve, reject) {
@@ -872,7 +922,7 @@
     var imgBtnAny = '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>';
 
     if (type === 'banner') {
-      return '<div class="pv-section pv-section-quote" style="' + (s.image ? 'background-image:url(\'../' + s.image + '\');' : '') + '">' +
+      return '<div class="pv-section pv-section-quote" style="' + (s.image ? 'background-image:url(\'/' + UPLOAD_PATH_PREFIX + s.image + '\');' : '') + '">' +
         delBtn +
         '<button class="pv-section-img-btn" style="opacity:1;" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>' +
         '<div onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;">' +
@@ -969,7 +1019,7 @@
   // Hero card with text edit (bottom-left) and image edit (top-right)
   function pvHero(pageKey, heroTitle, heroSubtitle) {
     var page = pages[pageKey] || {};
-    var img = page.heroImage ? '../' + page.heroImage : '';
+    var img = page.heroImage ? '/' + UPLOAD_PATH_PREFIX + page.heroImage : '';
     return '<div class="pv-hero" style="background-image:url(\'' + img + '\');">' +
       '<div class="pv-hero-actions">' +
         '<button class="pv-hero-btn" onclick="event.stopPropagation();CMS.changeHeroImage(\'' + pageKey + '\')">Change Image</button>' +
@@ -990,7 +1040,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/', '');
+          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
           var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
           if (section) section.image = relPath;
           markDirty('pages.json');
@@ -1015,7 +1065,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/', '');
+          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
           section.images.push(relPath);
           markDirty('pages.json');
           toast('Image added. Click Publish when ready.');
@@ -1037,7 +1087,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/', '');
+          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
           section.images[index] = relPath;
           markDirty('pages.json');
           toast('Image updated. Click Publish when ready.');
@@ -1067,7 +1117,7 @@
       uploadImage(input.files[0])
         .then(function(url) {
           // Store relative path from site root
-          var relPath = url.replace('https://slbrooy.github.io/', '');
+          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
           pages[pageKey].heroImage = relPath;
           markDirty('pages.json');
           toast('Hero image updated. Click Publish when ready.');
@@ -1082,7 +1132,7 @@
     var s = settings;
     var headline = (s.heroHeadline || '').replace(/<br\s*\/?>/g, ' ');
     var html = '' +
-      '<div class="pv-hero" style="background-image:url(\'../' + (pages.home.heroImage || '') + '\');">' +
+      '<div class="pv-hero" style="background-image:url(\'/' + UPLOAD_PATH_PREFIX + (pages.home.heroImage || '') + '\');">' +
         '<div class="pv-hero-actions">' +
           '<button class="pv-hero-btn" onclick="event.stopPropagation();CMS.changeHeroImage(\'home\')">Change Image</button>' +
         '</div>' +
@@ -1421,6 +1471,8 @@
   $('discard-btn').addEventListener('click', discardDrafts);
 
   // ===== INIT =====
+  populateSitePicker();
+  $('site-picker').addEventListener('change', function() { switchSite(this.value); });
   initAuth();
   var initialHash = location.hash.replace('#', '');
   if (initialHash && initialHash.indexOf('setup=') !== 0) showSection(initialHash);

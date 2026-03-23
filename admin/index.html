@@ -30,7 +30,10 @@
   <div id="app" class="screen" style="display:none;">
     <header id="admin-header">
       <div class="admin-header-inner">
-        <h2>Salt Spring Rolfing</h2>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h2 id="site-title">CMS</h2>
+          <select id="site-picker" style="padding:6px 10px;border:1px solid #e0e0e0;border-radius:6px;font-family:inherit;font-size:13px;background:#fff;"></select>
+        </div>
         <div class="admin-header-right">
           <span id="user-name"></span>
           <button id="logout-btn" class="btn-small">Logout</button>
