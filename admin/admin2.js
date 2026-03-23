@@ -195,9 +195,14 @@
       '      <nav></nav>\n' +
       '    </div>\n' +
       '  </header>\n\n' +
-      '  <section style="padding-top:100px;">\n' +
+      '  <section class="hero hero-short" style="background-image:url(\'' + (page.heroImage || '') + '\');">\n' +
+      '    <div class="hero-content">\n' +
+      '      <h1>' + page.title + '</h1>\n' +
+      '    </div>\n' +
+      '  </section>\n' +
+      '  <div class="hero-spacer"></div>\n\n' +
+      '  <section>\n' +
       '    <div class="container">\n' +
-      '      <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);margin-bottom:30px;">' + page.title + '</h1>\n' +
       '      <div id="page-content"></div>\n' +
       '    </div>\n' +
       '  </section>\n\n' +
@@ -1687,6 +1692,11 @@
     if (!newTitle || !newTitle.trim()) return;
     pages[key].title = newTitle.trim();
     pages[key].navLabel = newTitle.trim();
+    // Auto-update URL for non-original pages
+    var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+    if (!originals.includes(pages[key].url)) {
+      pages[key].url = newTitle.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.html';
+    }
     markDirty('pages.json');
     populatePagePicker();
     pagePicker.value = key;
