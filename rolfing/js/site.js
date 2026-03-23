@@ -184,6 +184,18 @@
           el.style.width = section.imageSize + 'px';
           el.style.height = 'auto';
         }
+        // Image position: swap grid direction
+        if (section.imagePosition) {
+          var grid = el.closest('.grid-2');
+          if (grid) {
+            if (section.imagePosition === 'right') {
+              grid.style.direction = 'rtl';
+              Array.from(grid.children).forEach(function(c) { c.style.direction = 'ltr'; });
+            } else {
+              grid.style.direction = '';
+            }
+          }
+        }
       });
     });
   }

@@ -1189,14 +1189,17 @@
     }
 
     if (type === 'text-image' || (type !== 'two-column' && type !== 'images' && s.image)) {
-      card = '<div class="pv-section pv-img-section ' + (extraClass || '') + '" style="font-size:' + fs + 'px;grid-template-columns:' + is + 'px 1fr;" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
-        delBtn +
-        '<div style="position:relative;"><img src="' + getImageUrl(s.image || '') + '" alt="" style="width:' + is + 'px;">' + imgBtnAny + '</div>' +
-        '<div><div class="pv-section-label">Edit Text</div>' +
+      var imgRight = (s.imagePosition === 'right');
+      var swapBtn = '<button class="pv-section-img-btn" style="opacity:1;top:auto;bottom:8px;right:8px;font-size:10px;padding:3px 10px;" onclick="event.stopPropagation();CMS.swapImageSide(\'' + pageKey + '\',\'' + sectionId + '\')">' + (imgRight ? 'Image \u2192 Left' : 'Image \u2192 Right') + '</button>';
+      var imgCol = '<div style="position:relative;"><img src="' + getImageUrl(s.image || '') + '" alt="">' + imgBtnAny + swapBtn + '</div>';
+      var txtCol = '<div><div class="pv-section-label">Edit Text</div>' +
           typeLabel +
           '<h2>' + s.heading + '</h2>' +
           s.body +
-        '</div>' +
+        '</div>';
+      var cols = imgRight ? txtCol + imgCol : imgCol + txtCol;
+      card = '<div class="pv-section pv-img-section ' + (extraClass || '') + '" style="font-size:' + fs + 'px;" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
+        delBtn + cols +
       '</div>';
       return wrapWithControls(pageKey, sectionId, card);
     }
@@ -1364,6 +1367,14 @@
     markDirty('pages.json');
     renderPagePreview();
     toast('Image removed. Click Publish when ready.');
+  }
+
+  function swapImageSide(pageKey, sectionId) {
+    var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+    if (!section) return;
+    section.imagePosition = (section.imagePosition === 'right') ? 'left' : 'right';
+    markDirty('pages.json');
+    renderPagePreview();
   }
 
   function changeHeroImage(pageKey) {
@@ -1716,6 +1727,7 @@
     openSettingModal: openSettingModal,
     changeHeroImage: changeHeroImage,
     changeSectionImage: changeSectionImage,
+    swapImageSide: swapImageSide,
     adjustSize: adjustSize,
     setSize: setSize,
     resetSize: resetSize,
