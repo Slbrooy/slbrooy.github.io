@@ -29,14 +29,17 @@
         "type": "text-image",
         "heading": "What is structural integration?",
         "image": "images/rolfing-hands.webp",
-        "body": "<p>A dynamic touch therapy that works with the fascia (a web of connective tissue under the skin) to systematically release, realign and balance the whole body, thereby resolving chronic pain from habitual postural compensations.</p>"
+        "body": "<p>A dynamic touch therapy that works with the fascia (a web of connective tissue under the skin) to systematically release, realign and balance the whole body, thereby resolving chronic pain from habitual postural compensations.</p>",
+        "imageSize": 360,
+        "fontSize": 22
       },
       {
         "id": "quote",
         "type": "banner",
         "heading": "Quote",
         "image": "images/sunset-person.webp",
-        "body": ""
+        "body": "",
+        "imageSize": 200
       }
     ]
   },
@@ -66,7 +69,8 @@
         "type": "banner",
         "heading": "Helping people to understand how to shift unhealthy patterns and postures to find the joy of inhabiting their body!",
         "image": "images/body-mind.webp",
-        "body": "<p>Part of this is understanding habitual ways in which we sabotage ourselves unconsciously. These curiosities led me into further studies in Laban movement patterning, Body Mind Centering, Feldenkrais, the Axis Syllabus and a career in Rolfing® Structural Integration and Rolf Movement.™ I continue to study and learn from a variety of incredible teachers as often as I can.</p>"
+        "body": "<p>Part of this is understanding habitual ways in which we sabotage ourselves unconsciously. These curiosities led me into further studies in Laban movement patterning, Body Mind Centering, Feldenkrais, the Axis Syllabus and a career in Rolfing® Structural Integration and Rolf Movement.™ I continue to study and learn from a variety of incredible teachers as often as I can.</p>",
+        "imageSize": 120
       }
     ]
   },
