@@ -21,7 +21,8 @@
         "heading": "Meet Selena La Brooy",
         "image": "images/selena-profile.webp",
         "body": "<p><strong>Certified Rolfer™ + Certified Movement Integration Practitioner</strong></p><p>I’m fascinated with understanding body mechanics, injury prevention and how we can use our bodies in more harmonious ways. These curiosities led me into further studies in Laban movement patterning, Body Mind Centering, Feldenkrais, Axis Syllabus and a career in Rolfing® Structural Integration and Rolf Movement.™</p>",
-        "fontSize": 16
+        "fontSize": 16,
+        "imagePosition": "right"
       },
       {
         "id": "structural-integration",
