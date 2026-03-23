@@ -231,11 +231,17 @@
 
   // ===== IMAGE UPLOAD =====
   var UPLOAD_PATH = UPLOAD_PATH_PREFIX + 'images/uploads/';
+  var imageCache = {}; // { relativePath: dataUrl } for instant preview
+
+  function getImageUrl(relativePath) {
+    // Return cached data URL if available, otherwise the GitHub Pages URL
+    if (imageCache[relativePath]) return imageCache[relativePath];
+    return '/' + UPLOAD_PATH_PREFIX + relativePath;
+  }
 
   function uploadImage(file) {
     return new Promise(function(resolve, reject) {
       if (!file.type.match(/^image\//)) { reject(new Error('Not an image')); return; }
-      // Resize if needed (max 1600px wide)
       var img = new Image();
       var reader = new FileReader();
       reader.onload = function(e) {
@@ -248,7 +254,6 @@
           canvas.width = w;
           canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          // Convert to JPEG for smaller size, or keep PNG if it has transparency
           var mime = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
           var quality = 0.85;
           var dataUrl = canvas.toDataURL(mime, quality);
@@ -256,6 +261,10 @@
           var ext = mime === 'image/png' ? '.png' : '.jpg';
           var filename = Date.now() + '-' + file.name.replace(/[^a-z0-9.]/gi, '-').toLowerCase().replace(/\.[^.]+$/, '') + ext;
           var filePath = UPLOAD_PATH + filename;
+          var relativePath = 'images/uploads/' + filename;
+
+          // Cache the data URL for instant preview
+          imageCache[relativePath] = dataUrl;
 
           // Commit to GitHub
           var body = {
@@ -273,9 +282,7 @@
             return r.json();
           })
           .then(function(result) {
-            // Return the GitHub Pages URL for the image
-            var url = 'https://clients.pietsuess.com/' + filePath;
-            resolve(url);
+            resolve(relativePath);
           })
           .catch(reject);
         };
@@ -803,7 +810,7 @@
       toast('Uploading logo...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          var relPath = url;
           settings.logo = relPath;
           markDirty('site-settings.json');
           toast('Logo updated. Click Publish when ready.');
@@ -818,7 +825,7 @@
     var container = $('logo-preview');
     if (!container) return;
     if (settings.logo) {
-      container.innerHTML = '<img src="/' + UPLOAD_PATH_PREFIX + settings.logo + '" alt="Logo" style="max-height:60px;border-radius:6px;">';
+      container.innerHTML = '<img src="' + getImageUrl(settings.logo) + '" alt="Logo" style="max-height:60px;border-radius:6px;">';
     } else {
       container.innerHTML = '<span style="color:#999;font-size:13px;">No logo set</span>';
     }
@@ -997,7 +1004,7 @@
     var imgBtnAny = '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>';
 
     if (type === 'banner') {
-      return '<div class="pv-section pv-section-quote" style="' + (s.image ? 'background-image:url(\'/' + UPLOAD_PATH_PREFIX + s.image + '\');' : '') + '">' +
+      return '<div class="pv-section pv-section-quote" style="' + (s.image ? 'background-image:url(\'' + getImageUrl(s.image) + '\');' : '') + '">' +
         delBtn +
         '<button class="pv-section-img-btn" style="opacity:1;" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>' +
         '<div onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;">' +
@@ -1011,7 +1018,7 @@
     if (type === 'text-image' || (type !== 'two-column' && s.image)) {
       return '<div class="pv-section pv-img-section ' + (extraClass || '') + '" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
         delBtn +
-        '<div style="position:relative;"><img src="../' + (s.image || '') + '" alt="">' + imgBtnAny + '</div>' +
+        '<div style="position:relative;"><img src="' + getImageUrl(s.image || '') + '" alt="">' + imgBtnAny + '</div>' +
         '<div><div class="pv-section-label">Edit Text</div>' +
           typeLabel +
           '<h2>' + s.heading + '</h2>' +
@@ -1025,7 +1032,7 @@
       var imgHtml = '';
       imgs.forEach(function(src, i) {
         imgHtml += '<div style="position:relative;flex:1;min-width:0;">' +
-          '<img src="../' + src + '" alt="" style="width:100%;border-radius:8px;display:block;">' +
+          '<img src="' + getImageUrl(src) + '" alt="" style="width:100%;border-radius:8px;display:block;">' +
           '<button class="pv-section-img-btn" style="opacity:1;font-size:10px;padding:3px 8px;" onclick="event.stopPropagation();CMS.changeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">Change</button>' +
           '<button class="pv-section-delete" style="opacity:1;top:4px;left:4px;font-size:10px;padding:2px 6px;" onclick="event.stopPropagation();CMS.removeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">X</button>' +
         '</div>';
@@ -1094,7 +1101,7 @@
   // Hero card with text edit (bottom-left) and image edit (top-right)
   function pvHero(pageKey, heroTitle, heroSubtitle) {
     var page = pages[pageKey] || {};
-    var img = page.heroImage ? '/' + UPLOAD_PATH_PREFIX + page.heroImage : '';
+    var img = page.heroImage ? getImageUrl(page.heroImage) : '';
     return '<div class="pv-hero" style="background-image:url(\'' + img + '\');">' +
       '<div class="pv-hero-actions">' +
         '<button class="pv-hero-btn" onclick="event.stopPropagation();CMS.changeHeroImage(\'' + pageKey + '\')">Change Image</button>' +
@@ -1115,7 +1122,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          var relPath = url;
           var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
           if (section) section.image = relPath;
           markDirty('pages.json');
@@ -1140,7 +1147,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          var relPath = url;
           section.images.push(relPath);
           markDirty('pages.json');
           toast('Image added. Click Publish when ready.');
@@ -1162,7 +1169,7 @@
       toast('Uploading image...');
       uploadImage(input.files[0])
         .then(function(url) {
-          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          var relPath = url;
           section.images[index] = relPath;
           markDirty('pages.json');
           toast('Image updated. Click Publish when ready.');
@@ -1192,7 +1199,7 @@
       uploadImage(input.files[0])
         .then(function(url) {
           // Store relative path from site root
-          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          var relPath = url;
           pages[pageKey].heroImage = relPath;
           markDirty('pages.json');
           toast('Hero image updated. Click Publish when ready.');
@@ -1207,7 +1214,7 @@
     var s = settings;
     var headline = (s.heroHeadline || '').replace(/<br\s*\/?>/g, ' ');
     var html = '' +
-      '<div class="pv-hero" style="background-image:url(\'/' + UPLOAD_PATH_PREFIX + (pages.home.heroImage || '') + '\');">' +
+      '<div class="pv-hero" style="background-image:url(\'' + getImageUrl(pages.home.heroImage || '') + '\');">' +
         '<div class="pv-hero-actions">' +
           '<button class="pv-hero-btn" onclick="event.stopPropagation();CMS.changeHeroImage(\'home\')">Change Image</button>' +
         '</div>' +
