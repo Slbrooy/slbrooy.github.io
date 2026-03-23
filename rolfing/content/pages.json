@@ -122,34 +122,5 @@
     "navOrder": 5,
     "heroImage": "images/contact-hero.jpg",
     "sections": []
-  },
-  "footware": {
-    "title": "Footware",
-    "url": "footware.html",
-    "showInNav": true,
-    "navLabel": "Footware",
-    "navOrder": 7,
-    "heroImage": "images/uploads/1774306808085-3paintedyeezy-001.png",
-    "sections": [
-      {
-        "id": "options",
-        "type": "images",
-        "heading": "options",
-        "body": "<p>All shoes have uses, are they our masters? Yes. They are.</p><p><br></p><p>DON'T YOU DARE QUESTION ME!</p>",
-        "images": [
-          "images/uploads/1774306622282-jordans-265.png",
-          "images/uploads/1774306629916-jordans-124.png",
-          "images/uploads/1774306634179-jordans-262.png"
-        ]
-      },
-      {
-        "id": "good",
-        "type": "two-column",
-        "heading": "Good",
-        "body": "<p>Love these ones</p>",
-        "heading2": "Bad",
-        "body2": "<p>ARE YOU KIDDIN?<img src=\"images/uploads/1774306756054-jordans-255.png\"></p>"
-      }
-    ]
   }
 }
