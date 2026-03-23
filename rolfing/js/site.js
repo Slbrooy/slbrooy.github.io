@@ -1,11 +1,13 @@
-/* site.js -- fetches JSON content and renders it into public pages */
-
+/* site.js -- renders all CMS content on public pages */
 (function() {
   var BASE = (function() {
-    // Detect if we're in /blog/ subfolder
     if (location.pathname.indexOf('/blog/') !== -1) return '../';
     return '';
   })();
+
+  var settings = {};
+  var pages = {};
+  var loaded = { settings: false, pages: false };
 
   function fetchJSON(file, callback) {
     fetch(BASE + 'content/' + file)
@@ -20,13 +22,136 @@
     return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
-  // ===== BLOG LISTING (blog.html) =====
+  // ===== FONTS & COLORS =====
+  function applyTheme() {
+    if (!settings.colorAccent) return;
+    var root = document.documentElement;
+    root.style.setProperty('--color-accent', settings.colorAccent);
+    root.style.setProperty('--color-accent-dark', settings.colorAccent);
+    root.style.setProperty('--color-secondary', settings.colorSecondary || '#C4846C');
+    root.style.setProperty('--color-bg', settings.colorBg || '#FAF8F5');
+    root.style.setProperty('--color-bg-light', settings.colorBgLight || '#F0EDE8');
+    root.style.setProperty('--color-heading', settings.colorHeading || '#1A1A1A');
+    root.style.setProperty('--color-text', settings.colorText || '#2D2D2D');
+    if (settings.fontHeading) root.style.setProperty('--font-heading', settings.fontHeading);
+    if (settings.fontBody) root.style.setProperty('--font-body', settings.fontBody);
+    document.body.style.background = settings.colorBg || '';
+  }
+
+  // ===== LOGO =====
+  function renderLogos() {
+    if (!settings.logo) return;
+    document.querySelectorAll('.logo-dark, .logo-footer img').forEach(function(img) {
+      img.src = BASE + settings.logo;
+    });
+  }
+
+  // ===== NAVIGATION =====
+  function renderNav() {
+    if (!loaded.settings || !loaded.pages) return;
+    var navEls = document.querySelectorAll('header nav');
+    if (!navEls.length) return;
+
+    var items = [];
+    Object.keys(pages).forEach(function(key) {
+      var p = pages[key];
+      if (p.showInNav) {
+        items.push({ label: p.navLabel || p.title, url: BASE + (p.url || key + '.html'), order: p.navOrder || 99 });
+      }
+    });
+    (settings.customNavLinks || []).forEach(function(link) {
+      items.push({ label: link.label, url: link.url, order: link.order || 99 });
+    });
+    items.sort(function(a, b) { return a.order - b.order; });
+
+    navEls.forEach(function(nav) {
+      var socialLink = nav.querySelector('.nav-social');
+      var socialHTML = socialLink ? socialLink.outerHTML : '';
+      var bookLink = nav.querySelector('.btn-book');
+      var bookHTML = bookLink ? bookLink.outerHTML : '';
+
+      var html = '';
+      items.forEach(function(item) {
+        html += '<a href="' + item.url + '">' + item.label + '</a>';
+      });
+      html += socialHTML;
+      html += bookHTML;
+      nav.innerHTML = html;
+    });
+  }
+
+  // ===== FOOTER =====
+  function renderFooter() {
+    document.querySelectorAll('.footer-address p').forEach(function(el) {
+      if (settings.address) {
+        el.innerHTML = 'Our Clinic is located at<br>' + settings.address;
+      }
+    });
+    var footerNav = document.querySelector('.footer-nav');
+    if (footerNav && loaded.pages && loaded.settings) {
+      var items = [];
+      Object.keys(pages).forEach(function(key) {
+        var p = pages[key];
+        if (p.showInNav) {
+          items.push({ label: p.navLabel || p.title, url: BASE + (p.url || key + '.html'), order: p.navOrder || 99 });
+        }
+      });
+      items.sort(function(a, b) { return a.order - b.order; });
+      var html = '';
+      items.forEach(function(item) {
+        html += '<a href="' + item.url + '">' + item.label + '</a>';
+      });
+      html += '<a href="' + BASE + 'booking.html">Book A Session</a>';
+      footerNav.innerHTML = html;
+    }
+  }
+
+  // ===== MAP =====
+  function renderMap() {
+    if (!settings.mapCoords) return;
+    document.querySelectorAll('.map-section iframe').forEach(function(iframe) {
+      iframe.src = 'https://maps.google.com/maps?q=' + settings.mapCoords + '&z=12&t=m&output=embed';
+    });
+  }
+
+  // ===== SETTINGS-DRIVEN CONTENT =====
+  function renderSettingsContent() {
+    document.querySelectorAll('[data-cms-setting]').forEach(function(el) {
+      var key = el.dataset.cmsSetting;
+      var val = settings[key];
+      if (!val) return;
+      if (key === 'quoteText') {
+        el.innerHTML = '\u201c' + val + '\u201d';
+      } else if (key === 'quoteBody') {
+        el.textContent = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+  }
+
+  // ===== PAGE SECTIONS =====
+  function renderPageSections() {
+    document.querySelectorAll('[data-cms-section]').forEach(function(el) {
+      var pageKey = el.dataset.cmsPage;
+      var sectionId = el.dataset.cmsSection;
+      if (!pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (!section) return;
+      el.innerHTML = section.body;
+      var heading = el.previousElementSibling;
+      if (heading && heading.classList.contains('section-title')) {
+        heading.innerHTML = section.heading;
+      }
+    });
+  }
+
+  // ===== BLOG LISTING =====
   function renderBlogList() {
     var target = document.getElementById('blog-list');
     if (!target) return;
     fetchJSON('blog-posts.json', function(posts) {
       var published = posts.filter(function(p) { return p.published; });
-      // Sort oldest first
       published.sort(function(a, b) { return a.date < b.date ? -1 : 1; });
       var html = '';
       published.forEach(function(post) {
@@ -42,7 +167,7 @@
     });
   }
 
-  // ===== SINGLE BLOG POST (blog/post.html) =====
+  // ===== SINGLE BLOG POST =====
   function renderBlogPost() {
     var target = document.getElementById('blog-post-content');
     if (!target) return;
@@ -60,7 +185,7 @@
     });
   }
 
-  // ===== TESTIMONIALS (index.html carousel) =====
+  // ===== TESTIMONIALS =====
   function renderTestimonials() {
     var target = document.getElementById('reviewsCarousel');
     if (!target) return;
@@ -74,12 +199,11 @@
         html += '</span></div>';
       });
       target.innerHTML = html;
-      // Re-init carousel after content loads
       initCarousel();
     });
   }
 
-  // ===== FAQ ACCORDION (faqs.html) =====
+  // ===== FAQ ACCORDION =====
   function renderFAQs() {
     var target = document.getElementById('faq-content');
     if (!target) return;
@@ -93,7 +217,6 @@
         html += '</div>';
       });
       target.innerHTML = html;
-      // Bind accordion
       document.querySelectorAll('.faq-question').forEach(function(btn) {
         btn.addEventListener('click', function() {
           var item = this.parentElement;
@@ -105,28 +228,18 @@
     });
   }
 
-  // ===== FOOTER ADDRESS (all pages) =====
-  function renderFooter() {
-    var addressEl = document.getElementById('footer-address');
-    if (!addressEl) return;
-    fetchJSON('site-settings.json', function(settings) {
-      addressEl.innerHTML = 'Our Clinic is located at<br>' + settings.address;
-    });
-  }
-
-  // ===== CAROUSEL INIT =====
+  // ===== CAROUSEL =====
   function initCarousel() {
     var carousel = document.getElementById('reviewsCarousel');
     var prevBtn = document.getElementById('carouselPrev');
     var nextBtn = document.getElementById('carouselNext');
     if (!carousel || !prevBtn || !nextBtn || !carousel.firstElementChild) return;
     var shifting = false;
-    var cardW = carousel.firstElementChild.offsetWidth + 20; // card + gap
 
     nextBtn.addEventListener('click', function() {
       if (shifting) return;
       shifting = true;
-      cardW = carousel.firstElementChild.offsetWidth + 20;
+      var cardW = carousel.firstElementChild.offsetWidth + 20;
       carousel.style.transition = 'transform 0.4s ease';
       carousel.style.transform = 'translateX(-' + cardW + 'px)';
       setTimeout(function() {
@@ -140,7 +253,7 @@
     prevBtn.addEventListener('click', function() {
       if (shifting) return;
       shifting = true;
-      cardW = carousel.firstElementChild.offsetWidth + 20;
+      var cardW = carousel.firstElementChild.offsetWidth + 20;
       carousel.style.transition = 'none';
       carousel.insertBefore(carousel.lastElementChild, carousel.firstElementChild);
       carousel.style.transform = 'translateX(-' + cardW + 'px)';
@@ -151,51 +264,28 @@
     });
   }
 
-  // ===== PAGE SECTIONS (data-cms-page="home" data-cms-section="what-is-rolfing") =====
-  function renderPageSections() {
-    var targets = document.querySelectorAll('[data-cms-section]');
-    if (!targets.length) return;
-    fetchJSON('pages.json', function(pages) {
-      targets.forEach(function(el) {
-        var pageKey = el.dataset.cmsPage;
-        var sectionId = el.dataset.cmsSection;
-        if (!pages[pageKey]) return;
-        var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
-        if (!section) return;
-        // Update heading if there's a sibling or parent heading
-        var headingEl = el.previousElementSibling;
-        if (headingEl && headingEl.classList.contains('section-title')) {
-          headingEl.innerHTML = section.heading;
-        }
-        el.innerHTML = section.body;
-      });
-    });
-  }
-
-  // ===== SITE SETTINGS =====
-  function renderSettings() {
-    fetchJSON('site-settings.json', function(s) {
-      // Footer address on all pages
-      document.querySelectorAll('[data-cms-setting="address"]').forEach(function(el) {
-        el.innerHTML = 'Our Clinic is located at<br>' + s.address;
-      });
-      // Hero headline
-      var heroEl = document.querySelector('[data-cms-setting="heroHeadline"]');
-      if (heroEl) heroEl.innerHTML = s.heroHeadline;
-      // Quote text
-      var quoteEl = document.querySelector('[data-cms-setting="quoteText"]');
-      if (quoteEl) quoteEl.innerHTML = '&ldquo;' + s.quoteText + '&rdquo;';
-      // Quote body
-      var quoteBodyEl = document.querySelector('[data-cms-setting="quoteBody"]');
-      if (quoteBodyEl) quoteBodyEl.textContent = s.quoteBody;
-    });
-  }
-
   // ===== INIT =====
+  fetchJSON('site-settings.json', function(s) {
+    settings = s;
+    loaded.settings = true;
+    applyTheme();
+    renderLogos();
+    renderNav();
+    renderFooter();
+    renderMap();
+    renderSettingsContent();
+  });
+
+  fetchJSON('pages.json', function(p) {
+    pages = p;
+    loaded.pages = true;
+    renderNav();
+    renderFooter();
+    renderPageSections();
+  });
+
   renderBlogList();
   renderBlogPost();
   renderTestimonials();
   renderFAQs();
-  renderPageSections();
-  renderSettings();
 })();
