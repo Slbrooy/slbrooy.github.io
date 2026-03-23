@@ -516,6 +516,7 @@
           toolbar: [
             [{ header: [2, 3, false] }],
             ['bold', 'italic', 'underline'],
+            [{ align: ['', 'center', 'right', 'justify'] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
             ['link', 'image'],
             ['clean']
@@ -1469,6 +1470,7 @@
           toolbar: [
             [{ header: [2, 3, false] }],
             ['bold', 'italic', 'underline'],
+            [{ align: ['', 'center', 'right', 'justify'] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
             ['link', 'image'],
             ['clean']
