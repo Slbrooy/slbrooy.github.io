@@ -17,5 +17,6 @@
   "colorBg": "#FAF8F5",
   "colorHeading": "#1A1A1A",
   "colorText": "#2D2D2D",
-  "colorBgLight": "#F0EDE8"
+  "colorBgLight": "#F0EDE8",
+  "logo": "images/logo-dark.webp"
 }
