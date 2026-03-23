@@ -993,29 +993,27 @@
     return s || { heading: '', body: '' };
   }
 
-  function pvSideControls(pageKey, sectionId) {
+  function pvSizeBar(pageKey, sectionId) {
     var s = getSection(pageKey, sectionId);
     var fontSize = s.fontSize || 16;
     var imageSize = s.imageSize || 200;
     var hasImage = s.image || s.type === 'text-image' || s.type === 'banner' || s.type === 'images';
 
-    var html = '<div class="pv-side-controls">';
-    // Font size
+    var html = '<div class="pv-size-bar" onclick="event.stopPropagation();">';
     html += '<div class="pv-size-control">';
     html += '<label>Text</label>';
     html += '<div class="pv-size-btns">';
-    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
+    html += '<button onclick="CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
     html += '<input class="pv-size-val" value="' + fontSize + '" readonly>';
-    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
+    html += '<button onclick="CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
     html += '</div></div>';
-    // Image size (only if section has/can have an image)
     if (hasImage) {
       html += '<div class="pv-size-control">';
       html += '<label>Image</label>';
       html += '<div class="pv-size-btns">';
-      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
+      html += '<button onclick="CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
       html += '<input class="pv-size-val" value="' + imageSize + '" readonly>';
-      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
+      html += '<button onclick="CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
       html += '</div></div>';
     }
     html += '</div>';
@@ -1035,10 +1033,9 @@
   }
 
   function wrapWithControls(pageKey, sectionId, sectionHtml) {
-    return '<div class="pv-section-row">' +
-      pvSideControls(pageKey, sectionId) +
-      sectionHtml +
-    '</div>';
+    // Inject size bar inside the section card, right after the opening div
+    var insertPos = sectionHtml.indexOf('>') + 1;
+    return sectionHtml.slice(0, insertPos) + pvSizeBar(pageKey, sectionId) + sectionHtml.slice(insertPos);
   }
 
   function pvSection(pageKey, sectionId, extraClass) {
