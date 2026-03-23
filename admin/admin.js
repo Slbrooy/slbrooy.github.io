@@ -997,24 +997,31 @@
     var s = getSection(pageKey, sectionId);
     var fontSize = s.fontSize || 16;
     var imageSize = s.imageSize || 200;
-    var hasImage = s.image || s.type === 'text-image' || s.type === 'banner' || s.type === 'images';
+    // Only show image size for sections with a foreground image (not background images like banner)
+    var showImageSize = (s.type === 'text-image' || s.type === 'images') && s.image;
 
     var html = '';
+    // Text size
     html += '<div class="pv-size-control">';
-    html += '<label>Txt</label>';
+    html += '<label>Text Size</label>';
     html += '<div class="pv-size-btns">';
     html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
     html += '<input class="pv-size-val" value="' + fontSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',this.value)" onclick="event.stopPropagation();">';
     html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
-    html += '</div></div>';
-    if (hasImage) {
+    html += '</div>';
+    html += '<button class="pv-reset-btn" onclick="event.stopPropagation();CMS.resetSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\')">Reset</button>';
+    html += '</div>';
+    // Image size (only for foreground images)
+    if (showImageSize) {
       html += '<div class="pv-size-control">';
-      html += '<label>Img</label>';
+      html += '<label>Image Size</label>';
       html += '<div class="pv-size-btns">';
       html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
       html += '<input class="pv-size-val" value="' + imageSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',this.value)" onclick="event.stopPropagation();">';
       html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
-      html += '</div></div>';
+      html += '</div>';
+      html += '<button class="pv-reset-btn" onclick="event.stopPropagation();CMS.resetSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\')">Reset</button>';
+      html += '</div>';
     }
     return html;
   }
@@ -1027,6 +1034,14 @@
     if (prop === 'fontSize') num = Math.max(10, Math.min(48, num));
     if (prop === 'imageSize') num = Math.max(40, Math.min(800, num));
     section[prop] = num;
+    markDirty('pages.json');
+    renderPagePreview();
+  }
+
+  function resetSize(pageKey, sectionId, prop) {
+    var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+    if (!section) return;
+    delete section[prop];
     markDirty('pages.json');
     renderPagePreview();
   }
@@ -1604,6 +1619,7 @@
     changeSectionImage: changeSectionImage,
     adjustSize: adjustSize,
     setSize: setSize,
+    resetSize: resetSize,
     toggleAddMenu: toggleAddMenu,
     deletePageSection: deletePageSection,
     addGalleryImage: addGalleryImage,

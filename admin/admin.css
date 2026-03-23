@@ -296,6 +296,13 @@ body {
   text-align: center; font-size: 16px; font-family: inherit; color: #555;
   background: #fafafa; padding: 0;
 }
+.pv-reset-btn {
+  display: block; width: 100%; margin-top: 4px; padding: 4px;
+  background: none; border: none; color: #aaa; font-family: inherit;
+  font-size: 11px; cursor: pointer; text-align: center;
+  transition: color 0.15s;
+}
+.pv-reset-btn:hover { color: #555; text-decoration: underline; }
 .pv-hero-actions { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; gap: 8px; }
 .pv-hero-btn {
   padding: 6px 14px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.3);
