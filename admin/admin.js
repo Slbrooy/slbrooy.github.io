@@ -1213,10 +1213,14 @@
       var imgs = s.images || [];
       var imgHtml = '';
       imgs.forEach(function(src, i) {
-        imgHtml += '<div style="position:relative;flex:1;min-width:0;">' +
-          '<img src="' + getImageUrl(src) + '" alt="" style="width:100%;border-radius:8px;display:block;">' +
-          '<button class="pv-section-img-btn" style="opacity:1;font-size:10px;padding:3px 8px;" onclick="event.stopPropagation();CMS.changeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">Change</button>' +
-          '<button class="pv-section-delete" style="opacity:1;top:4px;left:4px;font-size:10px;padding:2px 6px;" onclick="event.stopPropagation();CMS.removeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">X</button>' +
+        imgHtml += '<div style="flex:1;min-width:0;">' +
+          '<div style="display:flex;justify-content:flex-end;margin-bottom:4px;">' +
+            '<button style="padding:6px 12px;background:#fff;border:1px solid #ddd;border-radius:6px;font-size:11px;color:#c0392b;cursor:pointer;font-family:inherit;" onclick="event.stopPropagation();CMS.removeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">Remove</button>' +
+          '</div>' +
+          '<div style="position:relative;">' +
+            '<img src="' + getImageUrl(src) + '" alt="" style="width:100%;border-radius:8px;display:block;">' +
+            '<button class="pv-section-img-btn" style="opacity:1;font-size:10px;padding:3px 8px;" onclick="event.stopPropagation();CMS.changeGalleryImage(\'' + pageKey + '\',\'' + sectionId + '\',' + i + ')">Change</button>' +
+          '</div>' +
         '</div>';
       });
       if (imgs.length < 3) {
@@ -1227,7 +1231,7 @@
       card = '<div class="pv-section ' + (extraClass || '') + '">' +
         delBtn +
         typeLabel +
-        '<h2>' + s.heading + '</h2>' +
+        '<h2 onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;">' + s.heading + ' <span style="font-size:12px;color:#999;font-weight:400;">edit</span></h2>' +
         '<div style="display:flex;gap:12px;margin-top:12px;">' + imgHtml + '</div>' +
       '</div>';
       return wrapWithControls(pageKey, sectionId, card);
