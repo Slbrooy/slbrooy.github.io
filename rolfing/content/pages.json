@@ -20,17 +20,17 @@
         "type": "text-image",
         "heading": "Meet Selena La Brooy",
         "image": "images/selena-profile.webp",
-        "imagePosition": "left",
         "body": "<p><strong>Certified Rolfer™ + Certified Movement Integration Practitioner</strong></p><p>I’m fascinated with understanding body mechanics, injury prevention and how we can use our bodies in more harmonious ways. These curiosities led me into further studies in Laban movement patterning, Body Mind Centering, Feldenkrais, Axis Syllabus and a career in Rolfing® Structural Integration and Rolf Movement.™</p>",
-        "fontSize": 16
+        "fontSize": 16,
+        "imagePosition": "right"
       },
       {
         "id": "structural-integration",
         "type": "text-image",
         "heading": "What is structural integration?",
         "image": "images/rolfing-hands.webp",
-        "imagePosition": "right",
-        "body": "<p>A dynamic touch therapy that works with the fascia (a web of connective tissue under the skin) to systematically release, realign and balance the whole body, thereby resolving chronic pain from habitual postural compensations.</p>"
+        "body": "<p>A dynamic touch therapy that works with the fascia (a web of connective tissue under the skin) to systematically release, realign and balance the whole body, thereby resolving chronic pain from habitual postural compensations.</p>",
+        "imageSize": 380
       },
       {
         "id": "quote",
@@ -122,5 +122,25 @@
     "navOrder": 5,
     "heroImage": "images/contact-hero.jpg",
     "sections": []
+  },
+  "footware": {
+    "title": "Footware",
+    "heroImage": "images/uploads/1774302177168-yeezy-sneakers-0037.png",
+    "sections": [
+      {
+        "id": "the-right-fit",
+        "type": "accent",
+        "heading": "The right fit",
+        "body": "<p>There is a right and a wrong way to surround your feet.</p>"
+      },
+      {
+        "id": "no-name-brands",
+        "type": "banner",
+        "heading": "NO NAME BRANDS",
+        "body": "",
+        "image": "images/uploads/1774302284087-jordans-257.png"
+      }
+    ],
+    "showInNav": true
   }
 }
