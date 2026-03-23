@@ -123,26 +123,5 @@
     "navOrder": 5,
     "heroImage": "images/contact-hero.jpg",
     "sections": []
-  },
-  "footware": {
-    "title": "Footware",
-    "heroImage": "images/uploads/1774302177168-yeezy-sneakers-0037.png",
-    "sections": [
-      {
-        "id": "the-right-fit",
-        "type": "accent",
-        "heading": "The right fit",
-        "body": "<p>There is a right and a wrong way to surround your feet.</p>"
-      },
-      {
-        "id": "no-name-brands",
-        "type": "banner",
-        "heading": "NO NAME BRANDS",
-        "body": "",
-        "image": "images/uploads/1774302284087-jordans-257.png"
-      }
-    ],
-    "showInNav": true,
-    "url": "Footware.html"
   }
 }
