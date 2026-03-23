@@ -1169,7 +1169,11 @@
     var s = getSection(pageKey, sectionId);
     var type = s.type || 'text';
     var imgBtn = s.image ? '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">Change Image</button>' : '';
-    var delBtn = '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pageKey + '\',\'' + sectionId + '\')">Delete</button>';
+    var secIndex = pages[pageKey] ? pages[pageKey].sections.findIndex(function(sec) { return sec.id === sectionId; }) : -1;
+    var totalSecs = pages[pageKey] ? pages[pageKey].sections.length : 0;
+    var moveUp = secIndex > 0 ? '<button class="pv-section-move" onclick="event.stopPropagation();CMS.moveSection(\'' + pageKey + '\',' + secIndex + ',-1)" title="Move up">&uarr;</button>' : '';
+    var moveDown = secIndex < totalSecs - 1 ? '<button class="pv-section-move" onclick="event.stopPropagation();CMS.moveSection(\'' + pageKey + '\',' + secIndex + ',1)" title="Move down">&darr;</button>' : '';
+    var delBtn = '<div class="pv-section-controls">' + moveUp + moveDown + '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pageKey + '\',\'' + sectionId + '\')">Delete</button></div>';
     var typeLabel = '<span style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:1px;">' + type + '</span>';
     var fs = s.fontSize || 16;
     var is = s.imageSize || 200;
@@ -1541,6 +1545,17 @@
     toast('Section added. Click it to edit.');
   }
 
+  function moveSection(pageKey, index, direction) {
+    var secs = pages[pageKey].sections;
+    var newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= secs.length) return;
+    var temp = secs[index];
+    secs[index] = secs[newIndex];
+    secs[newIndex] = temp;
+    markDirty('pages.json');
+    renderPagePreview();
+  }
+
   function deletePageSection(pageKey, sectionId) {
     var page = pages[pageKey];
     if (!page) return;
@@ -1749,6 +1764,7 @@
     setSize: setSize,
     resetSize: resetSize,
     toggleAddMenu: toggleAddMenu,
+    moveSection: moveSection,
     deletePageSection: deletePageSection,
     addGalleryImage: addGalleryImage,
     changeGalleryImage: changeGalleryImage,
