@@ -272,8 +272,8 @@ body {
 .pv-section-wrap .pv-section { margin-bottom: 0; }
 .pv-section-wrap .pv-section-quote { margin-bottom: 0; }
 .pv-size-gutter {
-  position: absolute; right: calc(100% + 20px); top: 8px;
-  width: 160px;
+  position: absolute; right: 100%; top: 8px;
+  width: 190px; padding-left: 10px; padding-right: 12px;
   display: flex; flex-direction: column; gap: 16px;
 }
 .pv-size-control label {
@@ -282,8 +282,8 @@ body {
 }
 .pv-size-btns { display: flex; align-items: center; width: 100%; }
 .pv-size-btns button {
-  flex: 1; height: 44px; border: 1px solid #ccc; background: #fff;
-  font-size: 24px; line-height: 1; cursor: pointer; color: #555;
+  flex: 1; height: 48px; border: 1px solid #ccc; background: #fff;
+  font-size: 26px; line-height: 1; cursor: pointer; color: #555;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
 }
@@ -291,9 +291,9 @@ body {
 .pv-size-btns button:first-child { border-radius: 8px 0 0 8px; }
 .pv-size-btns button:last-child { border-radius: 0 8px 8px 0; }
 .pv-size-val {
-  width: 60px; flex-shrink: 0; height: 44px;
+  width: 56px; flex-shrink: 0; height: 48px;
   border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; border-left: none; border-right: none;
-  text-align: center; font-size: 16px; font-family: inherit; color: #555;
+  text-align: center; font-size: 18px; font-family: inherit; color: #555;
   background: #fafafa; padding: 0;
 }
 .pv-reset-btn {
