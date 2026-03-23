@@ -424,18 +424,23 @@ section { padding: var(--section-pad) 0; position: relative; overflow: hidden; b
   padding: 0 10px;
 }
 .carousel-btn {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.9);
   border: none;
   color: var(--color-heading);
-  font-size: 28px;
+  font-size: 44px;
   font-weight: 300;
   cursor: pointer;
   pointer-events: auto;
-  padding: 8px 14px;
-  transition: color 0.3s;
+  padding: 12px 20px;
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 .carousel-btn:hover {
-  color: var(--color-accent);
+  color: var(--color-white);
+  background: var(--color-accent);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: scale(1.05);
 }
 
 /* ===== ABOUT SELENA ===== */
