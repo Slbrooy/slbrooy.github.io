@@ -149,6 +149,7 @@
       } else if (type === 'images' && section.images && section.images.length) {
         html += '<div style="margin-bottom:40px;">';
         if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+        if (section.body) html += section.body;
         html += '<div style="display:flex;gap:16px;margin-top:16px;">';
         section.images.forEach(function(src) {
           html += '<div style="flex:1;min-width:0;"><img src="' + BASE + src + '" alt="" style="width:100%;border-radius:12px;display:block;"></div>';
