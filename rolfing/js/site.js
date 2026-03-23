@@ -146,6 +146,28 @@
         html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:40px;">';
         html += imgRight ? txtHtml + '<div>' + imgHtml + '</div>' : '<div>' + imgHtml + '</div>' + txtHtml;
         html += '</div>';
+      } else if (type === 'images' && section.images && section.images.length) {
+        html += '<div style="margin-bottom:40px;">';
+        if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+        html += '<div style="display:flex;gap:16px;margin-top:16px;">';
+        section.images.forEach(function(src) {
+          html += '<div style="flex:1;min-width:0;"><img src="' + BASE + src + '" alt="" style="width:100%;border-radius:12px;display:block;"></div>';
+        });
+        html += '</div></div>';
+      } else if (type === 'accent') {
+        html += '<div style="background:var(--color-bg-light);padding:40px;border-radius:12px;margin-bottom:40px;">';
+        if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+        if (section.body) html += section.body;
+        html += '</div>';
+      } else if (type === 'two-column') {
+        html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px;">';
+        html += '<div>';
+        if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+        if (section.body) html += section.body;
+        html += '</div><div>';
+        if (section.heading2) html += '<h2 class="section-title">' + section.heading2 + '</h2>';
+        if (section.body2) html += section.body2;
+        html += '</div></div>';
       } else if (type === 'banner' && section.image) {
         html += '<div style="background-image:url(' + BASE + section.image + ');background-size:cover;background-position:center;padding:80px 30px;border-radius:12px;position:relative;text-align:center;margin-bottom:40px;">';
         html += '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);border-radius:12px;"></div>';
