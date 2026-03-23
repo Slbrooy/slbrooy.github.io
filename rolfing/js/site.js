@@ -138,11 +138,28 @@
     if (!pageKey || !pages[pageKey]) return;
     var html = '';
     pages[pageKey].sections.forEach(function(section) {
-      html += '<div style="margin-bottom:40px;">';
-      if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
-      if (section.image) html += '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;margin-bottom:16px;">';
-      if (section.body) html += section.body;
-      html += '</div>';
+      var type = section.type || 'text';
+      if (type === 'text-image' && section.image) {
+        var imgRight = section.imagePosition === 'right';
+        var imgHtml = '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;">';
+        var txtHtml = '<div>' + (section.heading ? '<h2 class="section-title">' + section.heading + '</h2>' : '') + (section.body || '') + '</div>';
+        html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:40px;">';
+        html += imgRight ? txtHtml + '<div>' + imgHtml + '</div>' : '<div>' + imgHtml + '</div>' + txtHtml;
+        html += '</div>';
+      } else if (type === 'banner' && section.image) {
+        html += '<div style="background-image:url(' + BASE + section.image + ');background-size:cover;background-position:center;padding:80px 30px;border-radius:12px;position:relative;text-align:center;margin-bottom:40px;">';
+        html += '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);border-radius:12px;"></div>';
+        html += '<div style="position:relative;color:#fff;">';
+        if (section.heading) html += '<h2 style="font-family:var(--font-heading);font-size:2rem;color:#fff;">' + section.heading + '</h2>';
+        if (section.body) html += section.body;
+        html += '</div></div>';
+      } else {
+        html += '<div style="margin-bottom:40px;">';
+        if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+        if (section.image) html += '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;margin-bottom:16px;">';
+        if (section.body) html += section.body;
+        html += '</div>';
+      }
     });
     target.innerHTML = html;
   }
@@ -184,18 +201,8 @@
           el.style.width = section.imageSize + 'px';
           el.style.height = 'auto';
         }
-        // Image position: swap grid direction
-        if (section.imagePosition) {
-          var grid = el.closest('.grid-2');
-          if (grid) {
-            if (section.imagePosition === 'right') {
-              grid.style.direction = 'rtl';
-              Array.from(grid.children).forEach(function(c) { c.style.direction = 'ltr'; });
-            } else {
-              grid.style.direction = '';
-            }
-          }
-        }
+        // Note: imagePosition is used by CMS-generated pages and the admin preview.
+        // Existing hardcoded HTML pages have their own layout order.
       });
     });
   }
