@@ -130,6 +130,23 @@
     });
   }
 
+  // ===== DYNAMIC PAGE CONTENT (for CMS-generated pages) =====
+  function renderDynamicPage() {
+    var target = document.getElementById('page-content');
+    if (!target) return;
+    var pageKey = detectCurrentPage();
+    if (!pageKey || !pages[pageKey]) return;
+    var html = '';
+    pages[pageKey].sections.forEach(function(section) {
+      html += '<div style="margin-bottom:40px;">';
+      if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
+      if (section.image) html += '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;margin-bottom:16px;">';
+      if (section.body) html += section.body;
+      html += '</div>';
+    });
+    target.innerHTML = html;
+  }
+
   // ===== PAGE SECTIONS =====
   function renderPageSections() {
     document.querySelectorAll('[data-cms-section]').forEach(function(el) {
@@ -175,11 +192,15 @@
   function detectCurrentPage() {
     var path = location.pathname;
     if (path.match(/index\.html$/) || path.match(/\/$/)) return 'home';
-    if (path.match(/about-selena/)) return 'about-selena';
-    if (path.match(/about-sessions/)) return 'about-sessions';
-    if (path.match(/blog\.html/)) return 'blog';
-    if (path.match(/faqs\.html/)) return 'faqs';
-    if (path.match(/contact\.html/)) return 'contact';
+    // Match against pages.json URLs
+    var keys = Object.keys(pages);
+    for (var i = 0; i < keys.length; i++) {
+      var p = pages[keys[i]];
+      if (p.url && path.indexOf(p.url) >= 0) return keys[i];
+    }
+    // Fallback: match filename against page keys
+    var filename = path.split('/').pop().replace('.html', '');
+    if (pages[filename]) return filename;
     return null;
   }
 
@@ -346,6 +367,7 @@
     renderNav();
     renderFooter();
     renderPageSections();
+    renderDynamicPage();
     renderHeroImage();
     renderSectionImages();
     applySectionSizes();

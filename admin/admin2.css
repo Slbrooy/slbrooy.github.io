@@ -185,7 +185,7 @@ body {
 .visual-hint { font-size: 13px; color: var(--text-light); }
 
 /* Page preview sections */
-.page-preview { max-width: 1100px; margin: 0 auto; padding: 0 24px 120px 200px; }
+.page-preview { max-width: 1100px; margin: 0 auto; padding: 0 24px 120px 24px; }
 .pv-hero {
   position: relative; height: 300px; border-radius: 12px; overflow: hidden;
   background-size: cover; background-position: center; margin: 24px 0;

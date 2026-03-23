@@ -157,6 +157,12 @@
 
     chain
       .then(function() {
+        // Generate HTML for any new pages that don't have files yet
+        if (files.indexOf('pages.json') >= 0) {
+          return generatePageHTMLFiles();
+        }
+      })
+      .then(function() {
         toast('Published! Site updates in about a minute.');
         clearDrafts();
       })
@@ -165,6 +171,97 @@
         $('publish-btn').disabled = false;
         $('publish-btn').textContent = 'Publish';
       });
+  }
+
+  function generatePageHTML(pageKey) {
+    var page = pages[pageKey];
+    var url = page.url || pageKey + '.html';
+    var title = page.title + ' - Salt Spring Rolfing';
+
+    return '<!DOCTYPE html>\n' +
+      '<html lang="en">\n<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+      '  <title>' + title + '</title>\n' +
+      '  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+      '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+      '  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">\n' +
+      '  <link rel="stylesheet" href="css/style.css">\n' +
+      '</head>\n<body>\n\n' +
+      '  <header class="solid">\n' +
+      '    <div class="container">\n' +
+      '      <a href="index.html" class="logo"><img src="images/logo-light.webp" alt="Salt Spring Rolfing" class="logo-light"><img src="images/logo-dark.webp" alt="Salt Spring Rolfing" class="logo-dark"></a>\n' +
+      '      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>\n' +
+      '      <nav></nav>\n' +
+      '    </div>\n' +
+      '  </header>\n\n' +
+      '  <section style="padding-top:100px;">\n' +
+      '    <div class="container">\n' +
+      '      <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);margin-bottom:30px;">' + page.title + '</h1>\n' +
+      '      <div id="page-content"></div>\n' +
+      '    </div>\n' +
+      '  </section>\n\n' +
+      '  <footer>\n' +
+      '    <div class="container">\n' +
+      '      <div class="logo-footer"><img src="images/logo-dark.webp" alt="Salt Spring Rolfing"></div>\n' +
+      '      <div class="footer-address"><p></p></div>\n' +
+      '      <div class="footer-cta"><a href="booking.html" class="btn">Book A Session</a></div>\n' +
+      '    </div>\n' +
+      '    <nav class="footer-nav"></nav>\n' +
+      '  </footer>\n\n' +
+      '  <script>\n' +
+      '    var header = document.querySelector("header");\n' +
+      '    document.querySelector(".nav-toggle").addEventListener("click", function() {\n' +
+      '      document.querySelector("nav").classList.toggle("active");\n' +
+      '      header.classList.toggle("nav-open");\n' +
+      '    });\n' +
+      '  </script>\n' +
+      '  <script src="js/site.js"></script>\n' +
+      '</body>\n</html>';
+  }
+
+  function generatePageHTMLFiles() {
+    var SITE_PATH = UPLOAD_PATH_PREFIX;
+    var chain = Promise.resolve();
+
+    Object.keys(pages).forEach(function(key) {
+      var page = pages[key];
+      var url = page.url || key + '.html';
+      // Skip pages that are part of the original site (they already have HTML)
+      var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+      if (originals.indexOf(url) >= 0) return;
+
+      var filePath = SITE_PATH + url;
+      var html = generatePageHTML(key);
+      var encoded = btoa(unescape(encodeURIComponent(html)));
+
+      chain = chain.then(function() {
+        // Check if file exists first
+        return fetch(API + '/repos/' + OWNER + '/' + REPO + '/contents/' + filePath + '?ref=' + BRANCH, { headers: apiHeaders() })
+          .then(function(r) {
+            if (r.ok) return r.json(); // File exists, update it
+            return null; // File doesn't exist
+          })
+          .then(function(existing) {
+            var body = {
+              message: 'Generate page: ' + url,
+              content: encoded,
+              branch: BRANCH
+            };
+            if (existing && existing.sha) body.sha = existing.sha;
+            return fetch(API + '/repos/' + OWNER + '/' + REPO + '/contents/' + filePath, {
+              method: 'PUT',
+              headers: apiHeaders(),
+              body: JSON.stringify(body)
+            });
+          })
+          .then(function(r) {
+            if (!r.ok) return r.json().then(function(e) { console.warn('Failed to generate ' + url, e); });
+          });
+      });
+    });
+
+    return chain;
   }
 
   function discardDrafts() {
@@ -515,6 +612,7 @@
         modules: {
           toolbar: [
             [{ header: [2, 3, false] }],
+            [{ size: ['10px','12px','14px','16px','18px','20px','24px','28px','32px'] }],
             ['bold', 'italic', 'underline'],
             [{ align: ['', 'center', 'right', 'justify'] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
@@ -994,7 +1092,8 @@
     return s || { heading: '', body: '' };
   }
 
-  function pvSizeGutter(pageKey, sectionId) {
+  /* Side gutter removed -- font size is now in the Quill editor toolbar */
+  function pvSizeGutter_REMOVED(pageKey, sectionId) {
     var s = getSection(pageKey, sectionId);
     var fontSize = s.fontSize || 16;
     var imageSize = s.imageSize || 200;
@@ -1060,10 +1159,7 @@
   }
 
   function wrapWithControls(pageKey, sectionId, sectionHtml) {
-    return '<div class="pv-section-wrap">' +
-      '<div class="pv-size-gutter">' + pvSizeGutter(pageKey, sectionId) + '</div>' +
-      sectionHtml +
-    '</div>';
+    return sectionHtml;
   }
 
   function pvSection(pageKey, sectionId, extraClass) {
@@ -1469,6 +1565,7 @@
         modules: {
           toolbar: [
             [{ header: [2, 3, false] }],
+            [{ size: ['10px','12px','14px','16px','18px','20px','24px','28px','32px'] }],
             ['bold', 'italic', 'underline'],
             [{ align: ['', 'center', 'right', 'justify'] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
