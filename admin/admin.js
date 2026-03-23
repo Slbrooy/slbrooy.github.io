@@ -993,38 +993,91 @@
     return s || { heading: '', body: '' };
   }
 
+  function pvSideControls(pageKey, sectionId) {
+    var s = getSection(pageKey, sectionId);
+    var fontSize = s.fontSize || 16;
+    var imageSize = s.imageSize || 200;
+    var hasImage = s.image || s.type === 'text-image' || s.type === 'banner' || s.type === 'images';
+
+    var html = '<div class="pv-side-controls">';
+    // Font size
+    html += '<div class="pv-size-control">';
+    html += '<label>Text</label>';
+    html += '<div class="pv-size-btns">';
+    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
+    html += '<input class="pv-size-val" value="' + fontSize + '" readonly>';
+    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
+    html += '</div></div>';
+    // Image size (only if section has/can have an image)
+    if (hasImage) {
+      html += '<div class="pv-size-control">';
+      html += '<label>Image</label>';
+      html += '<div class="pv-size-btns">';
+      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
+      html += '<input class="pv-size-val" value="' + imageSize + '" readonly>';
+      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
+      html += '</div></div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function adjustSize(pageKey, sectionId, prop, delta) {
+    var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+    if (!section) return;
+    var current = section[prop] || (prop === 'fontSize' ? 16 : 200);
+    var newVal = current + delta;
+    if (prop === 'fontSize') newVal = Math.max(10, Math.min(32, newVal));
+    if (prop === 'imageSize') newVal = Math.max(80, Math.min(600, newVal));
+    section[prop] = newVal;
+    markDirty('pages.json');
+    renderPagePreview();
+  }
+
+  function wrapWithControls(pageKey, sectionId, sectionHtml) {
+    return '<div class="pv-section-row">' +
+      pvSideControls(pageKey, sectionId) +
+      sectionHtml +
+    '</div>';
+  }
+
   function pvSection(pageKey, sectionId, extraClass) {
     var s = getSection(pageKey, sectionId);
     var type = s.type || 'text';
     var imgBtn = s.image ? '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">Change Image</button>' : '';
     var delBtn = '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pageKey + '\',\'' + sectionId + '\')">Delete</button>';
     var typeLabel = '<span style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:1px;">' + type + '</span>';
+    var fs = s.fontSize || 16;
+    var is = s.imageSize || 200;
 
     var imgLabel = s.image ? 'Change Image' : 'Add Image';
     var imgBtnAny = '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>';
+    var card = '';
 
     if (type === 'banner') {
-      return '<div class="pv-section pv-section-quote" style="' + (s.image ? 'background-image:url(\'' + getImageUrl(s.image) + '\');' : '') + '">' +
+      card = '<div class="pv-section pv-section-quote" style="font-size:' + fs + 'px;' + (s.image ? 'background-image:url(\'' + getImageUrl(s.image) + '\');' : '') + '">' +
         delBtn +
         '<button class="pv-section-img-btn" style="opacity:1;" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>' +
         '<div onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')" style="cursor:pointer;">' +
           '<div class="pv-section-label" style="position:static;display:inline-block;margin-bottom:8px;">Edit Text</div>' +
           '<p>' + (s.heading || '') + '</p>' +
-          (s.body ? '<p style="font-size:0.9rem;margin-top:10px;font-style:normal;">' + s.body.replace(/<[^>]+>/g, '') + '</p>' : '') +
+          (s.body ? '<p style="font-size:0.9em;margin-top:10px;font-style:normal;">' + s.body.replace(/<[^>]+>/g, '') + '</p>' : '') +
         '</div>' +
       '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
     }
 
-    if (type === 'text-image' || (type !== 'two-column' && s.image)) {
-      return '<div class="pv-section pv-img-section ' + (extraClass || '') + '" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
+    if (type === 'text-image' || (type !== 'two-column' && type !== 'images' && s.image)) {
+      card = '<div class="pv-section pv-img-section ' + (extraClass || '') + '" style="font-size:' + fs + 'px;grid-template-columns:' + is + 'px 1fr;" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
         delBtn +
-        '<div style="position:relative;"><img src="' + getImageUrl(s.image || '') + '" alt="">' + imgBtnAny + '</div>' +
+        '<div style="position:relative;"><img src="' + getImageUrl(s.image || '') + '" alt="" style="width:' + is + 'px;">' + imgBtnAny + '</div>' +
         '<div><div class="pv-section-label">Edit Text</div>' +
           typeLabel +
           '<h2>' + s.heading + '</h2>' +
           s.body +
         '</div>' +
       '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
     }
 
     if (type === 'images') {
@@ -1042,16 +1095,17 @@
           '<span style="color:#999;font-size:13px;">+ Add Image</span>' +
         '</div>';
       }
-      return '<div class="pv-section ' + (extraClass || '') + '">' +
+      card = '<div class="pv-section ' + (extraClass || '') + '">' +
         delBtn +
         typeLabel +
         '<h2>' + s.heading + '</h2>' +
         '<div style="display:flex;gap:12px;margin-top:12px;">' + imgHtml + '</div>' +
       '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
     }
 
     if (type === 'two-column') {
-      return '<div class="pv-section ' + (extraClass || '') + '" style="cursor:default;">' +
+      card = '<div class="pv-section ' + (extraClass || '') + '" style="cursor:default;font-size:' + fs + 'px;">' +
         delBtn +
         typeLabel +
         '<div class="pv-two-col">' +
@@ -1067,14 +1121,15 @@
           '</div>' +
         '</div>' +
       '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
     }
 
     if (type === 'accent') {
       extraClass = (extraClass || '') + ' pv-section-accent';
     }
 
-    // Default: text / accent - always show image button
-    return '<div class="pv-section ' + (extraClass || '') + '" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
+    // Default: text / accent
+    card = '<div class="pv-section ' + (extraClass || '') + '" style="font-size:' + fs + 'px;" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
       delBtn +
       imgBtnAny +
       '<div class="pv-section-label">Edit Text</div>' +
@@ -1082,6 +1137,7 @@
       '<h2>' + s.heading + '</h2>' +
       s.body +
     '</div>';
+    return wrapWithControls(pageKey, sectionId, card);
   }
 
   function pvAddSection(pageKey) {
@@ -1537,6 +1593,7 @@
     openSettingModal: openSettingModal,
     changeHeroImage: changeHeroImage,
     changeSectionImage: changeSectionImage,
+    adjustSize: adjustSize,
     toggleAddMenu: toggleAddMenu,
     deletePageSection: deletePageSection,
     addGalleryImage: addGalleryImage,
