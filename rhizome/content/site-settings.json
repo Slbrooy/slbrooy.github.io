@@ -9,5 +9,13 @@
   "heroHeadline": "Rhizome Springs",
   "quoteText": "",
   "quoteBody": "",
-  "customNavLinks": []
+  "customNavLinks": [],
+  "fontHeading": "'Montserrat', sans-serif",
+  "fontBody": "'Open Sans', sans-serif",
+  "colorAccent": "#4A7C59",
+  "colorSecondary": "#8B6F47",
+  "colorBg": "#FAFAF5",
+  "colorHeading": "#1A1A1A",
+  "colorText": "#333333",
+  "colorBgLight": "#EDE8E0"
 }

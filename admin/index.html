@@ -242,6 +242,74 @@
           <label>Quote Text</label>
           <textarea id="setting-quote" rows="3"></textarea>
         </div>
+
+        <h2 style="margin-top:40px;font-size:18px;font-weight:600;">Site Logo</h2>
+        <div class="editor-form" style="margin-top:16px;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div id="logo-preview" style="min-width:120px;min-height:50px;display:flex;align-items:center;justify-content:center;border:1px dashed #e0e0e0;border-radius:8px;padding:8px;">
+              <span style="color:#999;font-size:13px;">No logo set</span>
+            </div>
+            <button class="btn-primary" onclick="CMS.changeLogo()">Change Logo</button>
+          </div>
+        </div>
+
+        <h2 style="margin-top:40px;font-size:18px;font-weight:600;">Fonts & Colors</h2>
+        <div class="editor-form" style="margin-top:16px;">
+          <label>Heading Font</label>
+          <select id="setting-font-heading">
+            <option value="'Playfair Display', Georgia, serif">Playfair Display</option>
+            <option value="'Cormorant Garamond', Georgia, serif">Cormorant Garamond</option>
+            <option value="'Lora', Georgia, serif">Lora</option>
+            <option value="'Merriweather', Georgia, serif">Merriweather</option>
+            <option value="'Poppins', sans-serif">Poppins</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Raleway', sans-serif">Raleway</option>
+            <option value="Georgia, serif">Georgia</option>
+          </select>
+          <label>Body Font</label>
+          <select id="setting-font-body">
+            <option value="'Poppins', 'Helvetica Neue', Arial, sans-serif">Poppins</option>
+            <option value="'Lato', sans-serif">Lato</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Nunito', sans-serif">Nunito</option>
+            <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+            <option value="'Raleway', sans-serif">Raleway</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="Georgia, serif">Georgia</option>
+          </select>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:20px;">
+            <div>
+              <label>Primary / Accent Color</label>
+              <input type="color" id="setting-color-accent" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+            <div>
+              <label>Secondary Color</label>
+              <input type="color" id="setting-color-secondary" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+            <div>
+              <label>Background Color</label>
+              <input type="color" id="setting-color-bg" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+            <div>
+              <label>Heading Text Color</label>
+              <input type="color" id="setting-color-heading" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+            <div>
+              <label>Body Text Color</label>
+              <input type="color" id="setting-color-text" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+            <div>
+              <label>Accent Background</label>
+              <input type="color" id="setting-color-bg-light" style="width:100%;height:44px;padding:2px;border:1px solid #e0e0e0;border-radius:6px;cursor:pointer;">
+            </div>
+          </div>
+
+          <div id="font-color-preview" style="margin-top:24px;padding:24px;border:1px solid #e0e0e0;border-radius:8px;">
+            <h3 id="preview-heading" style="margin-bottom:8px;font-size:1.5rem;">Heading Preview</h3>
+            <p id="preview-body" style="font-size:14px;line-height:1.7;">This is how your body text will look on the site. The colors and fonts you choose above will be reflected here as you make changes.</p>
+          </div>
+        </div>
       </section>
 
     </main>

@@ -9,5 +9,13 @@
   "heroHeadline": "Want to feel alive<br>in your body again?",
   "quoteText": "Finding peace with our bodies affects the way that we relate to others and the world around us.",
   "quoteBody": "When we live with chronic physical pain in our bodies daily, it affects our mood, emotions and thought patterns. This spirals out in destructive ways to all parts of our lives. Finding a solution to physical pain and regaining a sense of stability and strength is possible! This change will be reflected in the ways we relate to life.",
-  "customNavLinks": []
+  "customNavLinks": [],
+  "fontHeading": "'Playfair Display', Georgia, serif",
+  "fontBody": "'Poppins', 'Helvetica Neue', Arial, sans-serif",
+  "colorAccent": "#7C9A82",
+  "colorSecondary": "#C4846C",
+  "colorBg": "#FAF8F5",
+  "colorHeading": "#1A1A1A",
+  "colorText": "#2D2D2D",
+  "colorBgLight": "#F0EDE8"
 }

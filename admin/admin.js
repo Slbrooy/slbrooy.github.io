@@ -736,6 +736,19 @@
     $('setting-calendly').value = settings.calendlyUrl || '';
     $('setting-hero').value = settings.heroHeadline || '';
     $('setting-quote').value = settings.quoteText || '';
+    // Fonts
+    $('setting-font-heading').value = settings.fontHeading || "'Playfair Display', Georgia, serif";
+    $('setting-font-body').value = settings.fontBody || "'Poppins', 'Helvetica Neue', Arial, sans-serif";
+    // Colors
+    $('setting-color-accent').value = settings.colorAccent || '#7C9A82';
+    $('setting-color-secondary').value = settings.colorSecondary || '#C4846C';
+    $('setting-color-bg').value = settings.colorBg || '#FAF8F5';
+    $('setting-color-heading').value = settings.colorHeading || '#1A1A1A';
+    $('setting-color-text').value = settings.colorText || '#2D2D2D';
+    $('setting-color-bg-light').value = settings.colorBgLight || '#F0EDE8';
+    // Logo
+    updateLogoPreview();
+    updateFontColorPreview();
   }
 
   function saveSettings() {
@@ -745,9 +758,70 @@
     settings.calendlyUrl = $('setting-calendly').value.trim();
     settings.heroHeadline = $('setting-hero').value.trim();
     settings.quoteText = $('setting-quote').value.trim();
+    // Fonts
+    settings.fontHeading = $('setting-font-heading').value;
+    settings.fontBody = $('setting-font-body').value;
+    // Colors
+    settings.colorAccent = $('setting-color-accent').value;
+    settings.colorSecondary = $('setting-color-secondary').value;
+    settings.colorBg = $('setting-color-bg').value;
+    settings.colorHeading = $('setting-color-heading').value;
+    settings.colorText = $('setting-color-text').value;
+    settings.colorBgLight = $('setting-color-bg-light').value;
 
     markDirty('site-settings.json');
     toast('Draft saved. Click Publish when ready.');
+  }
+
+  // Live preview for fonts and colors
+  function updateFontColorPreview() {
+    var preview = $('font-color-preview');
+    var headingEl = $('preview-heading');
+    var bodyEl = $('preview-body');
+    if (!preview) return;
+    preview.style.background = $('setting-color-bg').value;
+    headingEl.style.fontFamily = $('setting-font-heading').value;
+    headingEl.style.color = $('setting-color-heading').value;
+    bodyEl.style.fontFamily = $('setting-font-body').value;
+    bodyEl.style.color = $('setting-color-text').value;
+  }
+
+  // Bind live preview to all font/color inputs
+  ['setting-font-heading','setting-font-body','setting-color-accent','setting-color-secondary','setting-color-bg','setting-color-heading','setting-color-text','setting-color-bg-light'].forEach(function(id) {
+    var el = $(id);
+    if (el) el.addEventListener('input', updateFontColorPreview);
+    if (el) el.addEventListener('change', updateFontColorPreview);
+  });
+
+  // Logo swap
+  function changeLogo() {
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function() {
+      if (!input.files.length) return;
+      toast('Uploading logo...');
+      uploadImage(input.files[0])
+        .then(function(url) {
+          var relPath = url.replace('https://slbrooy.github.io/' + UPLOAD_PATH_PREFIX, '');
+          settings.logo = relPath;
+          markDirty('site-settings.json');
+          toast('Logo updated. Click Publish when ready.');
+          updateLogoPreview();
+        })
+        .catch(function(err) { toast('Upload failed: ' + err.message, true); });
+    };
+    input.click();
+  }
+
+  function updateLogoPreview() {
+    var container = $('logo-preview');
+    if (!container) return;
+    if (settings.logo) {
+      container.innerHTML = '<img src="/' + UPLOAD_PATH_PREFIX + settings.logo + '" alt="Logo" style="max-height:60px;border-radius:6px;">';
+    } else {
+      container.innerHTML = '<span style="color:#999;font-size:13px;">No logo set</span>';
+    }
   }
 
   $('settings-save-btn').addEventListener('click', saveSettings);
@@ -1461,6 +1535,7 @@
     addGalleryImage: addGalleryImage,
     changeGalleryImage: changeGalleryImage,
     removeGalleryImage: removeGalleryImage,
+    changeLogo: changeLogo,
     togglePageNav: togglePageNav,
     editNavLink: editNavLink,
     deleteNavLink: deleteNavLink,
