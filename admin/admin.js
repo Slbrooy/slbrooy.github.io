@@ -1004,7 +1004,7 @@
     html += '<label>Txt</label>';
     html += '<div class="pv-size-btns">';
     html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
-    html += '<input class="pv-size-val" value="' + fontSize + '" readonly>';
+    html += '<input class="pv-size-val" value="' + fontSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',this.value)" onclick="event.stopPropagation();">';
     html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
     html += '</div></div>';
     if (hasImage) {
@@ -1012,11 +1012,23 @@
       html += '<label>Img</label>';
       html += '<div class="pv-size-btns">';
       html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
-      html += '<input class="pv-size-val" value="' + imageSize + '" readonly>';
+      html += '<input class="pv-size-val" value="' + imageSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',this.value)" onclick="event.stopPropagation();">';
       html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
       html += '</div></div>';
     }
     return html;
+  }
+
+  function setSize(pageKey, sectionId, prop, value) {
+    var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+    if (!section) return;
+    var num = parseInt(value, 10);
+    if (isNaN(num)) return;
+    if (prop === 'fontSize') num = Math.max(10, Math.min(48, num));
+    if (prop === 'imageSize') num = Math.max(40, Math.min(800, num));
+    section[prop] = num;
+    markDirty('pages.json');
+    renderPagePreview();
   }
 
   function adjustSize(pageKey, sectionId, prop, delta) {
@@ -1591,6 +1603,7 @@
     changeHeroImage: changeHeroImage,
     changeSectionImage: changeSectionImage,
     adjustSize: adjustSize,
+    setSize: setSize,
     toggleAddMenu: toggleAddMenu,
     deletePageSection: deletePageSection,
     addGalleryImage: addGalleryImage,
