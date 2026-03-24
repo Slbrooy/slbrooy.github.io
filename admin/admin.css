@@ -205,6 +205,7 @@ body {
   display: flex; align-items: center; gap: 16px;
   padding: 12px 24px;
   background: var(--white); border-bottom: 1px solid var(--border);
+  position: sticky; top: 45px; z-index: 9;
 }
 .visual-toolbar select {
   padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius);
