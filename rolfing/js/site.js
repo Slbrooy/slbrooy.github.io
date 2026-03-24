@@ -460,6 +460,21 @@
     });
   }
 
+  // ===== FIX INTERNAL LINKS =====
+  // Quill adds target="_blank" to all links; remove it for same-site links
+  function fixInternalLinks() {
+    var host = location.hostname;
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a) {
+      try {
+        var url = new URL(a.href, location.href);
+        if (url.hostname === host || !a.href.match(/^https?:\/\//)) {
+          a.removeAttribute('target');
+          a.removeAttribute('rel');
+        }
+      } catch(e) {}
+    });
+  }
+
   // ===== INIT =====
   fetchJSON('site-settings.json', function(s) {
     settings = s;
@@ -486,6 +501,7 @@
     renderHeroImage();
     renderSectionImages();
     applySectionSizes();
+    fixInternalLinks();
   });
 
   renderBlogList();
