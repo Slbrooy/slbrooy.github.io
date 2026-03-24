@@ -248,6 +248,22 @@
     });
   }
 
+  // Two-column right side: render body2 from pages.json
+  function renderBody2Sections() {
+    document.querySelectorAll('[data-cms-section-body2]').forEach(function(el) {
+      var pageKey = el.dataset.cmsPage;
+      var sectionId = el.dataset.cmsSectionBody2;
+      if (!pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (!section || !section.body2) return;
+      el.innerHTML = section.body2;
+      var heading = el.previousElementSibling;
+      if (heading && heading.classList.contains('section-title') && section.heading2) {
+        heading.innerHTML = section.heading2;
+      }
+    });
+  }
+
   // CTA buttons: show/hide based on showCTA in pages.json
   function renderCTAButtons() {
     document.querySelectorAll('[data-cms-cta]').forEach(function(el) {
@@ -462,6 +478,7 @@
     renderNav();
     renderFooter();
     renderPageSections();
+    renderBody2Sections();
     renderSectionHeadings();
     renderQuoteSections();
     renderCTAButtons();
