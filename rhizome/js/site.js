@@ -306,7 +306,7 @@
     var opacity = isPast ? 'opacity:0.6;' : '';
     var html = '<div class="event-list-item" style="' + opacity + '">';
     if (ev.image) {
-      html += '<div class="event-list-image"><a href="' + BASE + 'events/event.html#' + ev.id + '"><img src="' + BASE + ev.image + '" alt="' + ev.title + '"></a></div>';
+      html += '<div class="event-list-image"><a href="' + BASE + 'events/event.html#' + ev.id + '"><img src="' + (ev.image.indexOf('http') === 0 ? ev.image : BASE + ev.image) + '" alt="' + ev.title + '"></a></div>';
     }
     html += '<div class="event-list-body">';
     html += '<h3><a href="' + BASE + 'events/event.html#' + ev.id + '" style="color:inherit;">' + ev.title + '</a></h3>';
@@ -336,7 +336,7 @@
     var html = '<a href="' + BASE + 'events/event.html#' + ev.id + '" class="event-card" data-category="' + (ev.category || '') + '" style="color:inherit;text-decoration:none;' + opacity + '">';
     if (ev.image) {
       html += '<div class="event-card-image">';
-      html += '<img src="' + BASE + ev.image + '" alt="' + ev.title + '">';
+      html += '<img src="' + (ev.image.indexOf('http') === 0 ? ev.image : BASE + ev.image) + '" alt="' + ev.title + '">';
       html += '<span class="event-card-date">' + ev.dates + '</span>';
       if (ev.category) html += '<span class="event-card-category">' + ev.category + '</span>';
       html += '</div>';
