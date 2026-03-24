@@ -4,7 +4,7 @@
     "url": "index.html",
     "showInNav": false,
     "navLabel": "Home",
-    "navOrder": 0,
+    "navOrder": 1,
     "heroImage": "images/uploads/1774295862129-hero-stones.jpg",
     "sections": [
       {
@@ -59,7 +59,7 @@
     "url": "about-selena.html",
     "showInNav": true,
     "navLabel": "About Selena",
-    "navOrder": 2,
+    "navOrder": 3,
     "heroImage": "images/AlderForest.png",
     "sections": [
       {
@@ -110,7 +110,7 @@
     "url": "about-sessions.html",
     "showInNav": true,
     "navLabel": "About Sessions",
-    "navOrder": 1,
+    "navOrder": 2,
     "heroImage": "images/sessions-hero.jpg",
     "sections": [
       {
@@ -136,7 +136,7 @@
     "url": "blog.html",
     "showInNav": true,
     "navLabel": "Blog",
-    "navOrder": 4,
+    "navOrder": 5,
     "heroImage": "images/blog-hero.jpg",
     "sections": []
   },
@@ -145,7 +145,7 @@
     "url": "faqs.html",
     "showInNav": true,
     "navLabel": "FAQs",
-    "navOrder": 3,
+    "navOrder": 4,
     "heroImage": "images/faqs-hero.webp",
     "sections": []
   },
@@ -154,7 +154,7 @@
     "url": "contact.html",
     "showInNav": true,
     "navLabel": "Contact",
-    "navOrder": 5,
+    "navOrder": 6,
     "heroImage": "images/contact-hero.jpg",
     "sections": []
   }
