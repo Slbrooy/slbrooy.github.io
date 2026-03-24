@@ -165,17 +165,17 @@ header {
 .nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ===== HERO ===== */
-/* Squarespace: section-height--small = min-height:33vh, vertical-alignment--middle,
-   padding: 3.3vmax top/bottom. Content expands section as needed. */
+/* Hero measured at 82% of viewport. Text starts at 30% from top.
+   Using padding to position text correctly. */
 .hero {
   position: relative;
-  min-height: 33vh;
+  min-height: 80vh;
   display: flex; align-items: center; justify-content: center;
   background-size: cover; background-position: center center;
   overflow: hidden;
-  padding: 3.3vmax var(--page-padding);
+  padding: 25vh var(--page-padding) 15vh;
 }
-.hero.hero-short { min-height: 33vh; }
+.hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
 /* Squarespace: section-background-overlay opacity: 0.14 */
 .hero::before {
   content: ''; position: absolute; inset: 0;
@@ -576,7 +576,7 @@ footer {
   .logo { grid-column: 2; justify-self: center; }
   .logo img { max-height: 70px; }
 
-  .hero { min-height: 33vh; }
+  .hero { min-height: 60vh; padding: 15vh 6vw 10vh; }
   .hero h4 { font-size: calc((1.6 - 1) * 1.2vw + 1rem); }
   h2, .section-title { font-size: 40px; } /* Squarespace custom CSS mobile override */
 
