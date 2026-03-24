@@ -1182,6 +1182,39 @@
     var imgBtnAny = '<button class="pv-section-img-btn" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>';
     var card = '';
 
+    if (type === 'reviews') {
+      card = '<div class="pv-section" style="cursor:default;">';
+      card += delBtn;
+      card += '<h2>Client Reviews</h2>';
+      if (testimonials.length > 0) {
+        card += '<div style="display:flex;gap:16px;margin-top:12px;">';
+        testimonials.slice(0, 3).forEach(function(t) {
+          card += '<div style="flex:1;min-width:0;padding:16px;background:#f9f9f9;border-radius:8px;font-size:13px;line-height:1.7;color:#666;font-style:italic;">';
+          card += '&ldquo;' + (t.quote.length > 100 ? t.quote.substring(0, 100) + '...' : t.quote) + '&rdquo;';
+          card += '<div style="margin-top:8px;font-style:normal;font-weight:600;color:#333;font-size:12px;">' + t.name + '</div>';
+          card += '</div>';
+        });
+        card += '</div>';
+        card += '<p style="text-align:center;color:#999;font-size:12px;margin-top:8px;">' + testimonials.length + ' reviews -- manage from Reviews tab</p>';
+      } else {
+        card += '<p style="color:#999;">No reviews yet</p>';
+      }
+      card += '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
+    }
+
+    if (type === 'map') {
+      card = '<div class="pv-section" style="padding:0;overflow:hidden;cursor:default;">';
+      card += delBtn;
+      if (settings.mapCoords) {
+        card += '<iframe src="https://maps.google.com/maps?q=' + settings.mapCoords + '&z=12&t=m&output=embed" width="100%" height="250" style="border:0;display:block;filter:saturate(0.3) contrast(1.1) brightness(1.05);border-radius:12px;" loading="lazy"></iframe>';
+      } else {
+        card += '<div style="padding:40px;text-align:center;color:#999;">Map -- set coordinates in Settings</div>';
+      }
+      card += '</div>';
+      return wrapWithControls(pageKey, sectionId, card);
+    }
+
     if (type === 'banner') {
       card = '<div class="pv-section pv-section-quote" style="font-size:' + fs + 'px;' + (s.image ? 'background-image:url(\'' + getImageUrl(s.image) + '\');' : '') + '">' +
         delBtn +
@@ -1424,29 +1457,7 @@
     pages.home.sections.forEach(function(sec) {
       html += pvSection('home', sec.id);
     });
-    // Reviews preview
-    html += '<div class="pv-section" style="cursor:default;">';
-    html += '<h2>Client Reviews</h2>';
-    if (testimonials.length > 0) {
-      html += '<div style="display:flex;gap:16px;margin-top:12px;">';
-      testimonials.slice(0, 3).forEach(function(t) {
-        html += '<div style="flex:1;min-width:0;padding:16px;background:#f9f9f9;border-radius:8px;font-size:13px;line-height:1.7;color:#666;font-style:italic;">';
-        html += '&ldquo;' + (t.quote.length > 100 ? t.quote.substring(0, 100) + '...' : t.quote) + '&rdquo;';
-        html += '<div style="margin-top:8px;font-style:normal;font-weight:600;color:#333;font-size:12px;">' + t.name + '</div>';
-        html += '</div>';
-      });
-      html += '</div>';
-      html += '<p style="text-align:center;color:#999;font-size:12px;margin-top:8px;">' + testimonials.length + ' reviews total -- manage from Reviews tab</p>';
-    } else {
-      html += '<p style="color:#999;font-size:13px;">No reviews yet -- add from Reviews tab</p>';
-    }
-    html += '</div>';
-    // Map preview
-    if (settings.mapCoords) {
-      html += '<div class="pv-section" style="padding:0;overflow:hidden;cursor:default;">';
-      html += '<iframe src="https://maps.google.com/maps?q=' + settings.mapCoords + '&z=12&t=m&output=embed" width="100%" height="250" style="border:0;display:block;filter:saturate(0.3) contrast(1.1) brightness(1.05);border-radius:12px;" loading="lazy"></iframe>';
-      html += '</div>';
-    }
+    // Reviews and map are now regular sections in pages.json, rendered by pvSection
     html += pvAddSection('home');
     return html;
   }
@@ -1525,7 +1536,9 @@
     { id: 'text-image', label: 'Text + Image', desc: 'Side-by-side image and text' },
     { id: 'banner', label: 'Banner', desc: 'Full-width background image with text overlay' },
     { id: 'two-column', label: 'Two Column', desc: 'Two text blocks side by side' },
-    { id: 'images', label: 'Images', desc: '1 to 3 images across in a row' }
+    { id: 'images', label: 'Images', desc: '1 to 3 images across in a row' },
+    { id: 'reviews', label: 'Reviews', desc: 'Client testimonials carousel' },
+    { id: 'map', label: 'Map', desc: 'Embedded Google Map from settings' }
   ];
 
   function toggleAddMenu(pageKey, btn) {

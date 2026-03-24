@@ -38,6 +38,18 @@
         "heading": "Finding peace with our bodies affects the way that we relate to others and the world around us.",
         "image": "images/sunset-person.webp",
         "body": "<p>When we live with chronic physical pain in our bodies daily, it affects our mood, emotions and thought patterns. This spirals out in destructive ways to all parts of our lives. Finding a solution to physical pain and regaining a sense of stability and strength is possible! This change will be reflected in the ways we relate to life.</p>"
+      },
+      {
+        "id": "reviews",
+        "type": "reviews",
+        "heading": "Client Reviews",
+        "body": ""
+      },
+      {
+        "id": "map",
+        "type": "map",
+        "heading": "",
+        "body": ""
       }
     ]
   },
