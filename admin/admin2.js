@@ -1204,12 +1204,14 @@
     }
 
     if (type === 'map') {
-      card = '<div class="pv-section" style="padding:0;overflow:hidden;cursor:default;">';
+      card = '<div class="pv-section" style="cursor:default;background:#e8e8e8;text-align:center;padding:40px;">';
       card += delBtn;
+      card += '<div style="font-size:32px;margin-bottom:8px;">&#x1f5fa;</div>';
+      card += '<div style="font-size:14px;font-weight:600;color:#555;">Google Map</div>';
       if (settings.mapCoords) {
-        card += '<iframe src="https://maps.google.com/maps?q=' + settings.mapCoords + '&z=12&t=m&output=embed" width="100%" height="250" style="border:0;display:block;filter:saturate(0.3) contrast(1.1) brightness(1.05);border-radius:12px;" loading="lazy"></iframe>';
+        card += '<div style="font-size:12px;color:#999;margin-top:4px;">' + settings.mapCoords + '</div>';
       } else {
-        card += '<div style="padding:40px;text-align:center;color:#999;">Map -- set coordinates in Settings</div>';
+        card += '<div style="font-size:12px;color:#999;margin-top:4px;">Set coordinates in Settings</div>';
       }
       card += '</div>';
       return wrapWithControls(pageKey, sectionId, card);
