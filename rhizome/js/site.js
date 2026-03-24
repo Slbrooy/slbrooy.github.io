@@ -676,20 +676,23 @@
   fetchJSON('site-settings.json', function(s) {
     settings = s;
     loaded.settings = true;
-    // ALL CMS OVERRIDES DISABLED FOR TESTING
-    // applyTheme();
-    // renderLogos();
-    // renderNav();
-    // renderFooter();
-    // renderSettingsContent();
-    // updateCartBadge();
-    // initNewsletter();
+    // CMS overrides disabled - CSS has correct values from Squarespace source
+    // applyTheme();    // would override CSS vars with site-settings.json
+    // renderLogos();   // would replace logo img src
+    // renderNav();     // skips anyway (split nav detected)
+    // renderFooter();  // would overwrite hardcoded footer links
+    // renderSettingsContent(); // would overwrite data-cms-setting elements
+    updateCartBadge();
+    initNewsletter();
   });
 
   fetchJSON('pages.json', function(p) {
     pages = p;
     loaded.pages = true;
-    // ALL DISABLED
+    // renderPageSections();  // would overwrite data-cms-section elements
+    // renderDynamicPage();   // only for CMS-generated pages
+    // renderHeroImage();     // would overwrite hero bg from pages.json
+    // renderSectionImages(); // would overwrite section images
   });
 
   renderEventsList();
