@@ -676,25 +676,20 @@
   fetchJSON('site-settings.json', function(s) {
     settings = s;
     loaded.settings = true;
-    applyTheme();
-    // TEMPORARILY DISABLED: don't override hardcoded HTML
+    // ALL CMS OVERRIDES DISABLED FOR TESTING
+    // applyTheme();
     // renderLogos();
-    renderNav();
+    // renderNav();
     // renderFooter();
     // renderSettingsContent();
-    updateCartBadge();
-    initNewsletter();
+    // updateCartBadge();
+    // initNewsletter();
   });
 
   fetchJSON('pages.json', function(p) {
     pages = p;
     loaded.pages = true;
-    renderNav();
-    // renderFooter();
-    // renderPageSections();
-    // renderDynamicPage();
-    // renderHeroImage();
-    // renderSectionImages();
+    // ALL DISABLED
   });
 
   renderEventsList();
