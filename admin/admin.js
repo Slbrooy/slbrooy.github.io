@@ -1561,12 +1561,51 @@
     var page = pages[key];
     if (!page) return '<div class="pv-note">Page not found</div>';
     var html = pvHero(key, page.title);
-    if (page.sections.length === 0) {
+    if (page.sections.length === 0 && key !== 'faqs' && key !== 'blog') {
       html += '<div class="pv-note">No sections yet. Click "+ Add Section" below.</div>';
     }
     page.sections.forEach(function(s) {
       html += pvSection(key, s.id);
     });
+
+    // FAQs page: show FAQ preview
+    if (key === 'faqs') {
+      html += '<div class="pv-section" style="cursor:default;">';
+      html += '<h2>Frequently Asked Questions</h2>';
+      if (faqs.length > 0) {
+        faqs.forEach(function(f) {
+          html += '<div style="padding:12px 0;border-bottom:1px solid #eee;">';
+          html += '<strong style="color:#333;">' + f.question + '</strong>';
+          html += '</div>';
+        });
+        html += '<p style="text-align:center;color:#999;font-size:12px;margin-top:12px;">' + faqs.length + ' FAQs -- manage from FAQs tab</p>';
+      } else {
+        html += '<p style="color:#999;">No FAQs yet -- add from FAQs tab</p>';
+      }
+      html += '</div>';
+    }
+
+    // Blog page: show blog post preview
+    if (key === 'blog') {
+      html += '<div class="pv-section" style="cursor:default;">';
+      html += '<h2>Blog Posts</h2>';
+      if (blogPosts.length > 0) {
+        html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">';
+        blogPosts.filter(function(p) { return p.published; }).forEach(function(p) {
+          html += '<div style="padding:16px;background:#f9f9f9;border-radius:8px;">';
+          html += '<div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:1px;">' + p.date + '</div>';
+          html += '<div style="font-weight:600;margin-top:4px;">' + p.title + '</div>';
+          html += '<div style="font-size:13px;color:#666;margin-top:4px;">' + p.excerpt + '</div>';
+          html += '</div>';
+        });
+        html += '</div>';
+        html += '<p style="text-align:center;color:#999;font-size:12px;margin-top:12px;">' + blogPosts.length + ' posts -- manage from Blog tab</p>';
+      } else {
+        html += '<p style="color:#999;">No blog posts yet -- add from Blog tab</p>';
+      }
+      html += '</div>';
+    }
+
     html += pvAddSection(key);
     return html;
   }
