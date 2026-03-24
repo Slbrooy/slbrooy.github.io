@@ -32,6 +32,7 @@
   var pageSectionQuill = null;
   var editingColumn = ''; // '' or 'right' for two-column sections
   var pendingChanges = {}; // { filename: true } tracks which files have unpublished changes
+  var pendingDeletes = []; // old HTML filenames to delete on publish
   var DRAFT_KEY = 'selena-cms-drafts';
 
   // ===== SITE SWITCHER =====
@@ -86,7 +87,8 @@
       faqs: faqs,
       settings: settings,
       pages: pages,
-      pending: pendingChanges
+      pending: pendingChanges,
+      deletes: pendingDeletes
     };
     localStorage.setItem(DRAFT_KEY, JSON.stringify(drafts));
     updatePublishBar();
@@ -104,6 +106,7 @@
         settings = drafts.settings || settings;
         pages = drafts.pages || pages;
         pendingChanges = drafts.pending || {};
+        pendingDeletes = drafts.deletes || [];
         return true;
       }
     } catch(e) {}
@@ -163,14 +166,53 @@
         }
       })
       .then(function() {
+        // Delete old HTML files from renamed/re-URLed pages
+        if (pendingDeletes.length > 0) {
+          return deleteOldFiles();
+        }
+      })
+      .then(function() {
         toast('Published! Site updates in about a minute.');
         clearDrafts();
+        pendingDeletes = [];
       })
       .catch(function(err) { toast('Publish failed: ' + err.message, true); })
       .finally(function() {
         $('publish-btn').disabled = false;
         $('publish-btn').textContent = 'Publish';
       });
+  }
+
+  function deleteOldFiles() {
+    var SITE_PATH = UPLOAD_PATH_PREFIX;
+    var chain = Promise.resolve();
+    pendingDeletes.forEach(function(oldUrl) {
+      var filePath = SITE_PATH + oldUrl;
+      chain = chain.then(function() {
+        // Get the file's SHA first (required for deletion)
+        return fetch(API + '/repos/' + OWNER + '/' + REPO + '/contents/' + filePath + '?ref=' + BRANCH, { headers: apiHeaders() })
+          .then(function(r) {
+            if (!r.ok) return null; // File doesn't exist, skip
+            return r.json();
+          })
+          .then(function(existing) {
+            if (!existing || !existing.sha) return;
+            return fetch(API + '/repos/' + OWNER + '/' + REPO + '/contents/' + filePath, {
+              method: 'DELETE',
+              headers: apiHeaders(),
+              body: JSON.stringify({
+                message: 'Delete renamed page: ' + oldUrl,
+                sha: existing.sha,
+                branch: BRANCH
+              })
+            });
+          })
+          .then(function(r) {
+            if (r && !r.ok) console.warn('Failed to delete ' + oldUrl);
+          });
+      });
+    });
+    return chain;
   }
 
   function generatePageHTML(pageKey) {
@@ -1079,7 +1121,20 @@
   pageUrlInput.addEventListener('change', function() {
     var key = pagePicker.value;
     if (!pages[key]) return;
-    pages[key].url = pageUrlInput.value.trim();
+    var oldUrl = pages[key].url;
+    var newUrl = pageUrlInput.value.trim();
+    if (!newUrl) return;
+    // Add .html if not present
+    if (newUrl.indexOf('.html') === -1) newUrl += '.html';
+    pageUrlInput.value = newUrl;
+    if (oldUrl && oldUrl !== newUrl) {
+      // Track old file for deletion on publish
+      var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+      if (originals.indexOf(oldUrl) === -1) {
+        pendingDeletes.push(oldUrl);
+      }
+    }
+    pages[key].url = newUrl;
     markDirty('pages.json');
   });
 
@@ -1747,12 +1802,17 @@
     if (!pages[key]) return;
     var newTitle = prompt('New page name:', pages[key].title);
     if (!newTitle || !newTitle.trim()) return;
+    var oldUrl = pages[key].url;
     pages[key].title = newTitle.trim();
     pages[key].navLabel = newTitle.trim();
     // Auto-update URL for non-original pages
     var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
-    if (!originals.includes(pages[key].url)) {
-      pages[key].url = newTitle.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.html';
+    if (!originals.includes(oldUrl)) {
+      var newUrl = newTitle.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.html';
+      if (oldUrl && oldUrl !== newUrl) {
+        pendingDeletes.push(oldUrl);
+      }
+      pages[key].url = newUrl;
     }
     markDirty('pages.json');
     populatePagePicker();
