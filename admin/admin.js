@@ -34,7 +34,7 @@
   var pendingChanges = {}; // { filename: true } tracks which files have unpublished changes
   var pendingDeletes = []; // old HTML filenames to delete on publish
   var DRAFT_KEY = 'selena-cms-drafts-' + currentSite;
-  var ORIGINAL_PAGES = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+  var ORIGINAL_PAGES = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html','about.html','events.html','shop.html'];
 
   // ===== SITE SWITCHER =====
   function populateSitePicker() {
@@ -70,6 +70,8 @@
     blogPosts = [];
     testimonials = [];
     faqs = [];
+    events = [];
+    products = [];
     settings = {};
     pages = {};
     pendingChanges = {};
@@ -89,6 +91,8 @@
       faqs: faqs,
       settings: settings,
       pages: pages,
+      events: events,
+      products: products,
       pending: pendingChanges,
       deletes: pendingDeletes
     };
@@ -107,6 +111,8 @@
         faqs = drafts.faqs || faqs;
         settings = drafts.settings || settings;
         pages = drafts.pages || pages;
+        events = drafts.events || events;
+        products = drafts.products || products;
         pendingChanges = drafts.pending || {};
         pendingDeletes = drafts.deletes || [];
         return true;
@@ -149,7 +155,9 @@
       'testimonials.json': testimonials,
       'faqs.json': faqs,
       'site-settings.json': settings,
-      'pages.json': pages
+      'pages.json': pages,
+      'events.json': events,
+      'products.json': products
     };
 
     // Commit each changed file sequentially to avoid sha conflicts
@@ -219,7 +227,8 @@
   function generatePageHTML(pageKey) {
     var page = pages[pageKey];
     var url = page.url || pageKey + '.html';
-    var title = page.title + ' - Salt Spring Rolfing';
+    var siteName = SITES[currentSite] ? SITES[currentSite].name : 'Salt Spring Rolfing';
+    var title = page.title + ' - ' + siteName;
 
     return '<!DOCTYPE html>\n' +
       '<html lang="en">\n<head>\n' +
@@ -550,7 +559,9 @@
       getFile('testimonials.json').then(function(d) { testimonials = d; }),
       getFile('faqs.json').then(function(d) { faqs = d; }),
       getFile('site-settings.json').then(function(d) { settings = d; }),
-      getFile('pages.json').then(function(d) { pages = d; })
+      getFile('pages.json').then(function(d) { pages = d; }),
+      getFile('events.json').then(function(d) { events = d; }).catch(function() { events = []; }),
+      getFile('products.json').then(function(d) { products = d; }).catch(function() { products = []; })
     ])
     .then(function() {
       // Apply any pending drafts over the fetched data
@@ -559,11 +570,14 @@
       renderBlogList();
       renderTestimonialsList();
       renderFaqsList();
+      if (typeof renderEventsList === 'function') renderEventsList();
+      if (typeof renderProductsList === 'function') renderProductsList();
       loadSettings();
       updatePublishBar();
       // Populate pages dropdown and render preview
       if (pagePicker) { populatePagePicker(); renderPagePreview(); }
       renderNavList();
+      if (typeof loadNewsletterData === 'function') loadNewsletterData();
     })
     .catch(function(err) {
       toast('Error loading content: ' + err.message, true);
@@ -610,6 +624,7 @@
     $('count-blog').textContent = blogPosts.filter(function(p) { return p.published; }).length;
     $('count-testimonials').textContent = testimonials.length;
     $('count-faqs').textContent = faqs.length;
+    if ($('count-events')) $('count-events').textContent = events.filter(function(e) { return e.published; }).length;
     var pageCount = 0;
     Object.keys(pages).forEach(function(k) { pageCount += pages[k].sections.length; });
     $('count-pages').textContent = pageCount;
@@ -901,6 +916,12 @@
     $('setting-email').value = settings.email || '';
     $('setting-facebook').value = settings.facebookUrl || '';
     $('setting-calendly').value = settings.calendlyUrl || '';
+    if ($('setting-etransfer')) $('setting-etransfer').value = settings.etransferEmail || '';
+    if ($('setting-wise')) $('setting-wise').value = settings.wiseLink || '';
+    if ($('setting-stripe-key')) $('setting-stripe-key').value = settings.stripePublishableKey || '';
+    if ($('setting-kit-api-key')) $('setting-kit-api-key').value = settings.kitApiKey || '';
+    if ($('setting-kit-api-secret')) $('setting-kit-api-secret').value = settings.kitApiSecret || '';
+    if ($('setting-kit-form-id')) $('setting-kit-form-id').value = settings.kitFormId || '';
     // Fonts
     $('setting-font-heading').value = settings.fontHeading || "'Playfair Display', Georgia, serif";
     $('setting-font-body').value = settings.fontBody || "'Poppins', 'Helvetica Neue', Arial, sans-serif";
@@ -921,6 +942,12 @@
     settings.email = $('setting-email').value.trim();
     settings.facebookUrl = $('setting-facebook').value.trim();
     settings.calendlyUrl = $('setting-calendly').value.trim();
+    if ($('setting-etransfer')) settings.etransferEmail = $('setting-etransfer').value.trim();
+    if ($('setting-wise')) settings.wiseLink = $('setting-wise').value.trim();
+    if ($('setting-stripe-key')) settings.stripePublishableKey = $('setting-stripe-key').value.trim();
+    if ($('setting-kit-api-key')) settings.kitApiKey = $('setting-kit-api-key').value.trim();
+    if ($('setting-kit-api-secret')) settings.kitApiSecret = $('setting-kit-api-secret').value.trim();
+    if ($('setting-kit-form-id')) settings.kitFormId = $('setting-kit-form-id').value.trim();
     // Fonts
     settings.fontHeading = $('setting-font-heading').value;
     settings.fontBody = $('setting-font-body').value;
@@ -1933,6 +1960,267 @@
     if (Object.keys(pages).length > 0) renderPagePreview();
   }
 
+  // ===== EVENTS =====
+  var events = [];
+  var products = [];
+  var eventQuill = null;
+  var eventScheduleQuill = null;
+  var broadcastQuill = null;
+  var editingEventIndex = -1;
+  var editingProductIndex = -1;
+  var editingEventImage = '';
+
+  function renderEventsList() {
+    var el = $('events-list');
+    if (!el) return;
+    var html = '';
+    events.forEach(function(ev, i) {
+      html += '<div class="item-row">';
+      html += '<div class="item-info"><h3>' + ev.title;
+      if (!ev.published) html += '<span class="draft-badge">Draft</span>';
+      html += '</h3><p>' + ev.dates + ' &bull; ' + (ev.category || '') + '</p></div>';
+      html += '<div class="item-actions">';
+      html += '<button class="btn-small" onclick="CMS.editEvent(' + i + ')">Edit</button>';
+      html += '<button class="btn-danger" onclick="CMS.deleteEvent(' + i + ')">Delete</button>';
+      html += '</div></div>';
+    });
+    el.innerHTML = html || '<p style="color:#999;">No events yet.</p>';
+  }
+
+  function editEvent(index) {
+    editingEventIndex = index;
+    var ev = index >= 0 ? events[index] : null;
+    $('event-edit-title').textContent = ev ? 'Edit Event' : 'New Event';
+    $('event-title').value = ev ? ev.title : '';
+    $('event-dates').value = ev ? ev.dates : '';
+    $('event-category').value = ev ? (ev.category || 'Embodiment') : 'Embodiment';
+    $('event-start-date').value = ev ? ev.startDate : '';
+    $('event-end-date').value = ev ? ev.endDate : '';
+    $('event-facilitator').value = ev ? ev.facilitator : '';
+    $('event-location').value = ev ? (ev.location || 'Rhizome Springs, Salt Spring Island') : 'Rhizome Springs, Salt Spring Island';
+    $('event-capacity').value = ev ? ev.capacity : '';
+    $('event-excerpt').value = ev ? ev.excerpt : '';
+    $('event-registration-url').value = ev ? (ev.registrationUrl || '') : '';
+    $('event-stripe-link').value = ev ? (ev.stripePaymentLink || '') : '';
+    $('event-published').checked = ev ? ev.published : true;
+    editingEventImage = ev ? (ev.image || '') : '';
+    $('event-image-name').textContent = editingEventImage ? editingEventImage.split('/').pop() : 'No image';
+    var pricing = ev ? (ev.pricing || []) : [];
+    renderPricingRows(pricing);
+    if (!eventQuill) {
+      eventQuill = new Quill('#event-editor', { theme: 'snow', modules: { toolbar: [[{ header: [2, 3, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link', 'image'], ['clean']] } });
+      setupQuillImageHandler(eventQuill);
+    }
+    eventQuill.root.innerHTML = ev ? (ev.description || '') : '';
+    if (!eventScheduleQuill) {
+      eventScheduleQuill = new Quill('#event-schedule-editor', { theme: 'snow', modules: { toolbar: [['bold', 'italic'], [{ list: 'ordered' }, { list: 'bullet' }], ['clean']] } });
+    }
+    eventScheduleQuill.root.innerHTML = ev ? (ev.schedule || '') : '';
+    showSection('event-edit');
+  }
+
+  function renderPricingRows(pricing) {
+    var html = '';
+    pricing.forEach(function(p) {
+      html += '<div class="form-row" style="align-items:end;gap:8px;margin-bottom:8px;">';
+      html += '<div style="flex:2;"><input type="text" class="pricing-label" value="' + (p.label || '') + '" placeholder="Label"></div>';
+      html += '<div style="flex:1;"><input type="number" class="pricing-amount" value="' + (p.amount || '') + '" placeholder="Amount"></div>';
+      html += '<div style="flex:1;"><input type="text" class="pricing-currency" value="' + (p.currency || 'CAD') + '" placeholder="Currency"></div>';
+      html += '<div style="flex:1;"><input type="date" class="pricing-until" value="' + (p.until || '') + '"></div>';
+      html += '<div><button class="btn-danger" onclick="this.closest(\'.form-row\').remove()" style="padding:8px 12px;">X</button></div>';
+      html += '</div>';
+    });
+    $('event-pricing-rows').innerHTML = html;
+  }
+
+  function addPricingRow() {
+    var row = document.createElement('div');
+    row.className = 'form-row';
+    row.style.cssText = 'align-items:end;gap:8px;margin-bottom:8px;';
+    row.innerHTML = '<div style="flex:2;"><input type="text" class="pricing-label" placeholder="Label"></div><div style="flex:1;"><input type="number" class="pricing-amount" placeholder="Amount"></div><div style="flex:1;"><input type="text" class="pricing-currency" value="CAD"></div><div style="flex:1;"><input type="date" class="pricing-until"></div><div><button class="btn-danger" onclick="this.closest(\'.form-row\').remove()" style="padding:8px 12px;">X</button></div>';
+    $('event-pricing-rows').appendChild(row);
+  }
+
+  function getPricingFromUI() {
+    var rows = $('event-pricing-rows').querySelectorAll('.form-row');
+    var pricing = [];
+    rows.forEach(function(row) {
+      var label = row.querySelector('.pricing-label').value.trim();
+      var amount = parseFloat(row.querySelector('.pricing-amount').value);
+      var currency = row.querySelector('.pricing-currency').value.trim() || 'CAD';
+      var until = row.querySelector('.pricing-until').value;
+      if (label && !isNaN(amount)) {
+        var p = { label: label, amount: amount, currency: currency };
+        if (until) p.until = until;
+        pricing.push(p);
+      }
+    });
+    return pricing;
+  }
+
+  function saveEvent() {
+    var title = $('event-title').value.trim();
+    if (!title) { toast('Title is required', true); return; }
+    var ev = {
+      id: editingEventIndex >= 0 ? events[editingEventIndex].id : slugify(title),
+      title: title, dates: $('event-dates').value.trim(),
+      startDate: $('event-start-date').value, endDate: $('event-end-date').value,
+      category: $('event-category').value, image: editingEventImage,
+      excerpt: $('event-excerpt').value.trim(), facilitator: $('event-facilitator').value.trim(),
+      location: $('event-location').value.trim(), capacity: parseInt($('event-capacity').value) || 0,
+      description: eventQuill.root.innerHTML, schedule: eventScheduleQuill.root.innerHTML,
+      pricing: getPricingFromUI(), registrationUrl: $('event-registration-url').value.trim(),
+      stripePaymentLink: $('event-stripe-link').value.trim(), published: $('event-published').checked
+    };
+    if (editingEventIndex >= 0) { events[editingEventIndex] = ev; } else { events.push(ev); }
+    markDirty('events.json');
+    toast('Draft saved. Click Publish when ready.');
+    renderEventsList(); showSection('events');
+  }
+
+  function deleteEvent(index) {
+    if (!confirm('Delete "' + events[index].title + '"?')) return;
+    events.splice(index, 1); markDirty('events.json');
+    toast('Event deleted. Click Publish when ready.'); renderEventsList();
+  }
+
+  function changeEventImage() {
+    var input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+    input.onchange = function() {
+      if (!input.files.length) return;
+      toast('Uploading image...');
+      uploadImage(input.files[0]).then(function(url) {
+        editingEventImage = url;
+        $('event-image-name').textContent = url.split('/').pop();
+        toast('Image uploaded!');
+      }).catch(function(err) { toast('Upload failed: ' + err.message, true); });
+    };
+    input.click();
+  }
+
+  if ($('new-event-btn')) $('new-event-btn').addEventListener('click', function() { editEvent(-1); });
+  if ($('event-save-btn')) $('event-save-btn').addEventListener('click', saveEvent);
+  if ($('event-cancel-btn')) $('event-cancel-btn').addEventListener('click', function() { showSection('events'); });
+
+  // ===== PRODUCTS =====
+  function renderProductsList() {
+    var el = $('products-list');
+    if (!el) return;
+    var html = '';
+    products.forEach(function(p, i) {
+      html += '<div class="item-row">';
+      html += '<div class="item-info"><h3>' + p.title;
+      if (!p.available) html += '<span class="draft-badge">Unavailable</span>';
+      html += '</h3><p>$' + p.price + ' ' + (p.currency || 'CAD') + '</p></div>';
+      html += '<div class="item-actions">';
+      html += '<button class="btn-small" onclick="CMS.editProduct(' + i + ')">Edit</button>';
+      html += '<button class="btn-danger" onclick="CMS.deleteProduct(' + i + ')">Delete</button>';
+      html += '</div></div>';
+    });
+    el.innerHTML = html || '<p style="color:#999;">No products yet.</p>';
+  }
+
+  function editProduct(index) {
+    editingProductIndex = index;
+    var p = index >= 0 ? products[index] : null;
+    $('product-edit-title').textContent = p ? 'Edit Product' : 'New Product';
+    $('product-title').value = p ? p.title : '';
+    $('product-price').value = p ? p.price : '';
+    $('product-currency').value = p ? (p.currency || 'CAD') : 'CAD';
+    $('product-stripe-id').value = p ? (p.stripePriceId || '') : '';
+    $('product-category').value = p ? (p.category || '') : '';
+    $('product-description').value = p ? (p.description || '') : '';
+    $('product-event-id').value = p ? (p.eventId || '') : '';
+    $('product-available').checked = p ? p.available : true;
+    showSection('product-edit');
+  }
+
+  function saveProduct() {
+    var title = $('product-title').value.trim();
+    if (!title) { toast('Title is required', true); return; }
+    var p = {
+      id: editingProductIndex >= 0 ? products[editingProductIndex].id : slugify(title),
+      title: title, price: parseFloat($('product-price').value) || 0,
+      currency: $('product-currency').value.trim() || 'CAD',
+      stripePriceId: $('product-stripe-id').value.trim(),
+      category: $('product-category').value.trim(),
+      description: $('product-description').value.trim(),
+      eventId: $('product-event-id').value.trim(),
+      available: $('product-available').checked
+    };
+    if (editingProductIndex >= 0) { products[editingProductIndex] = p; } else { products.push(p); }
+    markDirty('products.json');
+    toast('Draft saved. Click Publish when ready.');
+    renderProductsList(); showSection('products');
+  }
+
+  function deleteProduct(index) {
+    if (!confirm('Delete "' + products[index].title + '"?')) return;
+    products.splice(index, 1); markDirty('products.json');
+    toast('Product deleted. Click Publish when ready.'); renderProductsList();
+  }
+
+  if ($('new-product-btn')) $('new-product-btn').addEventListener('click', function() { editProduct(-1); });
+  if ($('product-save-btn')) $('product-save-btn').addEventListener('click', saveProduct);
+  if ($('product-cancel-btn')) $('product-cancel-btn').addEventListener('click', function() { showSection('products'); });
+
+  // ===== NEWSLETTER (Kit API) =====
+  function loadNewsletterData() {
+    if (!settings.kitApiKey) {
+      if ($('newsletter-status')) $('newsletter-status').textContent = 'Not configured';
+      if ($('subscribers-list')) $('subscribers-list').innerHTML = '<p style="color:#999;">Add Kit API key in Settings to enable.</p>';
+      return;
+    }
+    if ($('newsletter-status')) $('newsletter-status').textContent = 'Connected';
+    if (settings.kitApiSecret) {
+      fetch('https://api.convertkit.com/v3/subscribers?api_secret=' + settings.kitApiSecret + '&sort_order=desc&per_page=20')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if ($('count-subscribers')) $('count-subscribers').textContent = data.total_subscribers || 0;
+          var html = '';
+          (data.subscribers || []).forEach(function(sub) {
+            html += '<div class="item-row"><div class="item-info"><h3>' + sub.email_address + '</h3><p>Subscribed: ' + new Date(sub.created_at).toLocaleDateString() + '</p></div></div>';
+          });
+          if ($('subscribers-list')) $('subscribers-list').innerHTML = html || '<p style="color:#999;">No subscribers yet.</p>';
+        }).catch(function() { if ($('subscribers-list')) $('subscribers-list').innerHTML = '<p style="color:#999;">Could not load subscribers.</p>'; });
+      fetch('https://api.convertkit.com/v3/broadcasts?api_secret=' + settings.kitApiSecret)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var broadcasts = data.broadcasts || [];
+          if ($('count-broadcasts')) $('count-broadcasts').textContent = broadcasts.length;
+          var html = '';
+          broadcasts.slice(0, 10).forEach(function(b) {
+            html += '<div class="item-row"><div class="item-info"><h3>' + (b.subject || 'No subject') + '</h3><p>Sent: ' + new Date(b.created_at).toLocaleDateString() + '</p></div></div>';
+          });
+          if ($('broadcasts-list')) $('broadcasts-list').innerHTML = html || '<p style="color:#999;">No broadcasts yet.</p>';
+        }).catch(function() { if ($('broadcasts-list')) $('broadcasts-list').innerHTML = '<p style="color:#999;">Could not load broadcasts.</p>'; });
+    }
+  }
+
+  function sendBroadcast() {
+    if (!settings.kitApiSecret) { toast('Kit API secret not configured', true); return; }
+    var subject = $('broadcast-subject').value.trim();
+    if (!subject) { toast('Subject is required', true); return; }
+    if (!broadcastQuill) {
+      broadcastQuill = new Quill('#broadcast-editor', { theme: 'snow', modules: { toolbar: [[{ header: [2, 3, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link'], ['clean']] } });
+    }
+    var content = broadcastQuill.root.innerHTML;
+    if (!content || content === '<p><br></p>') { toast('Content is required', true); return; }
+    if (!confirm('Send this broadcast to all subscribers?')) return;
+    $('send-broadcast-btn').disabled = true;
+    $('send-broadcast-btn').textContent = 'Sending...';
+    fetch('https://api.convertkit.com/v3/broadcasts', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_secret: settings.kitApiSecret, subject: subject, content: content, published: true })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.broadcast) { toast('Broadcast sent!'); $('broadcast-subject').value = ''; broadcastQuill.root.innerHTML = ''; loadNewsletterData(); }
+      else { toast('Failed to send', true); }
+    }).catch(function(err) { toast('Failed: ' + err.message, true); })
+    .finally(function() { $('send-broadcast-btn').disabled = false; $('send-broadcast-btn').textContent = 'Send Broadcast'; });
+  }
+
+  if ($('send-broadcast-btn')) $('send-broadcast-btn').addEventListener('click', sendBroadcast);
+
   // ===== EXPOSE FOR ONCLICK =====
   window.CMS = {
     editPost: editPost,
@@ -1962,7 +2250,13 @@
     togglePageNav: togglePageNav,
     editNavLink: editNavLink,
     deleteNavLink: deleteNavLink,
-    moveNavItem: moveNavItem
+    moveNavItem: moveNavItem,
+    editEvent: editEvent,
+    deleteEvent: deleteEvent,
+    changeEventImage: changeEventImage,
+    addPricingRow: addPricingRow,
+    editProduct: editProduct,
+    deleteProduct: deleteProduct
   };
 
   // ===== PUBLISH/DISCARD BUTTONS =====

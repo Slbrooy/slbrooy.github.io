@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rhizome Springs - The Land of Living Inquiry</title>
-  <meta name="description" content="Rhizome Springs is an off-grid community on Salt Spring Island dedicated to ecology, embodiment, and creativity. Workshops, dance festivals, jams, and residencies.">
+  <title>Get Involved - Rhizome Springs</title>
+  <meta name="description" content="Get involved with Rhizome Springs. Volunteer, attend events, or connect with our community on Salt Spring Island.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -34,70 +34,49 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" style="background-image: url('images/hero-land.jpg');">
+  <section class="hero hero-short" style="background-image: url('images/contact-hero.jpg');">
     <div class="hero-content">
-      <h1 data-cms-setting="heroHeadline">The Land of Living Inquiry</h1>
-      <p>Ecology, embodiment, and creativity on Salt Spring Island</p>
-      <a href="events.html" class="btn">Explore Events</a>
+      <h1>Get Involved</h1>
+      <p>Join our community</p>
     </div>
   </section>
 
-  <!-- INTRO -->
+  <!-- CONTACT CONTENT -->
   <section>
-    <div class="container" style="text-align:center;">
-      <div class="reveal" style="max-width:750px;margin:0 auto;">
-        <h2 class="section-title" style="text-align:center;">Welcome to Rhizome Springs</h2>
-        <div style="font-size:18px;line-height:1.8;color:var(--color-text-light);" data-cms-page="home" data-cms-section="intro">
-          <p style="text-align:center;">Rhizome Springs is an off-grid community and gathering place on Salt Spring Island, BC. We host workshops, dance festivals, ecological learning, creative residencies, and community gatherings rooted in our connection to the land.</p>
+    <div class="container contact-grid">
+      <div class="reveal-left">
+        <h2 class="section-title">Reach Out</h2>
+        <div data-cms-page="contact" data-cms-section="intro">
+          <p>We love hearing from people who are curious about Rhizome Springs. Whether you want to attend an event, volunteer, propose a workshop, or just say hello, we would love to hear from you.</p>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="contact-info" style="margin-top:30px;">
+          <p><strong>Email:</strong> <a href="mailto:info@rhizomesprings.com" data-cms-setting="email">info@rhizomesprings.com</a></p>
+          <p><strong>Location:</strong> Salt Spring Island, BC, Canada</p>
+        </div>
 
-  <!-- PILLARS -->
-  <section class="section-accent">
-    <div class="container">
-      <h2 class="section-title reveal" style="text-align:center;margin-bottom:50px;">Our Pillars</h2>
-      <div class="grid-3">
-        <div class="pillar-card reveal">
-          <img src="images/pillar-embodiment.jpg" alt="Embodiment" class="pillar-icon" data-cms-section-img="pillar-embodiment">
-          <h3>Embodiment</h3>
-          <p data-cms-page="home" data-cms-section="pillar-embodiment">Dance, movement, and somatic practices that deepen our relationship with our bodies and each other.</p>
-        </div>
-        <div class="pillar-card reveal">
-          <img src="images/pillar-ecology.jpg" alt="Ecology" class="pillar-icon" data-cms-section-img="pillar-ecology">
-          <h3>Ecology</h3>
-          <p data-cms-page="home" data-cms-section="pillar-ecology">Learning to live in reciprocity with the land through permaculture, restoration, and ecological stewardship.</p>
-        </div>
-        <div class="pillar-card reveal">
-          <img src="images/pillar-creativity.jpg" alt="Creativity" class="pillar-icon" data-cms-section-img="pillar-creativity">
-          <h3>Creativity</h3>
-          <p data-cms-page="home" data-cms-section="pillar-creativity">Art, music, building, and making as pathways to deeper understanding and community connection.</p>
+        <div style="margin-top:40px;">
+          <h3 class="section-title" style="font-size:1.3rem;">Ways to Get Involved</h3>
+          <div data-cms-page="contact" data-cms-section="ways-to-get-involved">
+            <p><strong>Attend an event</strong> - Browse our upcoming workshops, festivals, and gatherings.</p>
+            <p style="margin-top:12px;"><strong>Volunteer</strong> - We welcome work-trade volunteers who want to help with land stewardship, building, and event support.</p>
+            <p style="margin-top:12px;"><strong>Propose a workshop</strong> - Have a skill or practice to share? We are always open to collaboration.</p>
+            <p style="margin-top:12px;"><strong>Residency</strong> - Artists, makers, and practitioners can apply for time on the land.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- UPCOMING EVENTS -->
-  <section>
-    <div class="container">
-      <h2 class="section-title reveal" style="text-align:center;">Upcoming Events</h2>
-      <p class="section-intro reveal">Workshops, festivals, and gatherings at Rhizome Springs</p>
-      <div id="events-preview">
-        <!-- Rendered by site.js from content/events.json -->
-      </div>
-      <div class="reveal" style="text-align:center;margin-top:40px;">
-        <a href="events.html" class="btn">View All Events</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- QUOTE -->
-  <section class="quote-section" style="background-image: url('images/quote-bg.jpg');" data-cms-section-img="quote">
-    <div class="container">
-      <p class="quote-text reveal" data-cms-setting="quoteText">"We are not separate from the land. We are the land becoming aware of itself."</p>
-      <div class="reveal" style="text-align:center;">
-        <a href="contact.html" class="btn">Get Involved</a>
+      <div class="reveal-right">
+        <form class="contact-form" action="https://formspree.io/f/placeholder" method="POST">
+          <label>Name</label>
+          <input type="text" name="name" required>
+          <label>Email</label>
+          <input type="email" name="email" required>
+          <label>Subject</label>
+          <input type="text" name="subject">
+          <label>Message</label>
+          <textarea name="message" required></textarea>
+          <button type="submit" class="btn-solid" style="width:100%;">Send Message</button>
+        </form>
       </div>
     </div>
   </section>
@@ -139,7 +118,6 @@
   </footer>
 
   <script>
-    // Nav toggle
     document.querySelector('.nav-toggle').addEventListener('click', function() {
       document.querySelector('nav').classList.toggle('active');
       document.querySelector('header').classList.toggle('nav-open');
@@ -150,8 +128,6 @@
         document.querySelector('header').classList.remove('nav-open');
       });
     });
-
-    // Scroll reveal
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) entry.target.classList.add('visible');

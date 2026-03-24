@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event - Rhizome Springs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo-white.png" alt="Rhizome Springs">
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <nav>
+        <a href="../about.html">About</a>
+        <a href="../events.html">Events</a>
+        <a href="../contact.html">Get Involved</a>
+        <a href="../shop.html" class="cart-link" aria-label="Cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge"></span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <section style="padding-top:120px;">
+    <div class="container">
+      <div class="event-detail" id="event-detail-content">
+        <p>Loading event...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="logo-footer">
+        <img src="../images/logo-white.png" alt="Rhizome Springs">
+      </div>
+      <div class="footer-info">
+        <p>Salt Spring Island, BC, Canada</p>
+      </div>
+      <div class="footer-cta">
+        <a href="../events.html" class="btn">Explore Events</a>
+      </div>
+      <nav class="footer-nav">
+        <a href="../about.html">About</a>
+        <a href="../events.html">Events</a>
+        <a href="../contact.html">Get Involved</a>
+      </nav>
+      <div class="footer-bottom">
+        &copy; 2026 Rhizome Springs. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('active');
+      document.querySelector('header').classList.toggle('nav-open');
+    });
+    document.querySelectorAll('nav a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.querySelector('nav').classList.remove('active');
+        document.querySelector('header').classList.remove('nav-open');
+      });
+    });
+  </script>
+  <script src="../js/site.js"></script>
+</body>
+</html>

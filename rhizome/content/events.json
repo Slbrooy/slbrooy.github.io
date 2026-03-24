@@ -1,0 +1,90 @@
+[
+  {
+    "id": "saltspringfusion2026",
+    "title": "Salt Spring Fusion Dance Festival 2026",
+    "dates": "Jul 9-12, 2026",
+    "startDate": "2026-07-09",
+    "endDate": "2026-07-12",
+    "category": "Embodiment",
+    "image": "images/event-fusion.jpg",
+    "excerpt": "A multi-style fusion dance festival bringing together contact improvisation, blues, tango, and contemporary dance in a beautiful off-grid setting.",
+    "facilitator": "Samuel Samways",
+    "location": "Rhizome Springs, Salt Spring Island",
+    "capacity": 70,
+    "description": "<p>Join us for four days of movement, connection, and community at the Salt Spring Fusion Dance Festival. This immersive festival brings together dancers from across styles to explore the intersection of contact improvisation, blues, tango, contemporary, and more.</p><p>Set on the beautiful grounds of Rhizome Springs, you will dance under the trees, share meals around the fire, and connect with a vibrant community of movers.</p><h3>What to Expect</h3><p>The festival includes structured workshops during the day, open jams in the afternoon, and social dances in the evening. All levels are welcome. Our teaching team brings decades of combined experience across multiple dance forms.</p>",
+    "schedule": "<p><strong>Thursday Jul 9:</strong> Arrival, welcome circle, opening jam</p><p><strong>Friday Jul 10:</strong> Morning workshops, afternoon open dance, evening social</p><p><strong>Saturday Jul 11:</strong> Morning workshops, afternoon lake trip, evening gala dance</p><p><strong>Sunday Jul 12:</strong> Morning integration, closing circle, departure</p>",
+    "pricing": [
+      { "label": "Early Bird", "amount": 385, "currency": "CAD", "until": "2026-05-01" },
+      { "label": "Regular", "amount": 450, "currency": "CAD" },
+      { "label": "Sliding Scale (Low)", "amount": 320, "currency": "CAD" }
+    ],
+    "registrationUrl": "",
+    "stripePaymentLink": "",
+    "published": true
+  },
+  {
+    "id": "permaculture-intro-2026",
+    "title": "Introduction to Permaculture Design",
+    "dates": "May 17-18, 2026",
+    "startDate": "2026-05-17",
+    "endDate": "2026-05-18",
+    "category": "Ecology",
+    "image": "images/event-permaculture.jpg",
+    "excerpt": "A weekend introduction to permaculture principles and design, taught on the land at Rhizome Springs.",
+    "facilitator": "Selena La Brooy",
+    "location": "Rhizome Springs, Salt Spring Island",
+    "capacity": 20,
+    "description": "<p>This hands-on weekend workshop introduces the principles and practices of permaculture design. Working directly on the land at Rhizome Springs, you will learn to observe natural patterns, design productive ecosystems, and apply permaculture ethics to your own life and landscape.</p><h3>Topics Covered</h3><p>Permaculture ethics and principles, site observation and mapping, water harvesting and management, soil building and composting, food forest design, and natural building basics.</p>",
+    "schedule": "<p><strong>Saturday:</strong> 9am-5pm (Principles, site walk, design exercise)</p><p><strong>Sunday:</strong> 9am-4pm (Hands-on projects, design presentations)</p>",
+    "pricing": [
+      { "label": "Standard", "amount": 180, "currency": "CAD" },
+      { "label": "Work-Trade", "amount": 100, "currency": "CAD" }
+    ],
+    "registrationUrl": "",
+    "stripePaymentLink": "",
+    "published": true
+  },
+  {
+    "id": "summer-ci-jam-2026",
+    "title": "Summer Contact Improvisation Jam",
+    "dates": "Aug 1-3, 2026",
+    "startDate": "2026-08-01",
+    "endDate": "2026-08-03",
+    "category": "Embodiment",
+    "image": "images/event-ci-jam.jpg",
+    "excerpt": "Three days of open contact improvisation jamming in nature. All levels welcome.",
+    "facilitator": "Various",
+    "location": "Rhizome Springs, Salt Spring Island",
+    "capacity": 40,
+    "description": "<p>An open-format contact improvisation gathering over three days. This is an unstructured jam, meaning there are no formal classes. Instead, we create space for organic movement exploration, practice, and play.</p><p>The outdoor dance platform at Rhizome Springs offers a unique setting for CI, surrounded by forest and sky. Camping on site is included. Communal meals will be shared.</p>",
+    "schedule": "<p><strong>Daily rhythm:</strong> Morning warm-up (9am), Open jam (10am-12pm), Lunch, Afternoon jam (2-5pm), Evening jam (7-10pm)</p>",
+    "pricing": [
+      { "label": "Full Weekend", "amount": 120, "currency": "CAD" },
+      { "label": "Day Pass", "amount": 50, "currency": "CAD" }
+    ],
+    "registrationUrl": "",
+    "stripePaymentLink": "",
+    "published": true
+  },
+  {
+    "id": "creative-residency-fall2026",
+    "title": "Fall Creative Residency",
+    "dates": "Sep 15 - Oct 15, 2026",
+    "startDate": "2026-09-15",
+    "endDate": "2026-10-15",
+    "category": "Creativity",
+    "image": "images/event-residency.jpg",
+    "excerpt": "A month-long residency for artists, writers, and makers seeking inspiration in an off-grid natural setting.",
+    "facilitator": "Selena La Brooy",
+    "location": "Rhizome Springs, Salt Spring Island",
+    "capacity": 4,
+    "description": "<p>Our fall residency offers artists, writers, musicians, and makers a month of dedicated creative time on the land. Residents have access to studio space, the land, and the rhythms of off-grid life as fuel for their practice.</p><p>The residency includes a private cabin, shared meals with the community, and an end-of-residency sharing event. We ask residents to contribute 5 hours per week to community work (gardening, cooking, etc.).</p>",
+    "schedule": "",
+    "pricing": [
+      { "label": "Residency Fee", "amount": 800, "currency": "CAD" }
+    ],
+    "registrationUrl": "",
+    "stripePaymentLink": "",
+    "published": true
+  }
+]
