@@ -13,7 +13,8 @@
         "heading2": "Who is Rolfing good for?",
         "body": "<p>Rolfing™ is a method of restructuring the body through movement and touch. By learning to let go of unconscious holding patterns and postural habits, many chronic conditions are cured and replaced with a feeling of fluidity and lightness.</p>",
         "body2": "<p class=\"ql-align-justify\">Rolfing™ benefits anyone who wants to restore mobility and healthy functioning to joints and connective tissues. Rolfing can reduce and eliminate chronic pain and restricted movement caused by:</p><p class=\"ql-align-justify\"><br></p><p class=\"ql-align-justify\"><strong>Poor posture &amp; bad habits</strong> / <strong>Childbirth</strong> / <strong>Chronic back</strong> / <strong>Shoulder, knee or hip pain</strong> / <strong>Repetitive stress injury</strong> (work/sports) / <strong>Plantar fasciitis</strong> / <strong>Depression</strong> / <strong>Scoliosis, Sciatica</strong> / <strong>Whiplash accidents</strong> / <strong>Carpal tunnel syndrome</strong> / <strong>TMJ ‘lock jaw’ syndrome</strong> / <strong>Bunions</strong></p>",
-        "fontSize": 16
+        "fontSize": 16,
+        "showCTA": true
       },
       {
         "id": "meet-selena",
@@ -37,7 +38,8 @@
         "type": "banner",
         "heading": "Finding peace with our bodies affects the way that we relate to others and the world around us.",
         "image": "images/sunset-person.webp",
-        "body": "<p>When we live with chronic physical pain in our bodies daily, it affects our mood, emotions and thought patterns. This spirals out in destructive ways to all parts of our lives. Finding a solution to physical pain and regaining a sense of stability and strength is possible! This change will be reflected in the ways we relate to life.</p>"
+        "body": "<p>When we live with chronic physical pain in our bodies daily, it affects our mood, emotions and thought patterns. This spirals out in destructive ways to all parts of our lives. Finding a solution to physical pain and regaining a sense of stability and strength is possible! This change will be reflected in the ways we relate to life.</p>",
+        "showCTA": true
       },
       {
         "id": "reviews",
@@ -122,7 +124,8 @@
         "type": "banner",
         "heading": "Ready to begin your journey?",
         "image": "images/MossyForest.png",
-        "body": ""
+        "body": "",
+        "showCTA": true
       }
     ]
   },

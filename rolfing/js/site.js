@@ -130,6 +130,11 @@
     });
   }
 
+  function ctaHTML(section) {
+    if (!section.showCTA) return '';
+    return '<div style="margin-top:20px;"><a href="' + BASE + 'booking.html" class="btn">Book A Session</a></div>';
+  }
+
   // ===== DYNAMIC PAGE CONTENT (for CMS-generated pages) =====
   function renderDynamicPage() {
     var target = document.getElementById('page-content');
@@ -139,10 +144,11 @@
     var html = '';
     pages[pageKey].sections.forEach(function(section) {
       var type = section.type || 'text';
+      var cta = ctaHTML(section);
       if (type === 'text-image' && section.image) {
         var imgRight = section.imagePosition === 'right';
         var imgHtml = '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;">';
-        var txtHtml = '<div>' + (section.heading ? '<h2 class="section-title">' + section.heading + '</h2>' : '') + (section.body || '') + '</div>';
+        var txtHtml = '<div>' + (section.heading ? '<h2 class="section-title">' + section.heading + '</h2>' : '') + (section.body || '') + cta + '</div>';
         html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:40px;">';
         html += imgRight ? txtHtml + '<div>' + imgHtml + '</div>' : '<div>' + imgHtml + '</div>' + txtHtml;
         html += '</div>';
@@ -154,18 +160,18 @@
         section.images.forEach(function(src) {
           html += '<div style="flex:1;min-width:0;"><img src="' + BASE + src + '" alt="" style="width:100%;border-radius:12px;display:block;"></div>';
         });
-        html += '</div></div>';
+        html += '</div>' + cta + '</div>';
       } else if (type === 'accent') {
         html += '<div style="background:var(--color-bg-light);padding:40px;border-radius:12px;margin-bottom:40px;">';
         if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
         if (section.body) html += section.body;
-        html += '</div>';
+        html += cta + '</div>';
       } else if (type === 'two-column') {
         html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:40px;">';
         html += '<div>';
         if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
         if (section.body) html += section.body;
-        html += '</div><div>';
+        html += cta + '</div><div>';
         if (section.heading2) html += '<h2 class="section-title">' + section.heading2 + '</h2>';
         if (section.body2) html += section.body2;
         html += '</div></div>';
@@ -175,13 +181,13 @@
         html += '<div style="position:relative;color:#fff;">';
         if (section.heading) html += '<h2 style="font-family:var(--font-heading);font-size:2rem;color:#fff;">' + section.heading + '</h2>';
         if (section.body) html += section.body;
-        html += '</div></div>';
+        html += cta + '</div></div>';
       } else {
         html += '<div style="margin-bottom:40px;">';
         if (section.heading) html += '<h2 class="section-title">' + section.heading + '</h2>';
         if (section.image) html += '<img src="' + BASE + section.image + '" alt="" style="max-width:100%;border-radius:12px;margin-bottom:16px;">';
         if (section.body) html += section.body;
-        html += '</div>';
+        html += cta + '</div>';
       }
     });
     target.innerHTML = html;
@@ -239,6 +245,18 @@
       if (heading && heading.classList.contains('section-title')) {
         heading.innerHTML = section.heading;
       }
+    });
+  }
+
+  // CTA buttons: show/hide based on showCTA in pages.json
+  function renderCTAButtons() {
+    document.querySelectorAll('[data-cms-cta]').forEach(function(el) {
+      var sectionId = el.dataset.cmsCta;
+      var pageKey = el.dataset.cmsPage || detectCurrentPage();
+      if (!pageKey || !pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (!section) return;
+      el.style.display = section.showCTA ? '' : 'none';
     });
   }
 
@@ -446,6 +464,7 @@
     renderPageSections();
     renderSectionHeadings();
     renderQuoteSections();
+    renderCTAButtons();
     renderDynamicPage();
     renderHeroImage();
     renderSectionImages();

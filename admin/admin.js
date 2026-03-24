@@ -1233,6 +1233,10 @@
     return sectionHtml;
   }
 
+  function pvCTABadge(s) {
+    return s.showCTA ? '<div style="margin-top:10px;padding:8px 16px;background:var(--color-accent,#8B7355);color:#fff;border-radius:6px;display:inline-block;font-size:12px;font-weight:500;">Book A Session</div>' : '';
+  }
+
   function pvSection(pageKey, sectionId, extraClass) {
     var s = getSection(pageKey, sectionId);
     var type = s.type || 'text';
@@ -1293,6 +1297,7 @@
           '<div class="pv-section-label" style="position:static;display:inline-block;margin-bottom:8px;">Edit Text</div>' +
           '<p>' + (s.heading || '') + '</p>' +
           (s.body ? '<p style="font-size:0.9em;margin-top:10px;font-style:normal;">' + s.body.replace(/<[^>]+>/g, '') + '</p>' : '') +
+          (s.showCTA ? '<div style="margin-top:10px;padding:8px 16px;background:#fff;color:#333;border-radius:6px;display:inline-block;font-size:12px;font-weight:500;">Book A Session</div>' : '') +
         '</div>' +
       '</div>';
       return wrapWithControls(pageKey, sectionId, card);
@@ -1377,6 +1382,7 @@
       typeLabel +
       '<h2>' + s.heading + '</h2>' +
       s.body +
+      pvCTABadge(s) +
     '</div>';
     return wrapWithControls(pageKey, sectionId, card);
   }
@@ -1572,6 +1578,7 @@
         html += '<div class="pv-section-label" style="position:static;display:inline-block;margin-bottom:6px;">Edit</div>';
         if (sec.heading) html += '<h2 style="font-size:1.4em;margin-bottom:8px;">' + sec.heading + '</h2>';
         if (sec.body) html += '<div style="font-size:14px;line-height:1.7;color:#555;">' + sec.body + '</div>';
+        html += pvCTABadge(sec);
         html += '</div>';
       });
       html += '</div>';
@@ -1801,6 +1808,8 @@
       setupQuillImageHandler(modalQuill);
     }
     modalQuill.root.innerHTML = body;
+    $('modal-cta-toggle').checked = !!section.showCTA;
+    $('modal-cta-toggle').parentElement.style.display = '';
     $('edit-modal').style.display = 'flex';
   }
 
@@ -1813,7 +1822,8 @@
     $('modal-heading').value = settings[settingKey] || '';
     $('modal-heading').parentElement.querySelector('label').textContent = label;
 
-    // Hide Quill for simple settings
+    // Hide CTA toggle and Quill for simple settings
+    $('modal-cta-toggle').parentElement.style.display = 'none';
     var editorWrap = $('modal-editor').parentElement;
     var contentLabel = editorWrap.querySelectorAll('label')[1];
     if (contentLabel) contentLabel.style.display = 'none';
@@ -1848,6 +1858,7 @@
         section.heading = heading;
         section.body = modalQuill.root.innerHTML;
       }
+      section.showCTA = $('modal-cta-toggle').checked;
       markDirty('pages.json');
     }
 
