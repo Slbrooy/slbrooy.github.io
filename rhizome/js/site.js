@@ -92,24 +92,7 @@
 
   // ===== FOOTER =====
   function renderFooter() {
-    // Footer links use the .footer-links container with dot separators
-    var footerLinks = document.querySelector('.footer-links');
-    if (footerLinks && loaded.pages && loaded.settings) {
-      var items = [];
-      Object.keys(pages).forEach(function(key) {
-        var p = pages[key];
-        if (p.showInNav) {
-          items.push({ label: p.navLabel || p.title, url: BASE + (p.url || key + '.html'), order: p.navOrder || 99 });
-        }
-      });
-      items.sort(function(a, b) { return a.order - b.order; });
-      var html = '';
-      items.forEach(function(item, i) {
-        if (i > 0) html += '<span class="dot">&middot;</span>';
-        html += '<a href="' + item.url + '">' + item.label + '</a>';
-      });
-      footerLinks.innerHTML = html;
-    }
+    // Footer links - don't overwrite, they're hardcoded with Get Involved mailto
     // Also handle legacy .footer-nav
     var footerNav = document.querySelector('.footer-nav');
     if (footerNav && loaded.pages) {
