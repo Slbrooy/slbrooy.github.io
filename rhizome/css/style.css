@@ -1,3 +1,13 @@
+/* ===== FONTS ===== */
+@font-face {
+  font-family: 'Romans Story';
+  src: url('../fonts/romans-story.woff2') format('woff2'),
+       url('../fonts/romans-story.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,8 +22,8 @@
   --color-secondary: #8B6F47;
   --color-white: #ffffff;
   --color-dark: #1A1A1A;
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Romans Story', Georgia, serif;
+  --font-body: 'Cormorant Garamond', Georgia, serif;
   --max-width: 1200px;
   --page-padding: 4vw;
   --section-pad: 100px;
@@ -24,8 +34,8 @@ body {
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-bg);
-  line-height: 1.7;
-  font-size: 16px;
+  line-height: 1.8;
+  font-size: 18px;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
