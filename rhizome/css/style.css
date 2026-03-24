@@ -173,7 +173,7 @@ header {
   display: flex; align-items: center; justify-content: center;
   background-size: cover; background-position: center center;
   overflow: hidden;
-  padding: 28vh var(--page-padding) 15vh;
+  padding: 32vh var(--page-padding) 18vh;
 }
 .hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
 /* Squarespace: section-background-overlay opacity: 0.14 */
