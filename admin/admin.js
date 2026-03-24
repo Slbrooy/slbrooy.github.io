@@ -33,7 +33,8 @@
   var editingColumn = ''; // '' or 'right' for two-column sections
   var pendingChanges = {}; // { filename: true } tracks which files have unpublished changes
   var pendingDeletes = []; // old HTML filenames to delete on publish
-  var DRAFT_KEY = 'selena-cms-drafts';
+  var DRAFT_KEY = 'selena-cms-drafts-' + currentSite;
+  var ORIGINAL_PAGES = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
 
   // ===== SITE SWITCHER =====
   function populateSitePicker() {
@@ -73,6 +74,7 @@
     pages = {};
     pendingChanges = {};
     localStorage.removeItem(DRAFT_KEY);
+    DRAFT_KEY = 'selena-cms-drafts-' + siteKey;
     updatePublishBar();
     // Reload content for new site
     loadAllContent();
@@ -168,13 +170,12 @@
       .then(function() {
         // Delete old HTML files from renamed/re-URLed pages
         if (pendingDeletes.length > 0) {
-          return deleteOldFiles();
+          return deleteOldFiles().then(function() { pendingDeletes = []; });
         }
       })
       .then(function() {
         toast('Published! Site updates in about a minute.');
         clearDrafts();
-        pendingDeletes = [];
       })
       .catch(function(err) { toast('Publish failed: ' + err.message, true); })
       .finally(function() {
@@ -275,7 +276,7 @@
       var page = pages[key];
       var url = page.url || key + '.html';
       // Skip pages that are part of the original site (they already have HTML)
-      var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+      var originals = ORIGINAL_PAGES;
       if (originals.indexOf(url) >= 0) return;
 
       var filePath = SITE_PATH + url;
@@ -1066,6 +1067,7 @@
   }
 
   function editNavLink(index) {
+    if (!settings.customNavLinks || !settings.customNavLinks[index]) return;
     var link = settings.customNavLinks[index];
     var label = prompt('Link label:', link.label);
     if (label === null) return;
@@ -1137,10 +1139,13 @@
     if (!newUrl) return;
     // Add .html if not present
     if (newUrl.indexOf('.html') === -1) newUrl += '.html';
+    // Check URL uniqueness
+    var duplicate = Object.keys(pages).some(function(k) { return k !== key && pages[k].url === newUrl; });
+    if (duplicate) { toast('URL already used by another page', true); pageUrlInput.value = oldUrl || ''; return; }
     pageUrlInput.value = newUrl;
     if (oldUrl && oldUrl !== newUrl) {
       // Track old file for deletion on publish
-      var originals = ['index.html','about-selena.html','about-sessions.html','blog.html','faqs.html','contact.html','booking.html'];
+      var originals = ORIGINAL_PAGES;
       if (originals.indexOf(oldUrl) === -1) {
         pendingDeletes.push(oldUrl);
       }
@@ -1159,40 +1164,6 @@
     if (!page) return { heading: '', body: '' };
     var s = page.sections.find(function(sec) { return sec.id === sectionId; });
     return s || { heading: '', body: '' };
-  }
-
-  /* Side gutter removed -- font size is now in the Quill editor toolbar */
-  function pvSizeGutter_REMOVED(pageKey, sectionId) {
-    var s = getSection(pageKey, sectionId);
-    var fontSize = s.fontSize || 16;
-    var imageSize = s.imageSize || 200;
-    // Only show image size for sections with a foreground image (not background images like banner)
-    var showImageSize = (s.type === 'text-image' || s.type === 'images') && s.image;
-
-    var html = '';
-    // Text size
-    html += '<div class="pv-size-control">';
-    html += '<label>Text Size</label>';
-    html += '<div class="pv-size-btns">';
-    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',-1)">-</button>';
-    html += '<input class="pv-size-val" value="' + fontSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',this.value)" onclick="event.stopPropagation();">';
-    html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\',1)">+</button>';
-    html += '</div>';
-    html += '<button class="pv-reset-btn" onclick="event.stopPropagation();CMS.resetSize(\'' + pageKey + '\',\'' + sectionId + '\',\'fontSize\')">Reset</button>';
-    html += '</div>';
-    // Image size (only for foreground images)
-    if (showImageSize) {
-      html += '<div class="pv-size-control">';
-      html += '<label>Image Size</label>';
-      html += '<div class="pv-size-btns">';
-      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',-20)">-</button>';
-      html += '<input class="pv-size-val" value="' + imageSize + '" onchange="event.stopPropagation();CMS.setSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',this.value)" onclick="event.stopPropagation();">';
-      html += '<button onclick="event.stopPropagation();CMS.adjustSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\',20)">+</button>';
-      html += '</div>';
-      html += '<button class="pv-reset-btn" onclick="event.stopPropagation();CMS.resetSize(\'' + pageKey + '\',\'' + sectionId + '\',\'imageSize\')">Reset</button>';
-      html += '</div>';
-    }
-    return html;
   }
 
   function setSize(pageKey, sectionId, prop, value) {
@@ -1834,6 +1805,9 @@
 
   function closeModal() {
     $('edit-modal').style.display = 'none';
+    editingPageKey = '';
+    editingSectionIndex = -1;
+    editingColumn = '';
     var editorWrap = $('modal-editor').parentElement;
     editorWrap.querySelectorAll('label').forEach(function(l) { l.style.display = ''; });
     $('modal-editor').style.display = '';
@@ -1847,8 +1821,10 @@
       settings[key] = $('modal-heading').value.trim();
       markDirty('site-settings.json');
     } else {
+      if (!pages[editingPageKey] || editingSectionIndex < 0) { toast('Page or section not found', true); closeModal(); return; }
       var heading = $('modal-heading').value.trim();
       var section = pages[editingPageKey].sections[editingSectionIndex];
+      if (!section) { toast('Section not found', true); closeModal(); return; }
       if (editingColumn === 'right') {
         section.heading2 = heading;
         section.body2 = modalQuill.root.innerHTML;

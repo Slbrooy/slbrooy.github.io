@@ -124,6 +124,9 @@
         el.innerHTML = '\u201c' + val + '\u201d';
       } else if (key === 'quoteBody') {
         el.textContent = val;
+      } else if (key === 'email' && el.tagName === 'A') {
+        el.href = 'mailto:' + val;
+        el.textContent = val;
       } else {
         el.innerHTML = val;
       }
