@@ -1535,11 +1535,55 @@
   }
 
   function buildAboutSelenaPage() {
-    var html = pvHero('about-selena', 'Selena La Brooy', 'Certified Rolfer, Certified Movement Integration Practitioner');
-    pages['about-selena'].sections.forEach(function(sec) {
-      html += pvSection('about-selena', sec.id);
+    var pk = 'about-selena';
+    var html = pvHero(pk, 'Selena La Brooy', 'Certified Rolfer, Certified Movement Integration Practitioner');
+    var secs = pages[pk].sections;
+    // Bio sections that flow together next to the image
+    var bioIds = ['bio-intro', 'bio-story', 'bio-extended', 'bio-mission'];
+    var bioSecs = bioIds.map(function(id) { return secs.find(function(s) { return s.id === id; }); }).filter(Boolean);
+    var otherSecs = secs.filter(function(s) { return bioIds.indexOf(s.id) < 0; });
+
+    if (bioSecs.length) {
+      var introSec = getSection(pk, 'bio-intro');
+      var imgUrl = introSec.image ? getImageUrl(introSec.image) : '';
+      var imgLabel = introSec.image ? 'Change Image' : 'Add Image';
+
+      html += '<div class="pv-section" style="cursor:default;padding:0;overflow:hidden;">';
+      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">';
+
+      // Image column
+      html += '<div style="position:relative;padding:30px;">';
+      html += '<img src="' + imgUrl + '" alt="" style="width:100%;border-radius:12px;">';
+      html += '<button class="pv-section-img-btn" style="opacity:1;" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pk + '\',\'bio-intro\')">' + imgLabel + '</button>';
+      html += '</div>';
+
+      // Text column - all bio sections stacked
+      html += '<div style="padding:30px 30px 30px 0;">';
+      bioSecs.forEach(function(sec) {
+        var isAccent = sec.type === 'accent';
+        var moveIdx = secs.indexOf(sec);
+        var totalSecs = secs.length;
+        var moveUp = moveIdx > 0 ? '<button class="pv-section-move" onclick="event.stopPropagation();CMS.moveSection(\'' + pk + '\',' + moveIdx + ',-1)" title="Move up">&uarr;</button>' : '';
+        var moveDown = moveIdx < totalSecs - 1 ? '<button class="pv-section-move" onclick="event.stopPropagation();CMS.moveSection(\'' + pk + '\',' + moveIdx + ',1)" title="Move down">&darr;</button>' : '';
+        var delBtn = '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pk + '\',\'' + sec.id + '\')">Delete</button>';
+
+        html += '<div style="' + (isAccent ? 'background:#F0EDE8;border-radius:12px;padding:24px;' : '') + 'margin-bottom:20px;position:relative;cursor:pointer;" onclick="CMS.openSectionModal(\'' + pk + '\',\'' + sec.id + '\')">';
+        html += '<div class="pv-section-controls" style="position:absolute;top:4px;right:4px;">' + moveUp + moveDown + delBtn + '</div>';
+        html += '<div class="pv-section-label" style="position:static;display:inline-block;margin-bottom:6px;">Edit</div>';
+        if (sec.heading) html += '<h2 style="font-size:1.4em;margin-bottom:8px;">' + sec.heading + '</h2>';
+        if (sec.body) html += '<div style="font-size:14px;line-height:1.7;color:#555;">' + sec.body + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+
+      html += '</div></div>';
+    }
+
+    // Remaining sections (passion-quote, closing, etc.)
+    otherSecs.forEach(function(sec) {
+      html += pvSection(pk, sec.id);
     });
-    html += pvAddSection('about-selena');
+    html += pvAddSection(pk);
     return html;
   }
 
