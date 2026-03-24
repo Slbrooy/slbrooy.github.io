@@ -210,6 +210,19 @@
     });
   }
 
+  // Headings that aren't direct siblings of the body element
+  function renderSectionHeadings() {
+    document.querySelectorAll('[data-cms-section-heading]').forEach(function(el) {
+      var pageKey = el.dataset.cmsPage;
+      var sectionId = el.dataset.cmsSectionHeading;
+      if (!pages[pageKey]) return;
+      var section = pages[pageKey].sections.find(function(s) { return s.id === sectionId; });
+      if (section && section.heading) {
+        el.innerHTML = section.heading;
+      }
+    });
+  }
+
   function renderPageSections() {
     document.querySelectorAll('[data-cms-section]').forEach(function(el) {
       var pageKey = el.dataset.cmsPage;
@@ -431,6 +444,7 @@
     renderNav();
     renderFooter();
     renderPageSections();
+    renderSectionHeadings();
     renderQuoteSections();
     renderDynamicPage();
     renderHeroImage();
