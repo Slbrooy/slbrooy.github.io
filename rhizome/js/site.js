@@ -90,8 +90,9 @@
 
   // ===== FOOTER =====
   function renderFooter() {
-    var footerNav = document.querySelector('.footer-nav');
-    if (footerNav && loaded.pages && loaded.settings) {
+    // Footer links use the .footer-links container with dot separators
+    var footerLinks = document.querySelector('.footer-links');
+    if (footerLinks && loaded.pages && loaded.settings) {
       var items = [];
       Object.keys(pages).forEach(function(key) {
         var p = pages[key];
@@ -101,20 +102,29 @@
       });
       items.sort(function(a, b) { return a.order - b.order; });
       var html = '';
-      items.forEach(function(item) {
+      items.forEach(function(item, i) {
+        if (i > 0) html += '<span class="dot">&middot;</span>';
         html += '<a href="' + item.url + '">' + item.label + '</a>';
       });
-      footerNav.innerHTML = html;
+      footerLinks.innerHTML = html;
     }
-    // Footer contact info
-    document.querySelectorAll('.footer-info p').forEach(function(el) {
-      if (settings.email) {
-        el.innerHTML = '<a href="mailto:' + settings.email + '">' + settings.email + '</a>';
-        if (settings.address) {
-          el.innerHTML += '<br>' + settings.address;
+    // Also handle legacy .footer-nav
+    var footerNav = document.querySelector('.footer-nav');
+    if (footerNav && loaded.pages) {
+      var navItems = [];
+      Object.keys(pages).forEach(function(key) {
+        var p = pages[key];
+        if (p.showInNav) {
+          navItems.push({ label: p.navLabel || p.title, url: BASE + (p.url || key + '.html'), order: p.navOrder || 99 });
         }
-      }
-    });
+      });
+      navItems.sort(function(a, b) { return a.order - b.order; });
+      var navHtml = '';
+      navItems.forEach(function(item) {
+        navHtml += '<a href="' + item.url + '">' + item.label + '</a>';
+      });
+      footerNav.innerHTML = navHtml;
+    }
   }
 
   // ===== SETTINGS-DRIVEN CONTENT =====
@@ -270,23 +280,44 @@
 
       var html = '';
       if (upcoming.length > 0) {
-        html += renderEventCards(upcoming);
+        upcoming.forEach(function(ev) {
+          html += renderEventListItem(ev);
+        });
       } else {
         html += '<p style="text-align:center;color:var(--color-text-light);padding:40px 0;">No upcoming events at this time. Check back soon!</p>';
       }
 
       if (past.length > 0) {
         html += '<div style="margin-top:60px;">';
-        html += '<h2 class="section-title" style="text-align:center;margin-bottom:30px;">Past Events</h2>';
-        html += '<div class="events-grid">';
+        html += '<h2 class="section-title" style="margin-bottom:30px;">Past Events</h2>';
         past.forEach(function(ev) {
-          html += renderEventCard(ev, true);
+          html += renderEventListItem(ev, true);
         });
-        html += '</div></div>';
+        html += '</div>';
       }
 
       target.innerHTML = html;
     });
+  }
+
+  function renderEventListItem(ev, isPast) {
+    var opacity = isPast ? 'opacity:0.6;' : '';
+    var html = '<div class="event-list-item" style="' + opacity + '">';
+    if (ev.image) {
+      html += '<div class="event-list-image"><a href="' + BASE + 'events/event.html#' + ev.id + '"><img src="' + BASE + ev.image + '" alt="' + ev.title + '"></a></div>';
+    }
+    html += '<div class="event-list-body">';
+    html += '<h3><a href="' + BASE + 'events/event.html#' + ev.id + '" style="color:inherit;">' + ev.title + '</a></h3>';
+    html += '<p class="event-dates">' + ev.dates + '</p>';
+    if (ev.category) html += '<span class="event-category">' + ev.category + '</span>';
+    if (ev.excerpt) html += '<p>' + ev.excerpt + '</p>';
+    html += '<a href="' + BASE + 'events/event.html#' + ev.id + '" class="event-link">View Event</a>';
+    if (ev.startDate) {
+      var gcalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(ev.title) + '&dates=' + ev.startDate.replace(/-/g, '') + '/' + (ev.endDate || ev.startDate).replace(/-/g, '') + '&location=' + encodeURIComponent(ev.location || '');
+      html += '<div class="calendar-links"><a href="' + gcalUrl + '" target="_blank">Google Calendar</a></div>';
+    }
+    html += '</div></div>';
+    return html;
   }
 
   function renderEventCards(events) {

@@ -9,29 +9,32 @@
       {
         "id": "intro",
         "type": "text",
-        "heading": "Welcome to Rhizome Springs",
-        "body": "<p>Rhizome Springs is an off-grid community and gathering place on Salt Spring Island, BC. We host workshops, dance festivals, ecological learning, creative residencies, and community gatherings rooted in our connection to the land.</p>"
+        "heading": "",
+        "body": "<p>Rhizome Springs is an off-grid community on Salt Spring Island, British Columbia. It is a place for people to gather, explore, build, learn, live and grow into new regenerative ways. Through workshops, community development and events, Rhizome Springs operates as a living laboratory for creative and ecological exploration.</p>"
       },
       {
-        "id": "pillar-embodiment",
+        "id": "philosophy-heading",
         "type": "text",
-        "heading": "Embodiment",
-        "body": "Dance, movement, and somatic practices that deepen our relationship with our bodies and each other.",
-        "image": "images/pillar-embodiment.jpg"
+        "heading": "What does it mean to live in harmony?",
+        "body": ""
       },
       {
-        "id": "pillar-ecology",
+        "id": "philosophy",
         "type": "text",
-        "heading": "Ecology",
-        "body": "Learning to live in reciprocity with the land through permaculture, restoration, and ecological stewardship.",
-        "image": "images/pillar-ecology.jpg"
+        "heading": "",
+        "body": "<p>At Rhizome Springs, the land is our laboratory, the community our teachers and our bodies the compass. We are dedicated to the ongoing inquiry into how we relate to ourselves, each other and the land we live on. Through the lenses of ecology, creativity and embodiment, we continuously explore what it means to be in reciprocity with the living world around us.</p>"
       },
       {
-        "id": "pillar-creativity",
+        "id": "cta-heading",
         "type": "text",
-        "heading": "Creativity",
-        "body": "Art, music, building, and making as pathways to deeper understanding and community connection.",
-        "image": "images/pillar-creativity.jpg"
+        "heading": "We've just begun planting this seed, would you like to help us tend to it?",
+        "body": ""
+      },
+      {
+        "id": "cta-body",
+        "type": "text",
+        "heading": "",
+        "body": "<p>Rhizome Springs is in early development stages. We are building infrastructure, growing food systems, and creating gathering spaces. If you feel called to be part of this living project, we would love to hear from you.</p>"
       }
     ]
   },
@@ -44,48 +47,81 @@
     "heroImage": "images/about-hero.jpg",
     "sections": [
       {
-        "id": "the-land",
-        "type": "text-image",
-        "heading": "The Land",
-        "body": "<p>Rhizome Springs sits on 20 acres of forested land on Salt Spring Island, in the traditional territory of the Hul'q'umi'num' and SENCO\u0164EN speaking peoples. The property features old-growth forest, natural springs, meadows, and a growing network of gardens and gathering spaces.</p><p>We steward this land with care, guided by principles of ecological restoration and permaculture. Our buildings are hand-built using natural materials, and we live off-grid, powered by solar energy and spring water.</p>",
-        "image": "images/about-land.jpg",
-        "imagePosition": "right"
+        "id": "vision-heading",
+        "type": "text",
+        "heading": "Our Vision",
+        "body": ""
       },
       {
         "id": "vision",
         "type": "text",
-        "heading": "Our Vision",
-        "body": "<p>Rhizome Springs is a living laboratory for regenerative culture. We believe that by deepening our relationship with the land, our bodies, and each other, we can discover new ways of living that are both sustaining and joyful. Through workshops, festivals, residencies, and daily practice, we explore what it means to be fully alive in community.</p>"
+        "heading": "",
+        "body": "<p>To seed a future where we live in integrity with ourselves, each other, and nature \u2013 and in appreciation of their intricate connections.</p>"
       },
       {
-        "id": "embodiment-detail",
-        "type": "text-image",
-        "heading": "Movement, Dance & Somatic Practice",
-        "body": "<p>We host contact improvisation jams, fusion dance festivals, and somatic workshops throughout the year. Our outdoor dance platform and indoor studio provide spaces for movers of all levels to explore their embodied experience. From ecstatic dance to structured technique classes, our programming invites participants to listen deeply to their bodies and discover new ways of moving together.</p>",
-        "image": "images/pillar-embodiment.jpg",
-        "imagePosition": "left"
+        "id": "mission-heading",
+        "type": "text",
+        "heading": "Our Mission",
+        "body": ""
       },
       {
-        "id": "ecology-detail",
+        "id": "mission",
+        "type": "text",
+        "heading": "",
+        "body": "<p>To cultivate a living process of inquiry exploring resilient and regenerative forms of community, through the lenses of ecology, creativity and embodiment.</p>"
+      },
+      {
+        "id": "the-land",
         "type": "text-image",
-        "heading": "Land Stewardship & Permaculture",
-        "body": "<p>Our ecological programming includes permaculture design courses, forest restoration work parties, wild food foraging walks, and natural building workshops. We practice and teach regenerative land management, seed saving, and food preservation. Living off-grid means learning to work with natural systems rather than against them.</p>",
-        "image": "images/pillar-ecology.jpg",
+        "heading": "The Land",
+        "body": "<p>Rhizome Springs is situated on the south side of Mt. Tuam on Salt Spring Island, within the unceded territories of the Coast Salish peoples. The 20-acre property features old-growth forest, natural springs, meadows, and a growing network of gardens and gathering spaces.</p><p>We live off-grid, powered by solar energy and spring water. Our buildings are hand-built using natural materials. We steward this land with care, guided by principles of ecological restoration and permaculture.</p>",
+        "image": "images/about-land.jpg",
         "imagePosition": "right"
       },
       {
-        "id": "creativity-detail",
-        "type": "text-image",
-        "heading": "Art, Music & Making",
-        "body": "<p>Creativity is woven into everything we do at Rhizome Springs. From music jams around the fire to collaborative art projects, from woodworking to weaving, we believe that making things together builds community and deepens our understanding of the world. Our residency program invites artists and makers to spend time on the land, creating work inspired by this place.</p>",
-        "image": "images/pillar-creativity.jpg",
-        "imagePosition": "left"
+        "id": "ethos-heading",
+        "type": "text",
+        "heading": "We believe in living, working and playing mindfully with ourselves, each other and the land",
+        "body": ""
+      },
+      {
+        "id": "ethos",
+        "type": "text",
+        "heading": "",
+        "body": "<p>We are committed to cultivating an inclusive, self-sufficient and regenerative community. We value diversity of thought, practice and background. We seek to learn from the land and from each other, honouring both ancient wisdom and creative innovation.</p>"
+      },
+      {
+        "id": "pillar-embodiment",
+        "type": "text",
+        "heading": "Embodiment",
+        "body": "Soma: the body experienced from within, at the level of cellular awareness. Through practices of meditation, Contact Improvisation, Body-Mind Centering, dance, yoga, and somatic exploration, we deepen our relationship with our bodies and each other.",
+        "image": "images/pillar-embodiment.jpg"
+      },
+      {
+        "id": "pillar-ecology",
+        "type": "text",
+        "heading": "Ecology",
+        "body": "Ecology: the study of organisms and their relationships to the environment. We practice and teach regenerative land management, permaculture design, food forests, seed saving, natural building, and ecological restoration.",
+        "image": "images/pillar-ecology.jpg"
+      },
+      {
+        "id": "pillar-creativity",
+        "type": "text",
+        "heading": "Creativity",
+        "body": "Creativity: the artistic canvas upon which we paint new possibilities. Through residencies, performances, workshops, music, and collaborative projects, we explore making as a pathway to understanding.",
+        "image": "images/pillar-creativity.jpg"
+      },
+      {
+        "id": "community",
+        "type": "text",
+        "heading": "Community",
+        "body": "<p>Rhizome Springs is a co-creation. Every structure has been built by volunteers, every garden tended by community members. We welcome people who want to contribute their skills, energy, and curiosity to this ongoing experiment in living differently.</p>"
       },
       {
         "id": "selena",
         "type": "text-image",
         "heading": "Selena La Brooy",
-        "body": "<p>Selena is the founder and steward of Rhizome Springs. A certified Rolfer, dancer, and ecological builder, she has been tending this land since 2018. Her vision for Rhizome Springs grew from a lifelong passion for movement, community, and living close to the earth.</p><p>When not hosting events or working on the land, Selena maintains a Rolfing practice on Salt Spring Island, helping people find ease and alignment in their bodies.</p>",
+        "body": "<p>Selena is the founder and steward of Rhizome Springs. Her path has woven through dance, healing arts, herbalism, and ecological building. A certified Rolfer and lifelong mover, Selena's vision for Rhizome Springs grew from a deep passion for community, embodied living, and tending the land.</p>",
         "image": "images/selena.jpg",
         "imagePosition": "left"
       }
@@ -99,28 +135,6 @@
     "navOrder": 2,
     "heroImage": "images/events-hero.jpg",
     "sections": []
-  },
-  "contact": {
-    "title": "Get Involved",
-    "url": "contact.html",
-    "showInNav": true,
-    "navLabel": "Get Involved",
-    "navOrder": 3,
-    "heroImage": "images/contact-hero.jpg",
-    "sections": [
-      {
-        "id": "intro",
-        "type": "text",
-        "heading": "Reach Out",
-        "body": "<p>We love hearing from people who are curious about Rhizome Springs. Whether you want to attend an event, volunteer, propose a workshop, or just say hello, we would love to hear from you.</p>"
-      },
-      {
-        "id": "ways-to-get-involved",
-        "type": "text",
-        "heading": "Ways to Get Involved",
-        "body": "<p><strong>Attend an event</strong> - Browse our upcoming workshops, festivals, and gatherings.</p><p><strong>Volunteer</strong> - We welcome work-trade volunteers who want to help with land stewardship, building, and event support.</p><p><strong>Propose a workshop</strong> - Have a skill or practice to share? We are always open to collaboration.</p><p><strong>Residency</strong> - Artists, makers, and practitioners can apply for time on the land.</p>"
-      }
-    ]
   },
   "shop": {
     "title": "Cart",

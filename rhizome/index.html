@@ -14,66 +14,40 @@
 
   <!-- HEADER -->
   <header>
-    <div class="container">
+    <div class="container header-grid">
+      <nav class="nav-left">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+      </nav>
       <a href="index.html" class="logo">
         <img src="images/logo-white.png" alt="Rhizome Springs">
       </a>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
-      <nav>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
+      <nav class="nav-right">
+        <a href="mailto:info@rhizomesprings.com">Get Involved</a>
         <a href="shop.html" class="cart-link" aria-label="Cart">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="cart-badge"></span>
         </a>
       </nav>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero" style="background-image: url('images/hero-land.jpg');">
     <div class="hero-content">
-      <h1 data-cms-setting="heroHeadline">The Land of Living Inquiry</h1>
-      <p>Ecology, embodiment, and creativity on Salt Spring Island</p>
-      <a href="events.html" class="btn">Explore Events</a>
+      <h1 data-cms-setting="heroHeadline">The Land of<br>Living Inquiry</h1>
+      <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
     </div>
   </section>
 
-  <!-- INTRO -->
+  <!-- ABOUT INTRO -->
   <section>
-    <div class="container" style="text-align:center;">
-      <div class="reveal" style="max-width:750px;margin:0 auto;">
-        <h2 class="section-title" style="text-align:center;">Welcome to Rhizome Springs</h2>
-        <div style="font-size:18px;line-height:1.8;color:var(--color-text-light);" data-cms-page="home" data-cms-section="intro">
-          <p style="text-align:center;">Rhizome Springs is an off-grid community and gathering place on Salt Spring Island, BC. We host workshops, dance festivals, ecological learning, creative residencies, and community gatherings rooted in our connection to the land.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PILLARS -->
-  <section class="section-accent">
-    <div class="container">
-      <h2 class="section-title reveal" style="text-align:center;margin-bottom:50px;">Our Pillars</h2>
-      <div class="grid-3">
-        <div class="pillar-card reveal">
-          <img src="images/pillar-embodiment.jpg" alt="Embodiment" class="pillar-icon" data-cms-section-img="pillar-embodiment">
-          <h3>Embodiment</h3>
-          <p data-cms-page="home" data-cms-section="pillar-embodiment">Dance, movement, and somatic practices that deepen our relationship with our bodies and each other.</p>
-        </div>
-        <div class="pillar-card reveal">
-          <img src="images/pillar-ecology.jpg" alt="Ecology" class="pillar-icon" data-cms-section-img="pillar-ecology">
-          <h3>Ecology</h3>
-          <p data-cms-page="home" data-cms-section="pillar-ecology">Learning to live in reciprocity with the land through permaculture, restoration, and ecological stewardship.</p>
-        </div>
-        <div class="pillar-card reveal">
-          <img src="images/pillar-creativity.jpg" alt="Creativity" class="pillar-icon" data-cms-section-img="pillar-creativity">
-          <h3>Creativity</h3>
-          <p data-cms-page="home" data-cms-section="pillar-creativity">Art, music, building, and making as pathways to deeper understanding and community connection.</p>
-        </div>
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <p class="lead-text" data-cms-page="home" data-cms-section="intro">Rhizome Springs is an off-grid community on Salt Spring Island, British Columbia. It is a place for people to gather, explore, build, learn, live and grow into new regenerative ways. Through workshops, community development and events, Rhizome Springs operates as a living laboratory for creative and ecological exploration.</p>
       </div>
     </div>
   </section>
@@ -81,59 +55,84 @@
   <!-- UPCOMING EVENTS -->
   <section>
     <div class="container">
-      <h2 class="section-title reveal" style="text-align:center;">Upcoming Events</h2>
-      <p class="section-intro reveal">Workshops, festivals, and gatherings at Rhizome Springs</p>
+      <h2 class="section-title text-center reveal">Upcoming Events</h2>
       <div id="events-preview">
         <!-- Rendered by site.js from content/events.json -->
       </div>
-      <div class="reveal" style="text-align:center;margin-top:40px;">
+      <div class="reveal text-center" style="margin-top:40px;">
         <a href="events.html" class="btn">View All Events</a>
       </div>
     </div>
   </section>
 
-  <!-- QUOTE -->
-  <section class="quote-section" style="background-image: url('images/quote-bg.jpg');" data-cms-section-img="quote">
-    <div class="container">
-      <p class="quote-text reveal" data-cms-setting="quoteText">"We are not separate from the land. We are the land becoming aware of itself."</p>
-      <div class="reveal" style="text-align:center;">
-        <a href="contact.html" class="btn">Get Involved</a>
+  <!-- PHILOSOPHY -->
+  <section class="section-accent">
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <h2 class="section-title text-center" data-cms-page="home" data-cms-section="philosophy-heading">What does it mean to live in harmony?</h2>
+        <p class="lead-text" style="font-style:italic;margin-bottom:30px;">In harmony with the land that feeds us, the air that breathes us, the water that enlivens us...</p>
+        <p data-cms-page="home" data-cms-section="philosophy">At Rhizome Springs, the land is our laboratory, the community our teachers and our bodies the compass. We are dedicated to the ongoing inquiry into how we relate to ourselves, each other and the land we live on. Through the lenses of ecology, creativity and embodiment, we continuously explore what it means to be in reciprocity with the living world around us.</p>
       </div>
     </div>
   </section>
 
-  <!-- NEWSLETTER -->
-  <section class="newsletter-section">
+  <!-- CTA -->
+  <section>
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <h2 class="section-title text-center" data-cms-page="home" data-cms-section="cta-heading">We've just begun planting this seed, would you like to help us tend to it?</h2>
+        <p data-cms-page="home" data-cms-section="cta-body">Rhizome Springs is in early development stages. We are building infrastructure, growing food systems, and creating gathering spaces. If you feel called to be part of this living project, we would love to hear from you.</p>
+        <div style="margin-top:30px;">
+          <a href="mailto:info@rhizomesprings.com" class="btn">Get Involved</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE GALLERY -->
+  <section style="padding-top:0;">
     <div class="container">
-      <h2 class="section-title">Stay Connected</h2>
-      <p>Join our newsletter for updates on events, gatherings, and life at Rhizome Springs.</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-      <p class="newsletter-msg"></p>
+      <div class="image-gallery reveal">
+        <img src="images/about-hero.jpg" alt="Rhizome Springs landscape" loading="lazy">
+        <img src="images/pillar-ecology.jpg" alt="Ecology at Rhizome Springs" loading="lazy">
+        <img src="images/event-permaculture.jpg" alt="Garden work" loading="lazy">
+        <img src="images/contact-hero.jpg" alt="Gathering in the zome" loading="lazy">
+        <img src="images/pillar-embodiment.jpg" alt="Dance and movement" loading="lazy">
+        <img src="images/quote-bg.jpg" alt="Sunset at Rhizome Springs" loading="lazy">
+        <img src="images/event-ci-jam.jpg" alt="Contact improvisation" loading="lazy">
+        <img src="images/pillar-creativity.jpg" alt="Creativity" loading="lazy">
+        <img src="images/event-residency.jpg" alt="Music at Rhizome Springs" loading="lazy">
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="logo-footer">
-        <img src="images/logo-white.png" alt="Rhizome Springs">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <img src="images/logo-white.png" alt="Rhizome Springs" class="footer-logo-vertical">
+          <img src="images/logo-horizontal-white.png" alt="Rhizome Springs" class="footer-logo-horizontal">
+        </div>
+        <div class="footer-info text-center">
+          <p>The Land of Living Inquiry</p>
+          <p>Salt Spring Island, British Columbia</p>
+          <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <span class="dot">&middot;</span>
+          <a href="events.html">Events</a>
+          <span class="dot">&middot;</span>
+          <a href="mailto:info@rhizomesprings.com">Get Involved</a>
+        </div>
       </div>
-      <div class="footer-info">
-        <p>Salt Spring Island, BC, Canada</p>
-      </div>
-      <div class="footer-cta">
-        <a href="events.html" class="btn">Explore Events</a>
-      </div>
-      <nav class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
-      </nav>
-      <div class="footer-bottom">
-        &copy; 2026 Rhizome Springs. All rights reserved.
+      <div class="footer-newsletter">
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email Address" required>
+          <button type="submit">Sign Up</button>
+        </form>
+        <p class="newsletter-msg"></p>
       </div>
     </div>
   </footer>
@@ -141,14 +140,8 @@
   <script>
     // Nav toggle
     document.querySelector('.nav-toggle').addEventListener('click', function() {
-      document.querySelector('nav').classList.toggle('active');
+      document.querySelectorAll('.nav-left, .nav-right').forEach(function(n) { n.classList.toggle('active'); });
       document.querySelector('header').classList.toggle('nav-open');
-    });
-    document.querySelectorAll('nav a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        document.querySelector('nav').classList.remove('active');
-        document.querySelector('header').classList.remove('nav-open');
-      });
     });
 
     // Scroll reveal

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - Rhizome Springs</title>
+  <title>About Us - Rhizome Springs</title>
   <meta name="description" content="Learn about Rhizome Springs, an off-grid community on Salt Spring Island dedicated to ecology, embodiment, and creativity.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,29 +14,47 @@
 
   <!-- HEADER -->
   <header>
-    <div class="container">
+    <div class="container header-grid">
+      <nav class="nav-left">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+      </nav>
       <a href="index.html" class="logo">
         <img src="images/logo-white.png" alt="Rhizome Springs">
       </a>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
-      <nav>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
+      <nav class="nav-right">
+        <a href="mailto:info@rhizomesprings.com">Get Involved</a>
         <a href="shop.html" class="cart-link" aria-label="Cart">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="cart-badge"></span>
         </a>
       </nav>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero hero-short" style="background-image: url('images/about-hero.jpg');">
     <div class="hero-content">
-      <h1>About Rhizome Springs</h1>
+      <h1>About Us</h1>
+    </div>
+  </section>
+
+  <!-- VISION & MISSION -->
+  <section>
+    <div class="container">
+      <div class="grid-2 reveal">
+        <div>
+          <h2 class="section-title" data-cms-page="about" data-cms-section="vision-heading">Our Vision</h2>
+          <p data-cms-page="about" data-cms-section="vision">To seed a future where we live in integrity with ourselves, each other, and nature &ndash; and in appreciation of their intricate connections.</p>
+        </div>
+        <div>
+          <h2 class="section-title" data-cms-page="about" data-cms-section="mission-heading">Our Mission</h2>
+          <p data-cms-page="about" data-cms-section="mission">To cultivate a living process of inquiry exploring resilient and regenerative forms of community, through the lenses of ecology, creativity and embodiment.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -46,8 +64,8 @@
       <div class="reveal-left">
         <h2 class="section-title">The Land</h2>
         <div data-cms-page="about" data-cms-section="the-land">
-          <p>Rhizome Springs sits on 20 acres of forested land on Salt Spring Island, in the traditional territory of the Hul'q'umi'num' and SENCO&#x164;EN speaking peoples. The property features old-growth forest, natural springs, meadows, and a growing network of gardens and gathering spaces.</p>
-          <p style="margin-top:16px;">We steward this land with care, guided by principles of ecological restoration and permaculture. Our buildings are hand-built using natural materials, and we live off-grid, powered by solar energy and spring water.</p>
+          <p>Rhizome Springs is situated on the south side of Mt. Tuam on Salt Spring Island, within the unceded territories of the Coast Salish peoples. The 20-acre property features old-growth forest, natural springs, meadows, and a growing network of gardens and gathering spaces.</p>
+          <p style="margin-top:16px;">We live off-grid, powered by solar energy and spring water. Our buildings are hand-built using natural materials. We steward this land with care, guided by principles of ecological restoration and permaculture.</p>
         </div>
       </div>
       <div class="reveal-right">
@@ -58,134 +76,168 @@
     </div>
   </section>
 
-  <!-- MISSION -->
+  <!-- ETHOS -->
   <section class="section-accent">
-    <div class="container" style="max-width:800px;text-align:center;">
-      <div class="reveal">
-        <h2 class="section-title" style="text-align:center;">Our Vision</h2>
-        <div style="font-size:18px;line-height:1.9;" data-cms-page="about" data-cms-section="vision">
-          <p style="text-align:center;">Rhizome Springs is a living laboratory for regenerative culture. We believe that by deepening our relationship with the land, our bodies, and each other, we can discover new ways of living that are both sustaining and joyful. Through workshops, festivals, residencies, and daily practice, we explore what it means to be fully alive in community.</p>
-        </div>
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <p class="section-subtitle"><em>Our Ethos</em></p>
+        <h2 class="section-title text-center" data-cms-page="about" data-cms-section="ethos-heading">We believe in living, working and playing mindfully with ourselves, each other and the land</h2>
+        <p data-cms-page="about" data-cms-section="ethos">We are committed to cultivating an inclusive, self-sufficient and regenerative community. We value diversity of thought, practice and background. We seek to learn from the land and from each other, honouring both ancient wisdom and creative innovation.</p>
       </div>
     </div>
   </section>
 
-  <!-- PILLARS DETAIL -->
+  <!-- THREE PILLARS -->
   <section>
     <div class="container">
-      <h2 class="section-title reveal" style="text-align:center;margin-bottom:60px;">What We Do</h2>
-
-      <div class="grid-2" style="margin-bottom:80px;">
-        <div class="reveal-left">
-          <div class="img-hover-container">
-            <img src="images/pillar-embodiment.jpg" alt="Embodiment at Rhizome Springs" data-cms-section-img="embodiment-detail">
-          </div>
+      <div class="grid-3">
+        <div class="pillar-card reveal">
+          <img src="images/pillar-embodiment.jpg" alt="Embodiment" class="pillar-icon" data-cms-section-img="pillar-embodiment">
+          <h3>Embodiment</h3>
+          <p data-cms-page="about" data-cms-section="pillar-embodiment"><em>Soma:</em> the body experienced from within, at the level of cellular awareness. Through practices of meditation, Contact Improvisation, Body-Mind Centering, dance, yoga, and somatic exploration, we deepen our relationship with our bodies and each other.</p>
+          <details class="pillar-details">
+            <summary>Learn more</summary>
+            <ul>
+              <li>Contact Improvisation jams and festivals</li>
+              <li>Fusion dance events</li>
+              <li>Somatic workshops</li>
+              <li>Body-Mind Centering</li>
+              <li>Axis Syllabus</li>
+              <li>Meditation and mindfulness</li>
+            </ul>
+          </details>
         </div>
-        <div class="reveal-right">
-          <p class="section-subtitle">Embodiment</p>
-          <h3 class="section-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">Movement, Dance & Somatic Practice</h3>
-          <div data-cms-page="about" data-cms-section="embodiment-detail">
-            <p>We host contact improvisation jams, fusion dance festivals, and somatic workshops throughout the year. Our outdoor dance platform and indoor studio provide spaces for movers of all levels to explore their embodied experience. From ecstatic dance to structured technique classes, our programming invites participants to listen deeply to their bodies and discover new ways of moving together.</p>
-          </div>
+        <div class="pillar-card reveal">
+          <img src="images/pillar-ecology.jpg" alt="Ecology" class="pillar-icon" data-cms-section-img="pillar-ecology">
+          <h3>Ecology</h3>
+          <p data-cms-page="about" data-cms-section="pillar-ecology"><em>Ecology:</em> the study of organisms and their relationships to the environment. We practice and teach regenerative land management, permaculture design, food forests, seed saving, natural building, and ecological restoration.</p>
+          <details class="pillar-details">
+            <summary>Learn more</summary>
+            <ul>
+              <li>Food forest and permaculture</li>
+              <li>Natural building</li>
+              <li>Ecological restoration</li>
+              <li>Wild food foraging</li>
+              <li>Seed saving</li>
+              <li>First Nations ecological practices</li>
+            </ul>
+          </details>
         </div>
-      </div>
-
-      <div class="grid-2" style="margin-bottom:80px;">
-        <div class="reveal-left" style="order:2;">
-          <div class="img-hover-container">
-            <img src="images/pillar-ecology.jpg" alt="Ecology at Rhizome Springs" data-cms-section-img="ecology-detail">
-          </div>
-        </div>
-        <div class="reveal-right" style="order:1;">
-          <p class="section-subtitle">Ecology</p>
-          <h3 class="section-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">Land Stewardship & Permaculture</h3>
-          <div data-cms-page="about" data-cms-section="ecology-detail">
-            <p>Our ecological programming includes permaculture design courses, forest restoration work parties, wild food foraging walks, and natural building workshops. We practice and teach regenerative land management, seed saving, and food preservation. Living off-grid means learning to work with natural systems rather than against them.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="reveal-left">
-          <div class="img-hover-container">
-            <img src="images/pillar-creativity.jpg" alt="Creativity at Rhizome Springs" data-cms-section-img="creativity-detail">
-          </div>
-        </div>
-        <div class="reveal-right">
-          <p class="section-subtitle">Creativity</p>
-          <h3 class="section-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">Art, Music & Making</h3>
-          <div data-cms-page="about" data-cms-section="creativity-detail">
-            <p>Creativity is woven into everything we do at Rhizome Springs. From music jams around the fire to collaborative art projects, from woodworking to weaving, we believe that making things together builds community and deepens our understanding of the world. Our residency program invites artists and makers to spend time on the land, creating work inspired by this place.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SELENA -->
-  <section class="section-accent">
-    <div class="container grid-2" style="max-width:1000px;">
-      <div class="reveal-left">
-        <div class="img-hover-container">
-          <img src="images/selena.jpg" alt="Selena La Brooy" data-cms-section-img="selena" style="border-radius:16px;">
-        </div>
-      </div>
-      <div class="reveal-right">
-        <h2 class="section-title">Selena La Brooy</h2>
-        <div data-cms-page="about" data-cms-section="selena">
-          <p>Selena is the founder and steward of Rhizome Springs. A certified Rolfer, dancer, and ecological builder, she has been tending this land since 2018. Her vision for Rhizome Springs grew from a lifelong passion for movement, community, and living close to the earth.</p>
-          <p style="margin-top:16px;">When not hosting events or working on the land, Selena maintains a Rolfing practice on Salt Spring Island, helping people find ease and alignment in their bodies.</p>
+        <div class="pillar-card reveal">
+          <img src="images/pillar-creativity.jpg" alt="Creativity" class="pillar-icon" data-cms-section-img="pillar-creativity">
+          <h3>Creativity</h3>
+          <p data-cms-page="about" data-cms-section="pillar-creativity"><em>Creativity:</em> the artistic canvas upon which we paint new possibilities. Through residencies, performances, workshops, music, and collaborative projects, we explore making as a pathway to understanding.</p>
+          <details class="pillar-details">
+            <summary>Learn more</summary>
+            <ul>
+              <li>Artist residencies</li>
+              <li>Music jams and performances</li>
+              <li>Woodworking and building</li>
+              <li>Collaborative art projects</li>
+              <li>Creative workshops</li>
+            </ul>
+          </details>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- NEWSLETTER -->
-  <section class="newsletter-section">
+  <!-- COMMUNITY -->
+  <section class="quote-section" style="background-image: url('images/contact-hero.jpg');">
     <div class="container">
-      <h2 class="section-title">Stay Connected</h2>
-      <p>Join our newsletter for updates on events, gatherings, and life at Rhizome Springs.</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-      <p class="newsletter-msg"></p>
+      <div class="reveal" style="max-width:700px;">
+        <h2 class="section-title" style="color:#fff;">Community</h2>
+        <p style="color:rgba(255,255,255,0.9);font-size:18px;line-height:1.8;" data-cms-page="about" data-cms-section="community">Rhizome Springs is a co-creation. Every structure has been built by volunteers, every garden tended by community members. We welcome people who want to contribute their skills, energy, and curiosity to this ongoing experiment in living differently.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR STEWARDS -->
+  <section>
+    <div class="container">
+      <h2 class="section-title text-center reveal">Our Stewards</h2>
+      <div class="grid-2" style="max-width:900px;margin:40px auto 0;">
+        <div class="reveal-left">
+          <div class="img-hover-container">
+            <img src="images/selena.jpg" alt="Selena La Brooy" data-cms-section-img="selena">
+          </div>
+        </div>
+        <div class="reveal-right">
+          <h3 class="section-title" style="font-size:1.5rem;">Selena La Brooy</h3>
+          <p style="font-style:italic;margin-bottom:16px;">Pattern interrupter and realignment guide</p>
+          <p data-cms-page="about" data-cms-section="selena">Selena is the founder and steward of Rhizome Springs. Her path has woven through dance, healing arts, herbalism, and ecological building. A certified Rolfer and lifelong mover, Selena's vision for Rhizome Springs grew from a deep passion for community, embodied living, and tending the land.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR PARTNERS -->
+  <section class="section-accent">
+    <div class="container text-center">
+      <h2 class="section-title text-center reveal">Our Partners</h2>
+      <div class="partners-list reveal">
+        <div class="partner-item">
+          <strong>SSI Contact Festival</strong>
+          <a href="https://www.ssicontactfestival.com" target="_blank" rel="noopener">Visit Website</a>
+        </div>
+        <div class="partner-item">
+          <strong>Forest Gardens</strong>
+          <a href="#" target="_blank" rel="noopener">Visit Website</a>
+        </div>
+        <div class="partner-item">
+          <strong>Phoenix Domes</strong>
+          <a href="https://www.phoenixdomes.com" target="_blank" rel="noopener">Visit Website</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THANK YOUS -->
+  <section>
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <h2 class="section-title text-center">Thank Yous</h2>
+        <p>It truly takes many, many hands to have brought us just this far. Thank you to everyone who has contributed their time, energy, skills, and love to Rhizome Springs.</p>
+        <p style="margin-top:20px;font-style:italic;">Special thanks to Donna Moroz, without whom none of this would have been possible.</p>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="logo-footer">
-        <img src="images/logo-white.png" alt="Rhizome Springs">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <img src="images/logo-white.png" alt="Rhizome Springs" class="footer-logo-vertical">
+          <img src="images/logo-horizontal-white.png" alt="Rhizome Springs" class="footer-logo-horizontal">
+        </div>
+        <div class="footer-info text-center">
+          <p>The Land of Living Inquiry</p>
+          <p>Salt Spring Island, British Columbia</p>
+          <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <span class="dot">&middot;</span>
+          <a href="events.html">Events</a>
+          <span class="dot">&middot;</span>
+          <a href="mailto:info@rhizomesprings.com">Get Involved</a>
+        </div>
       </div>
-      <div class="footer-info">
-        <p>Salt Spring Island, BC, Canada</p>
-      </div>
-      <div class="footer-cta">
-        <a href="events.html" class="btn">Explore Events</a>
-      </div>
-      <nav class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
-      </nav>
-      <div class="footer-bottom">
-        &copy; 2026 Rhizome Springs. All rights reserved.
+      <div class="footer-newsletter">
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email Address" required>
+          <button type="submit">Sign Up</button>
+        </form>
+        <p class="newsletter-msg"></p>
       </div>
     </div>
   </footer>
 
   <script>
     document.querySelector('.nav-toggle').addEventListener('click', function() {
-      document.querySelector('nav').classList.toggle('active');
+      document.querySelectorAll('.nav-left, .nav-right').forEach(function(n) { n.classList.toggle('active'); });
       document.querySelector('header').classList.toggle('nav-open');
-    });
-    document.querySelectorAll('nav a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        document.querySelector('nav').classList.remove('active');
-        document.querySelector('header').classList.remove('nav-open');
-      });
     });
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {

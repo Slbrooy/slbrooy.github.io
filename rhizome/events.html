@@ -14,22 +14,24 @@
 
   <!-- HEADER -->
   <header>
-    <div class="container">
+    <div class="container header-grid">
+      <nav class="nav-left">
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+      </nav>
       <a href="index.html" class="logo">
         <img src="images/logo-white.png" alt="Rhizome Springs">
       </a>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
-      <nav>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
+      <nav class="nav-right">
+        <a href="mailto:info@rhizomesprings.com">Get Involved</a>
         <a href="shop.html" class="cart-link" aria-label="Cart">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span class="cart-badge"></span>
         </a>
       </nav>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -37,68 +39,66 @@
   <section class="hero hero-short" style="background-image: url('images/events-hero.jpg');">
     <div class="hero-content">
       <h1>Events</h1>
-      <p>Workshops, festivals, and gatherings at Rhizome Springs</p>
     </div>
   </section>
 
   <!-- EVENTS LISTING -->
   <section>
     <div class="container">
-      <div id="event-filters" class="event-filters">
-        <!-- Filter buttons rendered by site.js -->
-      </div>
+      <h2 class="section-title reveal">Upcoming Events</h2>
       <div id="events-list">
-        <!-- Event cards rendered by site.js from content/events.json -->
+        <!-- Rendered by site.js from content/events.json -->
       </div>
     </div>
   </section>
 
-  <!-- NEWSLETTER -->
-  <section class="newsletter-section">
-    <div class="container">
-      <h2 class="section-title">Stay Connected</h2>
-      <p>Get notified about new events and happenings at Rhizome Springs.</p>
-      <form class="newsletter-form">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-      <p class="newsletter-msg"></p>
+  <!-- PARTNERSHIP CTA -->
+  <section class="section-accent">
+    <div class="container text-center">
+      <div class="reveal narrow-text">
+        <p class="lead-text">Interested in partnering on an event?</p>
+        <div style="margin-top:20px;">
+          <a href="mailto:info@rhizomesprings.com" class="btn">Contact Us</a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="logo-footer">
-        <img src="images/logo-white.png" alt="Rhizome Springs">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <img src="images/logo-white.png" alt="Rhizome Springs" class="footer-logo-vertical">
+          <img src="images/logo-horizontal-white.png" alt="Rhizome Springs" class="footer-logo-horizontal">
+        </div>
+        <div class="footer-info text-center">
+          <p>The Land of Living Inquiry</p>
+          <p>Salt Spring Island, British Columbia</p>
+          <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
+        </div>
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <span class="dot">&middot;</span>
+          <a href="events.html">Events</a>
+          <span class="dot">&middot;</span>
+          <a href="mailto:info@rhizomesprings.com">Get Involved</a>
+        </div>
       </div>
-      <div class="footer-info">
-        <p>Salt Spring Island, BC, Canada</p>
-      </div>
-      <div class="footer-cta">
-        <a href="events.html" class="btn">Explore Events</a>
-      </div>
-      <nav class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="contact.html">Get Involved</a>
-      </nav>
-      <div class="footer-bottom">
-        &copy; 2026 Rhizome Springs. All rights reserved.
+      <div class="footer-newsletter">
+        <form class="newsletter-form">
+          <input type="email" placeholder="Email Address" required>
+          <button type="submit">Sign Up</button>
+        </form>
+        <p class="newsletter-msg"></p>
       </div>
     </div>
   </footer>
 
   <script>
     document.querySelector('.nav-toggle').addEventListener('click', function() {
-      document.querySelector('nav').classList.toggle('active');
+      document.querySelectorAll('.nav-left, .nav-right').forEach(function(n) { n.classList.toggle('active'); });
       document.querySelector('header').classList.toggle('nav-open');
-    });
-    document.querySelectorAll('nav a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        document.querySelector('nav').classList.remove('active');
-        document.querySelector('header').classList.remove('nav-open');
-      });
     });
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
