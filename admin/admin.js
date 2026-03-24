@@ -1873,7 +1873,13 @@
   function populatePagePicker() {
     var current = pagePicker.value;
     pagePicker.innerHTML = '';
-    Object.keys(pages).forEach(function(key) {
+    var keys = Object.keys(pages);
+    keys.sort(function(a, b) {
+      var oa = pages[a].navOrder || 99;
+      var ob = pages[b].navOrder || 99;
+      return oa - ob;
+    });
+    keys.forEach(function(key) {
       var opt = document.createElement('option');
       opt.value = key;
       opt.textContent = pages[key].title;
