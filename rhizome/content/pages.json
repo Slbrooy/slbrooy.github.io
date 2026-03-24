@@ -4,7 +4,7 @@
     "url": "index.html",
     "showInNav": false,
     "navLabel": "Home",
-    "heroImage": "images/hero-land.jpg",
+    "heroImage": "images/hero-land.webp",
     "sections": [
       {
         "id": "intro",

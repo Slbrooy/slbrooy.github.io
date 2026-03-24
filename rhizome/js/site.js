@@ -57,6 +57,8 @@
   // ===== NAVIGATION =====
   function renderNav() {
     if (!loaded.settings || !loaded.pages) return;
+    // Skip if using split nav (nav-left / nav-right) - those are hardcoded
+    if (document.querySelector('.nav-left')) return;
     var navEls = document.querySelectorAll('header nav');
     if (!navEls.length) return;
 
