@@ -25,8 +25,8 @@
   --color-dark: #12302f;        /* footer/header dark teal */
   --font-heading: 'Romans Story', Georgia, serif;
   --font-body: 'Cormorant Garamond', Georgia, serif;
-  /* Squarespace uses 1800px max-width, 4vw gutter */
-  --max-width: 1800px;
+  /* Squarespace grid uses --sqs-site-max-width: 1500px */
+  --max-width: 1500px;
   --page-padding: 4vw;
   --section-pad: 100px;
 }
@@ -165,14 +165,17 @@ header {
 .nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ===== HERO ===== */
+/* Squarespace: section-height--small = min-height:33vh, vertical-alignment--middle,
+   padding: 3.3vmax top/bottom. Content expands section as needed. */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 33vh;
   display: flex; align-items: center; justify-content: center;
   background-size: cover; background-position: center center;
   overflow: hidden;
+  padding: 3.3vmax var(--page-padding);
 }
-.hero.hero-short { height: 60vh; min-height: 400px; }
+.hero.hero-short { min-height: 33vh; }
 /* Squarespace: section-background-overlay opacity: 0.14 */
 .hero::before {
   content: ''; position: absolute; inset: 0;
@@ -182,24 +185,20 @@ header {
 .hero-content {
   position: relative; z-index: 1;
   text-align: center; color: var(--color-white);
-  /* Wide to allow text to fill */
-  max-width: 90vw; padding: 0 var(--page-padding);
 }
-/* Squarespace uses sqsrte-scaled-text which auto-scales h1 to fill container width.
-   We approximate: "The Land of" and "Living Inquiry" each fill ~85% of viewport width.
-   At 1440px, each line is roughly 8-10vw per character, so ~10vw total works well. */
+/* Squarespace sqsrte-scaled-text: each line scales independently to fill container.
+   Hero text block spans columns 6-22 of 24-col grid = ~66% of container width.
+   We use JS fitText() to scale each .scaled-text element to fill its container. */
 .hero h1 {
-  font-family: var(--font-heading);
-  font-size: 10vw;
   font-weight: 500; line-height: 1.05;
   color: #ffffff;
   text-shadow: 1px 2px 3px rgba(0,0,0,0.3);
   font-feature-settings: "liga" 1, "dlig" 1;
   -webkit-font-feature-settings: "liga" 1, "dlig" 1;
   margin: 0;
-  white-space: pre-wrap;
+  white-space: nowrap;
 }
-/* Squarespace hero subtitle custom CSS: #block h4 { font-size: 40px } */
+/* Squarespace hero subtitle custom CSS: font-size: 40px */
 .hero h4 {
   font-family: var(--font-body);
   font-size: 40px;
@@ -577,10 +576,7 @@ footer {
   .logo { grid-column: 2; justify-self: center; }
   .logo img { max-height: 70px; }
 
-  .hero { height: 70vh; }
-  .hero.hero-short { height: 50vh; }
-  /* Squarespace mobile formula: calc((value - 1) * calc(.012 * min(100vh, 900px)) + 1rem) */
-  .hero h1 { font-size: calc((6.5 - 1) * 1.2vw + 1rem); }
+  .hero { min-height: 33vh; }
   .hero h4 { font-size: calc((1.6 - 1) * 1.2vw + 1rem); }
   h2, .section-title { font-size: 40px; } /* Squarespace custom CSS mobile override */
 
