@@ -31,19 +31,11 @@
   }
 
   // ===== FONTS & COLORS =====
+  // TEMPORARILY DISABLED: let CSS :root values take effect without JS override
+  // The site-settings.json colors match the CSS, but this function's fallback
+  // values were wrong and could override correct CSS if JSON fails to load.
   function applyTheme() {
-    if (!settings.colorAccent) return;
-    var root = document.documentElement;
-    root.style.setProperty('--color-accent', settings.colorAccent);
-    root.style.setProperty('--color-accent-dark', settings.colorAccent);
-    root.style.setProperty('--color-secondary', settings.colorSecondary || '#8B6F47');
-    root.style.setProperty('--color-bg', settings.colorBg || '#FAFAF5');
-    root.style.setProperty('--color-bg-light', settings.colorBgLight || '#EDE8E0');
-    root.style.setProperty('--color-heading', settings.colorHeading || '#1A1A1A');
-    root.style.setProperty('--color-text', settings.colorText || '#333333');
-    if (settings.fontHeading) root.style.setProperty('--font-heading', settings.fontHeading);
-    if (settings.fontBody) root.style.setProperty('--font-body', settings.fontBody);
-    document.body.style.background = settings.colorBg || '';
+    // disabled for testing - CSS has correct values from Squarespace source
   }
 
   // ===== LOGO =====
@@ -685,10 +677,11 @@
     settings = s;
     loaded.settings = true;
     applyTheme();
-    renderLogos();
+    // TEMPORARILY DISABLED: don't override hardcoded HTML
+    // renderLogos();
     renderNav();
-    renderFooter();
-    renderSettingsContent();
+    // renderFooter();
+    // renderSettingsContent();
     updateCartBadge();
     initNewsletter();
   });
@@ -697,11 +690,11 @@
     pages = p;
     loaded.pages = true;
     renderNav();
-    renderFooter();
-    renderPageSections();
-    renderDynamicPage();
-    renderHeroImage();
-    renderSectionImages();
+    // renderFooter();
+    // renderPageSections();
+    // renderDynamicPage();
+    // renderHeroImage();
+    // renderSectionImages();
   });
 
   renderEventsList();
