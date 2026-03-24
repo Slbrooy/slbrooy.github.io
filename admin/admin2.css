@@ -386,17 +386,20 @@ body {
 #modal-editor .ql-container { min-height: 200px; }
 
 /* REVIEW PREVIEW CARDS */
-.review-preview {
+.reviews-grid-admin {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.review-card-admin {
   background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 24px; margin-bottom: 12px; transition: border-color 0.2s;
+  padding: 20px; display: flex; flex-direction: column; transition: border-color 0.2s;
 }
-.review-preview:hover { border-color: var(--accent); }
+.review-card-admin:hover { border-color: var(--accent); }
 .review-preview-quote {
-  font-size: 14px; line-height: 1.8; color: var(--text-light);
-  font-style: italic; margin-bottom: 12px;
+  font-size: 13px; line-height: 1.7; color: var(--text-light);
+  font-style: italic; margin-bottom: 12px; flex: 1;
 }
-.review-preview-author { font-size: 14px; margin-bottom: 12px; }
-.review-preview-actions { display: flex; gap: 6px; }
+.review-preview-author { font-size: 13px; margin-bottom: 12px; }
+.review-preview-actions { display: flex; gap: 4px; flex-wrap: wrap; }
 
 /* IMAGES IN EDITOR */
 .ql-editor img {

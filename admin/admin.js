@@ -728,20 +728,21 @@
 
   // ===== TESTIMONIALS =====
   function renderTestimonialsList() {
-    var html = '';
+    var html = '<div class="reviews-grid-admin">';
     testimonials.forEach(function(t, i) {
-      html += '<div class="review-preview">';
-      html += '<div class="review-preview-quote">&ldquo;' + t.quote + '&rdquo;</div>';
+      html += '<div class="review-card-admin">';
+      html += '<div class="review-preview-quote">&ldquo;' + (t.quote.length > 150 ? t.quote.substring(0, 150) + '...' : t.quote) + '&rdquo;</div>';
       html += '<div class="review-preview-author"><strong>' + t.name + '</strong>';
-      if (t.credentials) html += ' <span style="color:#999;">- ' + t.credentials + '</span>';
+      if (t.credentials) html += '<br><span style="color:#999;font-size:12px;">' + t.credentials + '</span>';
       html += '</div>';
       html += '<div class="review-preview-actions">';
-      if (i > 0) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',-1)" title="Move up">&uarr;</button>';
-      if (i < testimonials.length - 1) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',1)" title="Move down">&darr;</button>';
+      if (i > 0) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',-1)" title="Move left">&larr;</button>';
+      if (i < testimonials.length - 1) html += '<button class="btn-small" onclick="CMS.moveTestimonial(' + i + ',1)" title="Move right">&rarr;</button>';
       html += '<button class="btn-small" onclick="CMS.editTestimonial(' + i + ')">Edit</button>';
       html += '<button class="btn-danger" onclick="CMS.deleteTestimonial(' + i + ')">Delete</button>';
       html += '</div></div>';
     });
+    html += '</div>';
     $('testimonials-list').innerHTML = html || '<p style="color:#999;">No reviews yet.</p>';
   }
 
