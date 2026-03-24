@@ -636,11 +636,23 @@
       if (!post.published) html += '<span class="draft-badge">Draft</span>';
       html += '</h3><p>' + post.date + ' &bull; ' + post.author + '</p></div>';
       html += '<div class="item-actions">';
+      if (i > 0) html += '<button class="btn-small" onclick="CMS.movePost(' + i + ',-1)" title="Move up">&uarr;</button>';
+      if (i < blogPosts.length - 1) html += '<button class="btn-small" onclick="CMS.movePost(' + i + ',1)" title="Move down">&darr;</button>';
       html += '<button class="btn-small" onclick="CMS.editPost(' + i + ')">Edit</button>';
       html += '<button class="btn-danger" onclick="CMS.deletePost(' + i + ')">Delete</button>';
       html += '</div></div>';
     });
     $('blog-list').innerHTML = html || '<p style="color:#999;">No blog posts yet.</p>';
+  }
+
+  function movePost(index, direction) {
+    var newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= blogPosts.length) return;
+    var temp = blogPosts[index];
+    blogPosts[index] = blogPosts[newIndex];
+    blogPosts[newIndex] = temp;
+    markDirty('blog-posts.json');
+    renderBlogList();
   }
 
   function editPost(index) {
@@ -1887,6 +1899,7 @@
   window.CMS = {
     editPost: editPost,
     deletePost: deletePost,
+    movePost: movePost,
     editTestimonial: editTestimonial,
     deleteTestimonial: deleteTestimonial,
     moveTestimonial: moveTestimonial,
