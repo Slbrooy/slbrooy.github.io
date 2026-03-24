@@ -1873,6 +1873,8 @@
     pagePicker.innerHTML = '';
     var keys = Object.keys(pages);
     keys.sort(function(a, b) {
+      if (a === 'home') return -1;
+      if (b === 'home') return 1;
       var oa = pages[a].navOrder || 99;
       var ob = pages[b].navOrder || 99;
       return oa - ob;
