@@ -1300,9 +1300,11 @@
     }
 
     // Default: text / accent
+    var addImgBtn = '<button class="pv-section-move" style="font-size:10px;padding:4px 8px;" onclick="event.stopPropagation();CMS.changeSectionImage(\'' + pageKey + '\',\'' + sectionId + '\')">' + imgLabel + '</button>';
+    // Rebuild delBtn to include the add image button
+    var controlsWithImg = '<div class="pv-section-controls">' + moveUp + moveDown + addImgBtn + '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pageKey + '\',\'' + sectionId + '\')">Delete</button></div>';
     card = '<div class="pv-section ' + (extraClass || '') + '" style="font-size:' + fs + 'px;" onclick="CMS.openSectionModal(\'' + pageKey + '\',\'' + sectionId + '\')">' +
-      delBtn +
-      imgBtnAny +
+      controlsWithImg +
       '<div class="pv-section-label">Edit Text</div>' +
       typeLabel +
       '<h2>' + s.heading + '</h2>' +
