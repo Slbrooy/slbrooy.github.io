@@ -431,10 +431,16 @@ section { padding: var(--section-pad) 0; position: relative; overflow: hidden; b
   font-weight: 300;
   cursor: pointer;
   pointer-events: auto;
-  padding: 16px 18px;
+  width: 56px;
+  height: 56px;
+  padding: 0;
   border-radius: 12px;
   transition: all 0.3s;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 .carousel-btn:hover {
   color: var(--color-white);

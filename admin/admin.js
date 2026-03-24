@@ -1573,9 +1573,9 @@
         var moveDown = moveIdx < totalSecs - 1 ? '<button class="pv-section-move" onclick="event.stopPropagation();CMS.moveSection(\'' + pk + '\',' + moveIdx + ',1)" title="Move down">&darr;</button>' : '';
         var delBtn = '<button class="pv-section-delete" onclick="event.stopPropagation();CMS.deletePageSection(\'' + pk + '\',\'' + sec.id + '\')">Delete</button>';
 
-        html += '<div style="' + (isAccent ? 'background:#F0EDE8;border-radius:12px;padding:24px;' : '') + 'margin-bottom:20px;position:relative;cursor:pointer;" onclick="CMS.openSectionModal(\'' + pk + '\',\'' + sec.id + '\')">';
-        html += '<div class="pv-section-controls" style="position:absolute;top:4px;right:4px;">' + moveUp + moveDown + delBtn + '</div>';
-        html += '<div class="pv-section-label" style="position:static;display:inline-block;margin-bottom:6px;">Edit</div>';
+        html += '<div class="pv-section" style="' + (isAccent ? 'background:#F0EDE8;' : '') + 'margin-bottom:20px;padding:20px;cursor:pointer;" onclick="CMS.openSectionModal(\'' + pk + '\',\'' + sec.id + '\')">';
+        html += '<div class="pv-section-controls">' + moveUp + moveDown + delBtn + '</div>';
+        html += '<div class="pv-section-label">Edit</div>';
         if (sec.heading) html += '<h2 style="font-size:1.4em;margin-bottom:8px;">' + sec.heading + '</h2>';
         if (sec.body) html += '<div style="font-size:14px;line-height:1.7;color:#555;">' + sec.body + '</div>';
         html += pvCTABadge(sec);
