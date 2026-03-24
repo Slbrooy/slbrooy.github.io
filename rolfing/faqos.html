@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs - Salt Spring Rolfing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="solid">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/logo-light.webp" alt="Salt Spring Rolfing" class="logo-light"><img src="images/logo-dark.webp" alt="Salt Spring Rolfing" class="logo-dark"></a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <nav></nav>
+    </div>
+  </header>
+
+  <section class="hero hero-short" style="background-image:url('images/faqs-hero.webp');">
+    <div class="hero-content">
+      <h1>FAQs</h1>
+    </div>
+  </section>
+  <div class="hero-spacer"></div>
+
+  <section>
+    <div class="container">
+      <div id="page-content"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="logo-footer"><img src="images/logo-dark.webp" alt="Salt Spring Rolfing"></div>
+      <div class="footer-address"><p></p></div>
+      <div class="footer-cta"><a href="booking.html" class="btn">Book A Session</a></div>
+    </div>
+    <nav class="footer-nav"></nav>
+  </footer>
+
+  <script>
+    var header = document.querySelector("header");
+    document.querySelector(".nav-toggle").addEventListener("click", function() {
+      document.querySelector("nav").classList.toggle("active");
+      header.classList.toggle("nav-open");
+    });
+  </script>
+  <script src="js/site.js"></script>
+</body>
+</html>
