@@ -100,7 +100,7 @@
         "type": "text",
         "heading": "",
         "body": "<p class=\"ql-align-center\"><span style=\"font-size: 18px;\">“Finding peace with our bodies affects the way that we relate to others and the world around us.”</span></p>",
-        "showCTA": true
+        "showCTA": false
       }
     ]
   },
