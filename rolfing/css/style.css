@@ -2,7 +2,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* Quill editor alignment classes */
-.ql-align-center { text-align: center; }
+.ql-align-center { text-align: center !important; text-align-last: center !important; }
 .ql-align-right { text-align: right; }
 .ql-align-justify { text-align: justify; text-align-last: left; }
 
