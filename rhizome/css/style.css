@@ -93,7 +93,7 @@ header.scrolled {
   padding-top: 20px; padding-bottom: 20px;
 }
 .logo { justify-self: center; }
-.logo img { height: 80px; width: auto; }
+.logo img { height: 70px; width: auto; max-width: 220px; }
 .nav-left { display: flex; gap: 28px; justify-self: start; }
 .nav-right { display: flex; gap: 20px; justify-self: end; align-items: center; }
 .nav-left a, .nav-right a {
