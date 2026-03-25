@@ -366,8 +366,8 @@ section {
 /* Card grid (for homepage preview) */
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
-  gap: 60px 30px;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 40px 30px;
 }
 .event-card {
   overflow: hidden;
