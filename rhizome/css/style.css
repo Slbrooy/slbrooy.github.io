@@ -442,7 +442,7 @@ section {
 }
 .image-gallery img {
   flex: 0 0 auto;
-  width: 300px; height: 300px;
+  width: 380px; height: 380px;
   object-fit: cover;
   scroll-snap-align: start;
   transition: opacity 0.3s;
