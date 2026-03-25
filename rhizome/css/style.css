@@ -112,11 +112,11 @@ header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding-top: 1.3vw; padding-bottom: 1.3vw;
+  padding-top: 2vw; padding-bottom: 1vw;
 }
 .logo { justify-self: center; }
-/* Squarespace: logo max-height 100px */
-.logo img { height: auto; width: auto; max-height: 100px; max-width: 240px; }
+/* Original logo: 67px tall, 274px wide */
+.logo img { height: auto; width: auto; max-height: 67px; max-width: 274px; }
 .nav-left { display: flex; gap: 28px; justify-self: start; }
 .nav-right { display: flex; gap: 20px; justify-self: end; align-items: center; }
 /* Squarespace: --site-navigation-font-font-size-value: 1.5, weight 800 (overridden to Romans Story 500) */
