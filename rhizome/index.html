@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1774461580">
+  <link rel="stylesheet" href="css/style.css?v=1774462140">
 </head>
 <body>
 
@@ -80,14 +80,18 @@
     </div>
   </section>
 
-  <!-- CTA (Squarespace theme: white-bold, left aligned) -->
+  <!-- CTA (Squarespace theme: white-bold, two-column layout) -->
   <section>
     <div class="container">
-      <div class="reveal" style="max-width:800px;">
-        <h2 style="white-space:pre-wrap;">We've just begun planting this seed, would you like to help us tend to it?</h2>
-        <p class="sqsrte-large" style="white-space:pre-wrap;font-size:calc((1.5 - 1) * 1.2vw + 1rem);margin-top:20px;">Rhizome Springs is in the early stages of development. We're honoured to share a glimpse into our vision with you here. If you're interested in getting involved, we'd love to hear from you.</p>
-        <div style="margin-top:30px;">
-          <a href="mailto:info@rhizomesprings.com" class="btn">Get Involved</a>
+      <div class="grid-2 reveal" style="align-items:start;">
+        <div>
+          <h2 style="white-space:pre-wrap;">We've just begun planting this seed, would you like to help us tend to it?</h2>
+        </div>
+        <div>
+          <p class="sqsrte-large" style="white-space:pre-wrap;font-size:calc((1.5 - 1) * 1.2vw + 1rem);">Rhizome Springs is in the early stages of development. We're honoured to share a glimpse into our vision with you here. If you're interested in getting involved, we'd love to hear from you.</p>
+          <div style="margin-top:30px;">
+            <a href="mailto:info@rhizomesprings.com" class="btn">Get Involved</a>
+          </div>
         </div>
       </div>
     </div>
@@ -114,29 +118,32 @@
   <footer>
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-logo">
-          <img src="images/logo-white.png" alt="Rhizome Springs" class="footer-logo-vertical">
-          <img src="images/logo-horizontal-white.png" alt="Rhizome Springs" class="footer-logo-horizontal">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <img src="images/logo-vertical-white.png" alt="Rhizome Springs" class="footer-logo-vertical">
+            <img src="images/logo-horizontal-white.png" alt="Rhizome Springs" class="footer-logo-horizontal">
+          </div>
+          <div class="footer-info">
+            <p>The Land of Living Inquiry</p>
+            <p>Salt Spring Island, British Columbia</p>
+            <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
+          </div>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <span class="dot">&middot;</span>
+            <a href="events.html">Events</a>
+            <span class="dot">&middot;</span>
+            <a href="mailto:info@rhizomesprings.com">Get Involved</a>
+          </div>
         </div>
-        <div class="footer-info text-center">
-          <p>The Land of Living Inquiry</p>
-          <p>Salt Spring Island, British Columbia</p>
-          <p><em>An exploratorium for ecology, creativity and embodiment</em></p>
+        <div class="footer-right">
+          <h4>Subscribe to our Newsletter</h4>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Email Address" required>
+            <button type="submit">Sign Up</button>
+          </form>
+          <p class="newsletter-msg"></p>
         </div>
-        <div class="footer-links">
-          <a href="about.html">About</a>
-          <span class="dot">&middot;</span>
-          <a href="events.html">Events</a>
-          <span class="dot">&middot;</span>
-          <a href="mailto:info@rhizomesprings.com">Get Involved</a>
-        </div>
-      </div>
-      <div class="footer-newsletter">
-        <form class="newsletter-form">
-          <input type="email" placeholder="Email Address" required>
-          <button type="submit">Sign Up</button>
-        </form>
-        <p class="newsletter-msg"></p>
       </div>
     </div>
   </footer>
@@ -180,6 +187,6 @@
       observer.observe(el);
     });
   </script>
-  <script src="js/site.js?v=1774461580"></script>
+  <script src="js/site.js?v=1774462140"></script>
 </body>
 </html>

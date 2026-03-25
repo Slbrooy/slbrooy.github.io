@@ -312,8 +312,6 @@
     if (ev.image) {
       html += '<div class="event-card-image">';
       html += '<img src="' + (ev.image.indexOf('http') === 0 ? ev.image : BASE + ev.image) + '" alt="' + ev.title + '">';
-      html += '<span class="event-card-date">' + ev.dates + '</span>';
-      if (ev.category) html += '<span class="event-card-category">' + ev.category + '</span>';
       html += '</div>';
     }
     html += '<div class="event-card-body">';
@@ -325,7 +323,40 @@
     return html;
   }
 
-  // Homepage events preview (shows up to 3 upcoming)
+  function renderPreviewEventCard(ev) {
+    // Parse startDate for date badge (e.g. "2026-05-15")
+    var monthAbbrs = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    var badgeMonth = '';
+    var badgeDay = '';
+    if (ev.startDate) {
+      var sd = new Date(ev.startDate + 'T12:00:00');
+      badgeMonth = monthAbbrs[sd.getMonth()];
+      badgeDay = '' + sd.getDate();
+    }
+
+    // Build meta line: "May 15, 2026 - May 17, 2026 . Category"
+    var meta = '';
+    if (ev.startDate) meta += formatDate(ev.startDate);
+    if (ev.endDate && ev.endDate !== ev.startDate) meta += ' - ' + formatDate(ev.endDate);
+    if (ev.category) meta += ' \u00b7 ' + ev.category;
+
+    var html = '<a href="' + BASE + 'events/event.html#' + ev.id + '" class="event-card" data-category="' + (ev.category || '') + '" style="color:inherit;text-decoration:none;">';
+    if (ev.image) {
+      html += '<div class="event-card-image">';
+      html += '<img src="' + (ev.image.indexOf('http') === 0 ? ev.image : BASE + ev.image) + '" alt="' + ev.title + '">';
+      if (badgeMonth) {
+        html += '<div class="event-card-date"><span class="date-month">' + badgeMonth + '</span><span class="date-day">' + badgeDay + '</span></div>';
+      }
+      html += '</div>';
+    }
+    html += '<div class="event-card-body">';
+    if (meta) html += '<p class="event-card-meta">' + meta + '</p>';
+    html += '<h3>' + ev.title + '</h3>';
+    html += '</div></a>';
+    return html;
+  }
+
+  // Homepage events preview (shows ALL upcoming in compact cards)
   function renderEventsPreview() {
     var target = document.getElementById('events-preview');
     if (!target) return;
@@ -333,8 +364,7 @@
       var now = new Date().toISOString().split('T')[0];
       var upcoming = events
         .filter(function(e) { return e.published && (e.endDate >= now || e.startDate >= now); })
-        .sort(function(a, b) { return a.startDate < b.startDate ? -1 : 1; })
-        .slice(0, 3);
+        .sort(function(a, b) { return a.startDate < b.startDate ? -1 : 1; });
 
       if (upcoming.length === 0) {
         target.innerHTML = '<p style="text-align:center;color:var(--color-text-light);">No upcoming events at this time.</p>';
@@ -342,7 +372,7 @@
       }
 
       var html = '<div class="events-grid">';
-      upcoming.forEach(function(ev) { html += renderEventCard(ev, false); });
+      upcoming.forEach(function(ev) { html += renderPreviewEventCard(ev); });
       html += '</div>';
       target.innerHTML = html;
     });
