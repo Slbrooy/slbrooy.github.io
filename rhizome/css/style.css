@@ -201,7 +201,7 @@ header {
   position: relative;
   min-height: 82vh;
   display: flex; align-items: center; justify-content: center;
-  background-size: cover; background-position: center 60%;
+  background-size: 100% auto; background-position: center top;
   overflow: hidden;
   padding: 32vh var(--page-padding) 18vh;
 }
