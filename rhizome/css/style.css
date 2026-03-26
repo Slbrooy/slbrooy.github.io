@@ -254,9 +254,6 @@ header {
   color: rgba(255,255,255,0.9);
   margin-top: 24px;
   white-space: nowrap;
-  width: 85vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
 }
 .hero .btn {
   margin-top: 30px;
