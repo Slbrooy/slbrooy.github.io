@@ -200,7 +200,7 @@ header {
 .hero {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 /* The img fills and covers the entire section */
 .hero-bg {
