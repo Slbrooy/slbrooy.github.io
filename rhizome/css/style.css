@@ -202,10 +202,22 @@ header {
   width: 100%;
   overflow: hidden;
 }
+/* The img fills and covers the entire section */
 .hero-bg {
-  width: 100%; min-height: 100%; display: block; object-fit: cover;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center bottom;
+  z-index: 0;
 }
-.hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
+/* Invisible spacer that enforces image aspect ratio as minimum height.
+   Content can still push the hero taller. */
+.hero::after {
+  content: '';
+  display: block;
+  padding-bottom: 41.8%; /* 856/2048 = 0.418 */
+}
+.hero.hero-short { min-height: 50vh; }
+.hero.hero-short::after { display: none; }
 .hero::before {
   content: ''; position: absolute; inset: 0;
   background: rgba(0,0,0,0.14);
