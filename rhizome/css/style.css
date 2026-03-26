@@ -395,8 +395,9 @@ section {
   font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
 }
 .event-card-body { padding: 16px 0; flex: 1; display: flex; flex-direction: column; }
+/* Squarespace event titles: 24.64px (same as nav 1.5 value) */
 .event-card-body h3 {
-  font-size: 1.1rem;
+  font-size: calc((1.5 - 1) * 1.2vw + 1rem);
   margin-bottom: 8px;
   text-align: left;
 }
@@ -473,26 +474,29 @@ section {
 .quote-section .container { position: relative; z-index: 1; }
 
 /* ===== NEWSLETTER ===== */
+/* Squarespace newsletter: button 20.3px, input matches */
 .newsletter-form {
   display: flex; gap: 0;
-  max-width: 420px; margin: 0 auto;
+  max-width: 500px;
 }
 .newsletter-form input[type="email"] {
-  flex: 1; padding: 12px 16px;
+  flex: 1; padding: 14px 20px;
   border: 1px solid rgba(255,255,255,0.3);
   border-right: none;
   background: transparent;
   color: var(--color-white);
-  font-family: var(--font-body); font-size: 15px;
+  font-family: var(--font-body);
+  font-size: calc((1.2 - 1) * 1.2vw + 1rem);
 }
 .newsletter-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
 .newsletter-form input[type="email"]:focus { outline: none; border-color: rgba(255,255,255,0.6); }
 .newsletter-form button {
-  padding: 12px 24px;
+  padding: 14px 28px;
   background: var(--color-white); color: var(--color-heading);
   border: 1px solid rgba(255,255,255,0.3);
   font-family: var(--font-heading);
-  font-size: 11px; font-weight: 500;
+  font-size: calc((1.25 - 1) * 1.2vw + 1rem);
+  font-weight: 500;
   letter-spacing: 1px; text-transform: uppercase;
   cursor: pointer; transition: background .3s;
   font-feature-settings: "liga" 1, "dlig" 1;
@@ -517,16 +521,20 @@ footer {
 .footer-left .footer-info { margin-bottom: 20px; }
 .footer-logo-vertical { height: 80px; }
 .footer-logo-horizontal { height: 24px; }
+/* Squarespace footer text: 19.5px */
 .footer-info p {
-  font-size: 15px; line-height: 1.7;
+  font-size: calc((1.2 - 1) * 1.2vw + 1rem);
+  line-height: 1.7;
   color: rgba(255,255,255,0.6);
 }
 .footer-links {
   display: flex; gap: 12px; align-items: center;
 }
+/* Squarespace footer links: 19.5px */
 .footer-links a {
   font-family: var(--font-heading);
-  font-size: 13px; font-weight: 500;
+  font-size: calc((1.2 - 1) * 1.2vw + 1rem);
+  font-weight: 500;
   letter-spacing: 1px; text-transform: uppercase;
   color: rgba(255,255,255,0.6);
   font-feature-settings: "liga" 1, "dlig" 1;
