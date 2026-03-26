@@ -37,7 +37,9 @@ body {
   color: var(--color-text);
   background: var(--color-bg);
   line-height: 1.8;
-  font-size: 16px; /* Squarespace body = 1rem = 16px */
+  /* Squarespace renders all p at 19.5px minimum (1.2 value formula).
+     1rem stays 16px for the calc formulas, but actual body text is larger. */
+  font-size: calc((1.2 - 1) * 1.2vw + 1rem);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
