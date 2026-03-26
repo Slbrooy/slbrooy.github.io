@@ -92,11 +92,18 @@ h3 { font-size: calc((2.0 - 1) * 1.2vw + 1rem); }
 /* --heading-4-size-value: 1.6 */
 h4 { font-size: calc((1.6 - 1) * 1.2vw + 1rem); }
 
-/* Squarespace uses centered text on this site, NOT justified */
-p { text-align: left; }
+/* Piet design rule: body text always justify with last line left */
+p { text-align: justify; text-align-last: left; }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--color-accent); text-decoration: none; transition: color .3s; }
+a { color: var(--color-accent); text-decoration: none; transition: color .3s ease; }
 a:hover { color: var(--color-secondary); }
+
+/* Smooth transitions for interactive elements */
+.btn, .btn-solid, .btn-nav { transition: all 0.3s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-solid:hover { transform: translateY(-2px); }
+.event-card { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.event-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
 
 .container { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--page-padding); }
 .text-center { text-align: center; }
@@ -422,11 +429,15 @@ section {
   transition: transform .3s;
   display: flex; flex-direction: column;
 }
-.event-card:hover { transform: translateY(-4px); }
+.event-card:hover { transform: translateY(-6px); }
+.event-card:hover .event-card-image img { transform: scale(1.04); }
 .event-card-image {
   position: relative; overflow: hidden;
 }
-.event-card-image img { width: 100%; aspect-ratio: 1.5; object-fit: cover; }
+.event-card-image img {
+  width: 100%; aspect-ratio: 1.5; object-fit: cover;
+  transition: transform 0.5s ease;
+}
 .event-card-date {
   position: absolute; top: 12px; left: 12px;
   background: rgba(255,255,255,0.9); color: var(--color-heading);

@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rhizome Springs - The Land of Living Inquiry</title>
   <meta name="description" content="Rhizome Springs is an off-grid community on Salt Spring Island dedicated to ecology, embodiment, and creativity. Workshops, dance festivals, jams, and residencies.">
-  <link rel="stylesheet" href="css/style.css?v=1774505565">
+  <link rel="stylesheet" href="css/style.css?v=1774506873">
 </head>
 <body>
 
@@ -177,16 +178,22 @@
     fitText();
     window.addEventListener('resize', fitText);
 
-    // Scroll reveal
+    // Scroll reveal with staggered delays
+    var revealDelay = 0;
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = (revealDelay * 0.1) + 's';
+          entry.target.classList.add('visible');
+          revealDelay++;
+          observer.unobserve(entry.target);
+        }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
       observer.observe(el);
     });
   </script>
-  <script src="js/site.js?v=1774505565"></script>
+  <script src="js/site.js?v=1774506873"></script>
 </body>
 </html>
