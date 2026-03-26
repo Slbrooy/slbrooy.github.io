@@ -199,22 +199,25 @@ header {
    Using padding to position text correctly. */
 .hero {
   position: relative;
-  aspect-ratio: 2048 / 856;
-  display: flex; align-items: center; justify-content: center;
-  background-size: 100% 100%; background-position: center center;
+  width: 100%;
   overflow: hidden;
-  padding: 0 var(--page-padding);
+}
+.hero-bg {
+  width: 100%; display: block;
 }
 .hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
-/* Squarespace: section-background-overlay opacity: 0.14 */
 .hero::before {
   content: ''; position: absolute; inset: 0;
   background: rgba(0,0,0,0.14);
-  z-index: 0;
+  z-index: 1;
 }
 .hero-content {
-  position: relative; z-index: 1;
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 2;
   text-align: center; color: var(--color-white);
+  padding: 0 var(--page-padding);
 }
 /* Squarespace sqsrte-scaled-text: each line scales independently to fill container.
    Hero text block spans columns 6-22 of 24-col grid = ~66% of container width.
