@@ -200,12 +200,12 @@ header {
   margin: 0;
   white-space: nowrap;
 }
-/* Hero subtitle: measured at ~30px rendered height in original */
+/* Squarespace hero subtitle: 40px, livory, weight 400, NOT italic */
 .hero h4 {
   font-family: var(--font-body);
-  font-size: calc((1.6 - 1) * 1.2vw + 1rem);
-  font-weight: 400; font-style: italic;
-  letter-spacing: 0.5px;
+  font-size: 40px;
+  font-weight: 400; font-style: normal;
+  letter-spacing: normal;
   color: rgba(255,255,255,0.9);
   margin-top: 24px;
 }
