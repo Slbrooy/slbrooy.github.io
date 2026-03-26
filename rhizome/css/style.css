@@ -7,6 +7,34 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'livory';
+  src: url('../fonts/livory-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'livory';
+  src: url('../fonts/livory-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'livory';
+  src: url('../fonts/livory-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'livory';
+  src: url('../fonts/livory-bold-italic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +52,7 @@
   --color-white: #ffffff;
   --color-dark: #12302f;        /* footer/header dark teal */
   --font-heading: 'Romans Story', Georgia, serif;
-  --font-body: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'livory', Georgia, serif;
   /* Squarespace grid uses --sqs-site-max-width: 1500px */
   --max-width: 1500px;
   --page-padding: 4vw;
