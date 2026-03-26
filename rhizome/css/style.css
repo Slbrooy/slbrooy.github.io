@@ -199,11 +199,11 @@ header {
    Using padding to position text correctly. */
 .hero {
   position: relative;
-  min-height: 82vh;
+  aspect-ratio: 2048 / 856;
   display: flex; align-items: center; justify-content: center;
-  background-size: 100% auto; background-position: center top;
+  background-size: 100% 100%; background-position: center center;
   overflow: hidden;
-  padding: 32vh var(--page-padding) 18vh;
+  padding: 0 var(--page-padding);
 }
 .hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
 /* Squarespace: section-background-overlay opacity: 0.14 */
