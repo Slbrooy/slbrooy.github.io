@@ -200,7 +200,9 @@ header {
   margin: 0;
   white-space: nowrap;
 }
-/* Squarespace hero subtitle: 40px, livory, weight 400, NOT italic */
+/* Squarespace hero subtitle: 40px, livory, weight 400, NOT italic.
+   Container is 1213px wide on original - wider than the h1 text block.
+   We use vw-based width to ensure single line. */
 .hero h4 {
   font-family: var(--font-body);
   font-size: 40px;
@@ -208,6 +210,10 @@ header {
   letter-spacing: normal;
   color: rgba(255,255,255,0.9);
   margin-top: 24px;
+  white-space: nowrap;
+  width: 85vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 .hero .btn {
   margin-top: 30px;
