@@ -203,7 +203,7 @@ header {
   overflow: hidden;
 }
 .hero-bg {
-  width: 100%; display: block;
+  width: 100%; min-height: 100%; display: block; object-fit: cover;
 }
 .hero.hero-short { min-height: 50vh; padding: 15vh var(--page-padding) 10vh; }
 .hero::before {
